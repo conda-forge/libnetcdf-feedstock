@@ -1,22 +1,19 @@
 mkdir %SRC_DIR%\build
 cd %SRC_DIR%\build
 
-
-set LIB=%LIBRARY_LIB%;%LIB%
-set LIBPATH=%LIBRARY_LIB%;%LIBPATH%
-set INCLUDE=%LIBRARY_INC%;%INCLUDE%
-set HDF5_DIR=%LIBRARY_PREFIX%\cmake
-
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX% -DCMAKE_INSTALL_PREFIX:PATH=%LIBRARY_PREFIX% %SRC_DIR%
-if errorlevel 1 exit 1
-
 cmake -G "NMake Makefiles" ^
-    -DBUILD_SHARED_LIBS=ON ^
-    -DENABLE_TESTS=OFF ^
-    -DCMAKE_BUILD_TYPE=Release ^
-    -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
-    -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% %SRC_DIR%
+      -D CMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
+      -D BUILD_SHARED_LIBS=ON ^
+      -D ENABLE_TESTS=OFF ^
+      -D CMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
+      -D ZLIB_LIBRARY=%LIBRARY_LIB%\zlib.lib ^
+      -D ZLIB_INCLUDE_DIR=%LIBRARY_INC% ^
+      -D CMAKE_BUILD_TYPE=Release ^
+      %SRC_DIR%
 if errorlevel 1 exit 1
 
-cmake --build . --target INSTALL --config Release
+nmake
+if errorlevel 1 exit 1
+
+nmake install
 if errorlevel 1 exit 1
