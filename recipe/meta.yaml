@@ -25,12 +25,12 @@ requirements:
         - curl
         - zlib 1.2*
         - hdf4
-        - hdf5 1.8.16*
+        - hdf5 1.8.17*
     run:
         - curl
         - zlib 1.2*
         - hdf4
-        - hdf5 1.8.16*
+        - hdf5 1.8.17*
 
 test:
     commands:
