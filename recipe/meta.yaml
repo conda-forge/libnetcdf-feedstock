@@ -10,7 +10,7 @@ source:
     md5: 4e3d3b05ab53d0ae6036a1a0fe1506e5
 
 build:
-    number: 1
+    number: 2
     features:
         - vc9  # [win and py27]
         - vc10  # [win and py34]
@@ -23,14 +23,14 @@ requirements:
         - pkg-config  # [unix]
         - msinttypes  # [win]
         - curl
-        - zlib 1.2*
+        - zlib 1.2.*
         - hdf4
-        - hdf5 1.8.17*
+        - hdf5 1.8.17|1.8.17.*
     run:
         - curl
-        - zlib 1.2*
+        - zlib 1.2.*
         - hdf4
-        - hdf5 1.8.17*
+        - hdf5 1.8.17|1.8.17.*
 
 test:
     commands:
