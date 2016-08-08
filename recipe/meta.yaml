@@ -1,4 +1,4 @@
-{% set version = "4.4.0" %}
+{% set version = "4.4.1" %}
 
 package:
     name: libnetcdf
@@ -7,10 +7,10 @@ package:
 source:
     fn: v{{ version }}.tar.gz
     url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-    md5: 4e3d3b05ab53d0ae6036a1a0fe1506e5
+    sha256: 17599385fd76ccdced368f448f654de2ed000fece44dece9fb5d598798b4c9d6
 
 build:
-    number: 2
+    number: 0
     features:
         - vc9  # [win and py27]
         - vc10  # [win and py34]
@@ -39,11 +39,12 @@ test:
         - test -f ${PREFIX}/lib/libnetcdf.so  # [linux]
         - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
         - conda inspect linkages -n _test libnetcdf  # [linux]
+        - conda inspect objects -n _test libnetcdf  # [osx]
 
 about:
     home: http://www.unidata.ucar.edu/software/netcdf/
     license: MIT
-    summary: libraries and data formats that support array-oriented scientific data
+    summary: 'Libraries and data formats that support array-oriented scientific data.'
 
 extra:
     recipe-maintainers:
