@@ -8,6 +8,9 @@ source:
     fn: v{{ version }}.tar.gz
     url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
     sha256: 17599385fd76ccdced368f448f654de2ed000fece44dece9fb5d598798b4c9d6
+    patches:
+        - dfile.c.patch  # [win]
+        - dim.c.patch  # [win]
 
 build:
     number: 0
