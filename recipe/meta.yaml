@@ -11,6 +11,7 @@ source:
   patches:
     - dfile.c.patch  # [win]
     - dim.c.patch  # [win]
+    - semantics.c.patch  # [win]
 
 build:
   number: 0
