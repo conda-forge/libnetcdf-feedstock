@@ -10,6 +10,7 @@ cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
       -D ENABLE_TESTS=OFF \
       -D BUILD_UTILITIES=ON \
       -D ENABLE_DOXYGEN=OFF \
+      -D ENABLE_LOGGING=ON \
       $SRC_DIR
 make
 # ctest  # Run only for the shared lib build to save time.
@@ -26,6 +27,7 @@ cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
       -D ENABLE_TESTS=OFF \
       -D BUILD_UTILITIES=ON \
       -D ENABLE_DOXYGEN=OFF \
+      -D ENABLE_LOGGING=ON \
       $SRC_DIR
 make
 ctest
