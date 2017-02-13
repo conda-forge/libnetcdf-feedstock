@@ -14,7 +14,7 @@ source:
     - semantics.c.patch  # [win]
 
 build:
-  number: 2
+  number: 3
   features:
     - vc9  # [win and py27]
     - vc10  # [win and py34]
@@ -24,7 +24,7 @@ requirements:
   build:
     - python  # [win]
     - cmake
-    - pkg-config  # [unix]
+    - pkg-config  # [not win]
     - msinttypes  # [win]
     - curl
     - zlib 1.2.*
@@ -44,16 +44,18 @@ requirements:
 
 test:
   commands:
-    - nc-config --all  # [unix]
-    - test -f ${PREFIX}/lib/libnetcdf.a  # [unix]
+    - nc-config --all  # [not win]
+    - test -f ${PREFIX}/lib/libnetcdf.a  # [not win]
     - test -f ${PREFIX}/lib/libnetcdf.so  # [linux]
     - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
-    #- conda inspect linkages -p $PREFIX libnetcdf  # [not win]
-    #- conda inspect objects -p $PREFIX libnetcdf  # [osx]
+    - ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
+    - conda inspect linkages -p $PREFIX libnetcdf  # [not win]
+    - conda inspect objects -p $PREFIX libnetcdf  # [osx]
 
 about:
   home: http://www.unidata.ucar.edu/software/netcdf/
   license: MIT
+  license_file: COPYRIGHT
   summary: 'Libraries and data formats that support array-oriented scientific data.'
 
 extra:
