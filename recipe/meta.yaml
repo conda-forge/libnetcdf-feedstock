@@ -1,4 +1,4 @@
-{% set version = "4.4.1.1" %}
+{% set version = "4.4.0" %}
 
 package:
   name: libnetcdf
@@ -7,14 +7,12 @@ package:
 source:
   fn: v{{ version }}.tar.gz
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  sha256: 7f040a0542ed3f6d27f3002b074e509614e18d6c515b2005d1537fec01b24909
+  sha256: 09b78b152d3fd373bee4b5738dc05c7b2f5315fe34aa2d94ee9256661119112f
   patches:
-    - dfile.c.patch  # [win]
-    - dim.c.patch  # [win]
-    - semantics.c.patch  # [win]
+    - big_files.patch  # [win]
 
 build:
-  number: 2
+  number: 3
   features:
     - vc9  # [win and py27]
     - vc10  # [win and py34]
@@ -24,7 +22,7 @@ requirements:
   build:
     - python  # [win]
     - cmake
-    - pkg-config  # [unix]
+    - pkg-config  # [not win]
     - msinttypes  # [win]
     - curl
     - zlib 1.2.*
@@ -44,16 +42,21 @@ requirements:
 
 test:
   commands:
-    - nc-config --all  # [unix]
-    - test -f ${PREFIX}/lib/libnetcdf.a  # [unix]
+    - nc-config --all  # [not win]
+    - test -f ${PREFIX}/lib/libnetcdf.a  # [not win]
     - test -f ${PREFIX}/lib/libnetcdf.so  # [linux]
     - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
-    #- conda inspect linkages -p $PREFIX libnetcdf  # [not win]
-    #- conda inspect objects -p $PREFIX libnetcdf  # [osx]
+    - ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
+    # FIXME: the next two are failing at the moment.
+    - ncdump -h http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/GFS/Global_0p5deg/GFS_Global_0p5deg_20170215_1200.grib2
+    - ncdump -h https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc
+    - conda inspect linkages -p $PREFIX libnetcdf  # [not win]
+    - conda inspect objects -p $PREFIX libnetcdf  # [osx]
 
 about:
   home: http://www.unidata.ucar.edu/software/netcdf/
   license: MIT
+  license_file: COPYRIGHT
   summary: 'Libraries and data formats that support array-oriented scientific data.'
 
 extra:

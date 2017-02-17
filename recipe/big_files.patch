@@ -1,0 +1,512 @@
+diff -Naur netcdf-c-4.4.0.orig/CMakeLists.txt netcdf-c-4.4.0/CMakeLists.txt
+--- netcdf-c-4.4.0.orig/CMakeLists.txt	2016-01-13 18:40:17.000000000 -0300
++++ netcdf-c-4.4.0/CMakeLists.txt	2017-02-17 17:51:57.254671279 -0300
+@@ -26,8 +26,8 @@
+ 
+ SET(NC_VERSION_MAJOR 4)
+ SET(NC_VERSION_MINOR 4)
+-SET(NC_VERSION_PATCH 0)
+-SET(NC_VERSION_NOTE "")
++SET(NC_VERSION_PATCH 1)
++SET(NC_VERSION_NOTE "-development")
+ SET(netCDF_VERSION ${NC_VERSION_MAJOR}.${NC_VERSION_MINOR}.${NC_VERSION_PATCH}${NC_VERSION_NOTE})
+ SET(VERSION ${netCDF_VERSION})
+ SET(NC_VERSION ${netCDF_VERSION})
+@@ -493,6 +493,9 @@
+   ##
+   IF(HDF5_C_LIBRARY AND HDF5_HL_LIBRARY AND HDF5_INCLUDE_DIR)
+     SET(HDF5_LIBRARIES ${HDF5_C_LIBRARY} ${HDF5_HL_LIBRARY})
++    SET(HDF5_C_LIBRARIES ${HDF5_C_LIBRARY})
++    SET(HDF5_HL_LIBRARIES ${HDF5_HL_LIBRARY})
++    INCLUDE_DIRECTORIES(${HDF5_INCLUDE_DIR})
+     MESSAGE(STATUS "Using HDF5 C Library: ${HDF5_C_LIBRARY}")
+     MESSAGE(STATUS "Using HDF5 HL LIbrary: ${HDF5_HL_LIBRARY}")
+   ELSE(HDF5_C_LIBRARY AND HDF5_HL_LIBRARY AND HDF5_INCLUDE_DIR) # We are seeking out HDF5 with Find Package.
+@@ -945,44 +948,35 @@
+   FIND_LIBRARY(PNETCDF NAMES pnetcdf)
+   FIND_PATH(PNETCDF_INCLUDE_DIR pnetcdf.h)
+   IF(NOT PNETCDF)
+-    MESSAGE(STATUS "Cannot find pNetCDF library. Disabling pNetCDF support.")
++    MESSAGE(STATUS "Cannot find PNetCDF library. Disabling PNetCDF support.")
+     SET(USE_PNETCDF OFF CACHE BOOL "")
+   ELSE(NOT PNETCDF)
+     SET(USE_PARALLEL ON CACHE BOOL "")
++
++    # Check PNetCDF version. Must be >= 1.6.0
++    set(pnetcdf_h "${PNETCDF_INCLUDE_DIR}/pnetcdf.h" )
++    message(STATUS "PNetCDF include file ${pnetcdf_h} will be searched for version")
++    file(STRINGS "${pnetcdf_h}" pnetcdf_major_string REGEX "^#define PNETCDF_VERSION_MAJOR")
++    string(REGEX REPLACE "[^0-9]" "" pnetcdf_major "${pnetcdf_major_string}")
++    file(STRINGS "${pnetcdf_h}" pnetcdf_minor_string REGEX "^#define PNETCDF_VERSION_MINOR")
++    string(REGEX REPLACE "[^0-9]" "" pnetcdf_minor "${pnetcdf_minor_string}")
++    file(STRINGS "${pnetcdf_h}" pnetcdf_sub_string REGEX "^#define PNETCDF_VERSION_SUB")
++    string(REGEX REPLACE "[^0-9]" "" pnetcdf_sub "${pnetcdf_sub_string}")
++    set(pnetcdf_version "${pnetcdf_major}.${pnetcdf_minor}.${pnetcdf_sub}")
++    message(STATUS "Found PNetCDF version ${pnetcdf_version}")
++
++    if(${pnetcdf_version} VERSION_GREATER "1.6.0")
++      SET(STATUS_PNETCDF "ON")
++      INCLUDE_DIRECTORIES(${PNETCDF_INCLUDE_DIR})
++      SET(HAVE_LIBPNETCDF ON)
++      # pnetcdf => parallel
++      SET(STATUS_PARALLEL ON)
++      SET(USE_PARALLEL ON)
++      MESSAGE(STATUS "Using PNetCDF Library: ${PNETCDF}")
++    ELSE()
++      MESSAGE(WARNING "ENABLE_PNETCDF requires version 1.6.1 or later; found version ${pnetcdf_version}. PNetCDF is disabled")
++    ENDIF()
+   ENDIF(NOT PNETCDF)
+-#  ELSE()
+-##	SET(TMP_INC ${CMAKE_REQUIRED_INCLUDES})
+-#	SET(TMP_LB ${CMAKE_REQUIRED_LIBRARIES})
+-#	SET(CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} ${PNETCDF})
+-#	SET(CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES} ${PNETCDF_INCLUDE_DIR})
+-	# Check to see if version > 1.6.0
+-	# CHECK_C_SOURCE_RUNS("
+-		#include <stdio.h>
+-      		#include <pnetcdf.h>
+-    #  		int main() {
+-    #  		int major = PNETCDF_VERSION_MAJOR;
+-    #  		int minor = PNETCDF_VERSION_MINOR;
+-    #  		int version = major*1000 + minor;
+-    #  		int ok = (version >= (1*1000 + 6));
+-    #  		return ok?0:1;}"
+-    #  		HAVE_PNETCDF_16)
+-
+-#	SET(CMAKE_REQUIRED_INCLUDES ${TMP_INC})
+-#	SET(CMAKE_REQUIRED_LIBRARIES ${TMP_LB})
+-
+-	#IF(HAVE_PNETCDF_16)
+-	#	SET(ENABLE_PNETCDF "OFF")
+-    #  		MESSAGE(WARNING "ENABLE_PNETCDF requires version 1.6.0 or later; disabled")
+-    #	ELSE()
+-
+-   #	    SET(STATUS_PNETCDF "ON")
+-    #	    INCLUDE_DIRECTORIES(${PNETCDF_INCLUDE_DIR})
+-    #	    SET(HAVE_LIBPNETCDF ON)
+-    	    # pnetcdf => parallel
+-    #	    SET(STATUS_PARALLEL "ON")
+-    #	    SET(USE_PARALLEL ON)
+-  	#ENDIF()
+-    #ENDIF()
+ ENDIF()
+ 
+ # Enable Parallel Tests.
+@@ -1218,8 +1212,13 @@
+ ENDIF()
+ 
+ MACRO(GEN_m4 filename)
+-#  IF(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${filename}.c)
++
+ IF(HAVE_M4)
++  # If m4 is available, remove generated file if it exists.
++  IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${filename}.c)
++    FILE(REMOVE ${CMAKE_CURRENT_SOURCE_DIR}/${filename}.c)
++  ENDIF()
++
+   ADD_CUSTOM_COMMAND(
+     OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/${filename}.c
+     COMMAND ${NC_M4}
+@@ -1248,6 +1247,8 @@
+       ${CMAKE_CURRENT_BINARY_DIR})
+     SET_TARGET_PROPERTIES(${prefix}_${F} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE
+       ${CMAKE_CURRENT_BINARY_DIR})
++   SET_TARGET_PROPERTIES(${prefix}_${F} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO
++      ${CMAKE_CURRENT_BINARY_DIR})
+   ENDIF()
+ ENDMACRO()
+ 
+@@ -1551,23 +1552,6 @@
+ #####
+ ADD_SUBDIRECTORY(docs)
+ 
+-#####
+-# Moving on to CPack, install packages.
+-#####
+-INSTALL(FILES ${netCDF_SOURCE_DIR}/include/netcdf.h
+-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+-  COMPONENT headers)
+-
+-INSTALL(FILES ${netCDF_BINARY_DIR}/include/netcdf_meta.h
+-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+-  COMPONENT headers)
+-
+-IF(ENABLE_PNETCDF OR ENABLE_PARALLEL)
+-  INSTALL(FILES ${netCDF_SOURCE_DIR}/include/netcdf_par.h
+-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+-    COMPONENT headers)
+-ENDIF()
+-
+ ##
+ # Brute force, grab all of the dlls from the depency directory,
+ # install them in the binary dir. Grab all of the .libs, put them
+diff -Naur netcdf-c-4.4.0.orig/libdispatch/dfile.c netcdf-c-4.4.0/libdispatch/dfile.c
+--- netcdf-c-4.4.0.orig/libdispatch/dfile.c	2016-01-13 18:40:17.000000000 -0300
++++ netcdf-c-4.4.0/libdispatch/dfile.c	2017-02-17 17:56:02.804683508 -0300
+@@ -1,4 +1,5 @@
+-/** \file
++/** \file dfile.c
++
+ File create and open functions
+ 
+ These functions end up calling functions in one of the dispatch layers
+@@ -27,7 +28,8 @@
+ extern int NC_initialized;
+ extern int NC_finalized;
+ 
+-/** \defgroup datasets NetCDF Files
++
++/** \defgroup datasets NetCDF File and Data I/O
+ 
+ NetCDF opens datasets as files or remote access URLs.
+ 
+@@ -62,8 +64,23 @@
+ interfaces, the rest of this chapter presents a detailed description
+ of the interfaces for these operations.
+ */
+-/**@{*/
+ 
++
++/*!
++  Interpret the magic number found in the header of a netCDF file.
++
++  This function interprets the magic number/string contained in the header of a netCDF file and sets the appropriate NC_FORMATX flags.
++
++  @param[in] magic Pointer to a character array with the magic number block.
++  @param[out] model Pointer to an integer to hold the corresponding netCDF type.
++  @param[out] version Pointer to an integer to hold the corresponding netCDF version.
++  @param[in] use_parallel 1 if using parallel, 0 if not.
++  @return Returns an error code or 0 on success.
++
++\internal
++\ingroup datasets
++
++*/
+ static int
+ NC_interpret_magic_number(char* magic, int* model, int* version, int use_parallel)
+ {
+@@ -100,13 +117,12 @@
+      return status;
+ }
+ 
+-/**
++/*!
+ Given an existing file, figure out its format
+ and return that format value (NC_FORMATX_XXX)
+ in model arg.
+ */
+-static int
+-NC_check_file_type(const char *path, int flags, void *parameters,
++static int NC_check_file_type(const char *path, int flags, void *parameters,
+ 		   int* model, int* version)
+ {
+    char magic[MAGIC_NUMBER_LEN];
+@@ -150,6 +166,7 @@
+ 	{
+ 	    FILE *fp;
+ 	    size_t i;
++            __int64 file_len = 0;
+ #ifdef HAVE_SYS_STAT_H
+ 	    struct stat st;
+ #endif
+@@ -163,6 +180,22 @@
+ 	    /* The file must be at least MAGIC_NUMBER_LEN in size,
+ 	       or otherwise the following fread will exhibit unexpected
+   	       behavior. */
++
++        /* Windows and fstat have some issues, this will work around that. */
++#ifdef HAVE_FILE_LENGTH_I64
++        if((file_len = _filelengthi64(fileno(fp))) < 0) {
++          fclose(fp);
++          status = errno;
++          goto done;
++        }
++
++        if(file_len < MAGIC_NUMBER_LEN) {
++          fclose(fp);
++          status = NC_ENOTNC;
++          goto done;
++        }
++#else
++
+ 	    if(!(fstat(fileno(fp),&st) == 0)) {
+ 	        fclose(fp);
+ 	        status = errno;
+@@ -170,10 +203,12 @@
+ 	    }
+ 
+ 	    if(st.st_size < MAGIC_NUMBER_LEN) {
+-		fclose(fp);
+-		status = NC_ENOTNC;
+-		goto done;
++          fclose(fp);
++          status = NC_ENOTNC;
++          goto done;
+ 	    }
++#endif //HAVE_FILE_LENGTH_I64
++
+ #endif
+ 
+ 	    i = fread(magic, MAGIC_NUMBER_LEN, 1, fp);
+@@ -465,6 +500,9 @@
+      status = nc__create("foo.nc", NC_NOCLOBBER, initialsz, bufrsize, &ncid);
+      if (status != NC_NOERR) handle_error(status);
+ \endcode
++
++\ingroup datasets
++
+ */
+ int
+ nc__create(const char *path, int cmode, size_t initialsz,
+@@ -490,7 +528,7 @@
+ 		    chunksizehintp, 0, NULL, ncidp);
+ }
+ 
+-/**
++/** \ingroup datasets
+ Open an existing netCDF file.
+ 
+ This function opens an existing netCDF dataset for access. It
+@@ -610,7 +648,7 @@
+    return NC_open(path, mode, 0, NULL, 0, NULL, ncidp);
+ }
+ 
+-/**
++/** \ingroup datasets
+ Open a netCDF file with extra performance parameters for the classic
+ library.
+ 
+@@ -673,7 +711,7 @@
+ 		  NULL, ncidp);
+ }
+ 
+-/**
++/** \ingroup datasets
+ Open a netCDF file with the contents taken from a block of memory.
+ 
+ \param path Must be non-null, but otherwise only used to set the dataset name.
+@@ -754,7 +792,7 @@
+ 		  0, NULL, ncidp);
+ }
+ 
+-/**
++/** \ingroup datasets
+ Get the file pathname (or the opendap URL) which was used to
+ open/create the ncid's file.
+ 
+@@ -788,7 +826,7 @@
+    return stat;
+ }
+ 
+-/**
++/** \ingroup datasets
+ Put open netcdf dataset into define mode
+ 
+ The function nc_redef puts an open netCDF dataset into define mode, so
+@@ -845,7 +883,7 @@
+    return ncp->dispatch->redef(ncid);
+ }
+ 
+-/**
++/** \ingroup datasets
+ Leave define mode
+ 
+ The function nc_enddef() takes an open netCDF dataset out of define
+@@ -910,7 +948,7 @@
+    return ncp->dispatch->_enddef(ncid,0,1,0,1);
+ }
+ 
+-/**
++/** \ingroup datasets
+ Leave define mode with performance tuning
+ 
+ The function nc__enddef takes an open netCDF dataset out of define
+@@ -1001,7 +1039,7 @@
+    return ncp->dispatch->_enddef(ncid,h_minfree,v_align,v_minfree,r_align);
+ }
+ 
+-/**
++/** \ingroup datasets
+ Synchronize an open netcdf dataset to disk
+ 
+ The function nc_sync() offers a way to synchronize the disk copy of a
+@@ -1077,10 +1115,11 @@
+    return ncp->dispatch->sync(ncid);
+ }
+ 
+-/**
+-\internal
++/** \ingroup datasets
++No longer necessary for user to invoke manually.
+ 
+-Users no longer need to call this function, since it is called
++
++\warning Users no longer need to call this function since it is called
+ automatically by nc_close() in case the dataset is in define mode and
+ something goes wrong with committing the changes. The function
+ nc_abort() just closes the netCDF dataset, if not in define mode. If
+@@ -1138,7 +1177,7 @@
+    return stat;
+ }
+ 
+-/**
++/** \ingroup datasets
+ Close an open netCDF dataset
+ 
+ If the dataset in define mode, nc_enddef() will be called before
+@@ -1190,7 +1229,8 @@
+    if(ncp->refcount <= 0)
+ #endif
+    {
+-       stat = ncp->dispatch->close(ncid);
++
++	   stat = ncp->dispatch->close(ncid);
+        /* Remove from the nc list */
+        del_from_NCList(ncp);
+        free_NC(ncp);
+@@ -1198,7 +1238,7 @@
+    return stat;
+ }
+ 
+-/**
++/** \ingroup datasets
+ Change the fill-value mode to improve write performance.
+ 
+ This function is intended for advanced usage, to optimize writes under
+@@ -1345,7 +1385,7 @@
+    return ncp->dispatch->set_base_pe(ncid,pe);
+ }
+ 
+-/**
++/** \ingroup datasets
+ Inquire about the binary format of a netCDF file
+ as presented by the API.
+ 
+@@ -1372,9 +1412,10 @@
+    return ncp->dispatch->inq_format(ncid,formatp);
+ }
+ 
+-/**
++/** \ingroup datasets
+ Obtain more detailed (vis-a-vis nc_inq_format)
+ format information about an open dataset.
++
+ Note that the netcdf API will present the file
+ as if it had the format specified by nc_inq_format.
+ The true file format, however, may not even be
+@@ -1406,7 +1447,7 @@
+    return ncp->dispatch->inq_format_extended(ncid,formatp,modep);
+ }
+ 
+-/**
++/**\ingroup datasets
+ Inquire about a file or group.
+ 
+ \param ncid NetCDF or group ID, from a previous call to nc_open(),
+@@ -1468,7 +1509,7 @@
+    return ncp->dispatch->inq(ncid, NULL, nvarsp, NULL, NULL);
+ }
+ 
+-/**
++/**\ingroup datasets
+ Inquire about a type.
+ 
+ Given an ncid and a typeid, get the information about a type. This
+@@ -1569,7 +1610,6 @@
+    }
+ #endif
+ }
+-/**@}*/
+ 
+ /**
+ \internal
+diff -Naur netcdf-c-4.4.0.orig/libsrc/posixio.c netcdf-c-4.4.0/libsrc/posixio.c
+--- netcdf-c-4.4.0.orig/libsrc/posixio.c	2016-01-13 18:40:17.000000000 -0300
++++ netcdf-c-4.4.0/libsrc/posixio.c	2017-02-17 17:52:30.661672943 -0300
+@@ -29,11 +29,12 @@
+ 
+ #include <sys/types.h>
+ #include <sys/stat.h>
++
+ #include <fcntl.h>
+ #include <string.h>
+ 
+ #ifndef HAVE_SSIZE_T
+-#define ssize_t int
++typedef int ssize_t;
+ #endif
+ 
+ #ifndef SEEK_SET
+@@ -99,6 +100,41 @@
+ #ifndef POSIXIO_DEFAULT_PAGESIZE
+ #define POSIXIO_DEFAULT_PAGESIZE 4096
+ #endif
++
++/*! Cross-platform file length.
++ *
++ * Some versions of Visual Studio are throwing errno 132
++ * when fstat is used on large files.  This function is
++ * an attempt to get around that.
++ *
++ * @par fd File Descriptor.
++ * @return -1 on error, length of file (in bytes) otherwise.
++ */
++static size_t nc_get_filelen(const int fd) {
++
++  size_t flen;
++
++#ifdef HAVE_FILE_LENGTH_I64
++  __int64 file_len = 0;
++  if ((file_len = _filelengthi64(fd)) < 0) {
++    return file_len;
++  }
++  flen = (size_t)file_len;
++
++#else
++  int res = 0;
++  struct stat sb;
++  if((res = fstat(fd,&sb)) <0)
++    return res;
++
++  flen = sb.st_size;
++#endif
++
++  return flen;
++
++}
++
++
+ /*
+  * What is the system pagesize?
+  */
+@@ -186,13 +222,23 @@
+ static int
+ fgrow2(const int fd, const off_t len)
+ {
+-	struct stat sb;
+-	if (fstat(fd, &sb) < 0)
+-		return errno;
+-	if (len <= sb.st_size)
+-		return ENOERR;
+-	{
+-	    const char dumb = 0;
++
++
++  /* There is a problem with fstat on Windows based systems
++     which manifests (so far) when Config RELEASE is built.
++     Use _filelengthi64 isntead.
++
++     See https://github.com/Unidata/netcdf-c/issues/188
++
++  */
++
++
++  size_t file_len = nc_get_filelen(fd);
++  if(file_len < 0) return errno;
++  if(len <= file_len)
++    return ENOERR;
++  {
++    const char dumb = 0;
+ 	    /* we don't use ftruncate() due to problem with FAT32 file systems */
+ 	    /* cache current position */
+ 	    const off_t pos = lseek(fd, 0, SEEK_CUR);
