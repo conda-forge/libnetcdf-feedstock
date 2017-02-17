@@ -11,6 +11,18 @@ Summary: Libraries and data formats that support array-oriented scientific data.
 
 
 
+Current build status
+====================
+
+Linux: [![Circle CI](https://circleci.com/gh/conda-forge/libnetcdf-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/libnetcdf-feedstock)
+OSX: [![TravisCI](https://travis-ci.org/conda-forge/libnetcdf-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/libnetcdf-feedstock)
+Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/libnetcdf-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/libnetcdf-feedstock/branch/master)
+
+Current release info
+====================
+Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/libnetcdf/badges/version.svg)](https://anaconda.org/conda-forge/libnetcdf)
+Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/libnetcdf/badges/downloads.svg)](https://anaconda.org/conda-forge/libnetcdf)
+
 Installing libnetcdf
 ====================
 
@@ -66,18 +78,6 @@ Terminology
 
 **conda-forge** - the place where the feedstock and smithy live and work to
                   produce the finished article (built conda distributions)
-
-Current build status
-====================
-
-Linux: [![Circle CI](https://circleci.com/gh/conda-forge/libnetcdf-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/libnetcdf-feedstock)
-OSX: [![TravisCI](https://travis-ci.org/conda-forge/libnetcdf-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/libnetcdf-feedstock)
-Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/libnetcdf-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/libnetcdf-feedstock/branch/master)
-
-Current release info
-====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/libnetcdf/badges/version.svg)](https://anaconda.org/conda-forge/libnetcdf)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/libnetcdf/badges/downloads.svg)](https://anaconda.org/conda-forge/libnetcdf)
 
 
 Updating libnetcdf-feedstock
