@@ -12,9 +12,10 @@ source:
     - dfile.c.patch  # [win]
     - dim.c.patch  # [win]
     - semantics.c.patch  # [win]
+    - dap.path  # [win]
 
 build:
-  number: 3
+  number: 4
   features:
     - vc9  # [win and py27]
     - vc10  # [win and py34]
