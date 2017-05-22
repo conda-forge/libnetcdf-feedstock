@@ -51,6 +51,8 @@ test:
     - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
     - ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
     - ncdump -h https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc
+    - ncdump -h http://oos.soest.hawaii.edu/thredds/dodsC/hioos/model/atm/ncep_pac/NCEP_Pacific_Atmospheric_Model_best.ncd
+    - ncdump -h http://oos.soest.hawaii.edu/thredds/dodsC/usgs_dem_10m_tinian
     - conda inspect linkages -p $PREFIX libnetcdf  # [not win]
     - conda inspect objects -p $PREFIX libnetcdf  # [osx]
 
