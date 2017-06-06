@@ -1,0 +1,11 @@
+--- CMakeLists.txt	2016-11-21 10:27:08.000000000 -0800
++++ CMakeLists.txt	2017-06-05 19:36:55.837393000 -0700
+@@ -637,6 +637,8 @@
+     ENDIF(MSVC)
+   ENDIF(HDF5_C_LIBRARY AND HDF5_HL_LIBRARY AND HDF5_INCLUDE_DIR)
+ 
++  find_package(Threads REQUIRED)
++
+   ###
+   # The following options are not used in Windows.
+   ###

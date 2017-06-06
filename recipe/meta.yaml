@@ -13,6 +13,7 @@ source:
     - dim.c.patch  # [win]
     - semantics.c.patch  # [win]
     - dap.path  # [win]
+    - CMakeLists.patch  # [win]
 
 build:
   number: 5
