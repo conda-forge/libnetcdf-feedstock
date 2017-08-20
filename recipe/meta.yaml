@@ -15,28 +15,32 @@ source:
     - CMakeLists.patch  # [win]
 
 build:
-  number: 3
-  skip: True  # [win and py36 or py27]
+  number: 7
+  skip: True  # [win and py36]
   features:
-    - vc14  # [win and (py35 or py36)]
+    - vc{{ vc }}  # [win]
+  run_exports:
+    # C has good backcompat, C++ has poor.  Since we only build C, go with good
+    #   https://abi-laboratory.pro/tracker/timeline/netcdf/
+    #   https://abi-laboratory.pro/tracker/timeline/netcdf-cxx/
+    - {{ pin_subpackage('libnetcdf') }}
 
 requirements:
   build:
-    - python  # [win]
     - cmake
     - pkg-config  # [not win]
-    - msinttypes  # [win]
-    - curl >=7.44.0,<8
-    - zlib 1.2.11
+    - msinttypes  # [win and vc<14]
+    - curl
+    - zlib
     - hdf4
-    - hdf5 1.10.1
-    - vc 14  # [win and (py35 or py36)]
+    - hdf5
+    - {{ compiler('c') }}
+    # not sure if we need cxx compiler here - seems to be presently disabled.
+    # - {{ compiler('cxx') }}
+    # not sure if we need fortran compiler here - seems to be presently disabled.
+    # - {{ compiler('fortran') }}
   run:
-    - curl >=7.44.0,<8
-    - zlib 1.2.11
-    - hdf4
-    - hdf5 1.10.1
-    - vc 14  # [win and (py35 or py36)]
+    - curl
 
 test:
   commands:
@@ -63,3 +67,4 @@ extra:
     - groutr
     - ocefpaf
     - kmuehlbauer
+    - msarahan
