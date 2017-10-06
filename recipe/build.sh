@@ -34,5 +34,5 @@ cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
       -D CURL_LIBRARY=$PREFIX/lib/libcurl${SHLIB_EXT} \
       $SRC_DIR
 make -j$CPU_COUNT
-ctest
 make install -j$CPU_COUNT
+ctest

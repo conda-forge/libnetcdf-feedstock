@@ -29,16 +29,17 @@ requirements:
   build:
     - cmake
     - pkg-config  # [not win]
-    - msinttypes  # [win and vc<14]
-    - curl
-    - zlib
-    - hdf4
-    - hdf5
     - {{ compiler('c') }}
     # not sure if we need cxx compiler here - seems to be presently disabled.
     # - {{ compiler('cxx') }}
     # not sure if we need fortran compiler here - seems to be presently disabled.
     # - {{ compiler('fortran') }}
+  host:
+    - msinttypes  # [win and vc<14]
+    - curl
+    - zlib
+    - hdf4
+    - hdf5
   run:
     - curl
 
