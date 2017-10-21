@@ -13,10 +13,8 @@ source:
 
 build:
   number: 0
-  skip: True  # [win and py36]
+  skip: True  # [win and py36 or py27]
   features:
-    - vc9  # [win and py27]
-    - vc10  # [win and py34]
     - vc14  # [win and (py35 or py36)]
 
 requirements:
@@ -29,16 +27,12 @@ requirements:
     - zlib 1.2.8
     - hdf4
     - hdf5 1.8.18|1.8.18.*
-    - vc 9  # [win and py27]
-    - vc 10  # [win and py34]
     - vc 14  # [win and (py35 or py36)]
   run:
     - curl >=7.44.0,<8
     - zlib 1.2.8
     - hdf4
     - hdf5 1.8.18|1.8.18.*
-    - vc 9  # [win and py27]
-    - vc 10  # [win and py34]
     - vc 14  # [win and (py35 or py36)]
 
 test:
