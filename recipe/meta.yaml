@@ -48,7 +48,7 @@ test:
     - test -f ${PREFIX}/lib/libnetcdf.so  # [linux]
     - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
     - ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
-    - ncdump -h https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc
+    # - ncdump -h https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc
     - conda inspect linkages -p $PREFIX libnetcdf  # [not win]
     - conda inspect objects -p $PREFIX libnetcdf  # [osx]
 
