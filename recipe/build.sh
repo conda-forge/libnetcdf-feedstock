@@ -1,7 +1,15 @@
 #!/bin/bash
+if [ `uname` == "Linux" ]; then
+    LD_SUFFIX="so"
+else
+    LD_SUFFIX="dylib"
+fi
+
 
 # Build static.
 cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
+      -D CURL_INCLUDE_DIR=$PREFIX/include \
+      -D CURL_LIBRARY=$PREFIX/lib/libcurl.$LD_SUFFIX \
       -D CMAKE_INSTALL_LIBDIR:PATH=$PREFIX/lib \
       -D ENABLE_DAP=ON \
       -D ENABLE_HDF4=ON \
