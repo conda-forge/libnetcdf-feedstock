@@ -1,8 +1,10 @@
 #!/bin/bash
 if [ `uname` == "Linux" ]; then
     LD_SUFFIX="so"
-else
+elif [ `uname` == "Darwin" ]; then
     LD_SUFFIX="dylib"
+else
+    LD_SUFFIX="DLL"
 fi
 
 
