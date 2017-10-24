@@ -9,6 +9,8 @@ source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
   sha256: f7d1cb2a82100b9bf9a1130a50bc5c7baf0de5b5022860ac3e09a0a32f83cf4a
   patches:
+    # https://github.com/Unidata/netcdf-c/pull/512/files
+    - back_port_512.patch
     - CMakeLists.patch  # [win]
 
 build:
@@ -42,7 +44,7 @@ test:
     - test -f ${PREFIX}/lib/libnetcdf.so  # [linux]
     - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
     - ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
-    # - ncdump -h https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc
+    - ncdump -h https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc
     - conda inspect linkages -p $PREFIX libnetcdf  # [not win]
     - conda inspect objects -p $PREFIX libnetcdf  # [osx]
 
