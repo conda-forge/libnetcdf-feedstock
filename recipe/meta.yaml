@@ -16,7 +16,7 @@ source:
     - CMakeLists.patch  # [win]
 
 build:
-  number: 6
+  number: 7
   skip: True  # [win and py36]
   features:
     - vc9  # [win and py27]
