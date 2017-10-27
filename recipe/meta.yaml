@@ -1,4 +1,4 @@
-{% set version = "4.4.1.1" %}
+{% set version = "4.5.0" %}
 
 package:
   name: libnetcdf
@@ -7,20 +7,16 @@ package:
 source:
   fn: v{{ version }}.tar.gz
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  sha256: 7f040a0542ed3f6d27f3002b074e509614e18d6c515b2005d1537fec01b24909
+  sha256: f7d1cb2a82100b9bf9a1130a50bc5c7baf0de5b5022860ac3e09a0a32f83cf4a
   patches:
-    - dfile.c.patch  # [win]
-    - dim.c.patch  # [win]
-    - semantics.c.patch  # [win]
-    - dap.path  # [win]
+    # https://github.com/Unidata/netcdf-c/pull/512/files
+    - back_port_512.patch
     - CMakeLists.patch  # [win]
 
 build:
-  number: 7
-  skip: True  # [win and py36]
+  number: 0
+  skip: True  # [win and py36 or py27]
   features:
-    - vc9  # [win and py27]
-    - vc10  # [win and py34]
     - vc14  # [win and (py35 or py36)]
 
 requirements:
@@ -29,20 +25,16 @@ requirements:
     - cmake
     - pkg-config  # [not win]
     - msinttypes  # [win]
-    - curl
+    - curl >=7.44.0,<8
     - zlib 1.2.8
     - hdf4
     - hdf5 1.8.18|1.8.18.*
-    - vc 9  # [win and py27]
-    - vc 10  # [win and py34]
     - vc 14  # [win and (py35 or py36)]
   run:
-    - curl
+    - curl >=7.44.0,<8
     - zlib 1.2.8
     - hdf4
     - hdf5 1.8.18|1.8.18.*
-    - vc 9  # [win and py27]
-    - vc 10  # [win and py34]
     - vc 14  # [win and (py35 or py36)]
 
 test:
