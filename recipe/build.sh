@@ -14,9 +14,9 @@ cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
       -D CURL_INCLUDE_DIR=$PREFIX/include \
       -D CURL_LIBRARY=$PREFIX/lib/libcurl${SHLIB_EXT} \
       $SRC_DIR
-make
+make -j$CPU_COUNT
 # ctest  # Run only for the shared lib build to save time.
-make install
+make install -j$CPU_COUNT
 make clean
 
 # Build shared.
@@ -33,6 +33,6 @@ cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
       -D CURL_INCLUDE_DIR=$PREFIX/include \
       -D CURL_LIBRARY=$PREFIX/lib/libcurl${SHLIB_EXT} \
       $SRC_DIR
-make
+make -j$CPU_COUNT
 ctest
-make install
+make install -j$CPU_COUNT
