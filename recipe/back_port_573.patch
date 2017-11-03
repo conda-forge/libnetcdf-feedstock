@@ -1,0 +1,36 @@
+--- netcdf-c-4.5.0.orig/oc2/daplex.c	2017-10-20 15:20:52.000000000 -0200
++++ netcdf-c-4.5.0/oc2/daplex.c	2017-11-02 17:29:25.980656768 -0200
+@@ -40,16 +40,28 @@
+   "{}[]:;=,";
+ 
+ /* Define 1 and > 1st legal characters */
++/* Note: for some reason I added # and removed !~'"
++   what was I thinking?
++*/
+ static char* ddswordchars1 =
+-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+_/%\\.*";
++  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
++  "-+_/%\\.*!~'\"";
+ static char* ddswordcharsn =
+-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+_/%\\.*#";
++  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
++  "-+_/%\\.*!~'\"";
++
++/* This includes sharp and colon for historical reasons */
+ static char* daswordcharsn =
+-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+_/%\\.*#:";
++  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
++  "-+_/%\\.*#:!~'\"";
++
++/* Need to remove '.' to allow for fqns */
+ static char* cewordchars1 =
+-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+_/%\\";
++  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
++  "-+_/%\\*!~'\"";
+ static char* cewordcharsn =
+-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+_/%\\";
++  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
++  "-+_/%\\*!~'\"";
+ 
+ /* Current sets of legal characters */
+ /*

@@ -5,16 +5,17 @@ package:
   version: {{ version }}
 
 source:
-  fn: v{{ version }}.tar.gz
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
   sha256: f7d1cb2a82100b9bf9a1130a50bc5c7baf0de5b5022860ac3e09a0a32f83cf4a
   patches:
-    # https://github.com/Unidata/netcdf-c/pull/512/files
+    # https://github.com/Unidata/netcdf-c/pull/512
     - back_port_512.patch
+    # https://github.com/Unidata/netcdf-c/pull/573
+    - back_port_573.patch
     - CMakeLists.patch  # [win]
 
 build:
-  number: 0
+  number: 1
   skip: True  # [win and py36 or py27]
   features:
     - vc14  # [win and (py35 or py36)]
@@ -43,8 +44,9 @@ test:
     - test -f ${PREFIX}/lib/libnetcdf.a  # [not win]
     - test -f ${PREFIX}/lib/libnetcdf.so  # [linux]
     - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
-    - ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
-    - ncdump -h https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc
+    - ncdump -h "http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic"
+    - ncdump -h "https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc"
+    - ncdump -h "https://www.ncei.noaa.gov/thredds/dodsC/namanl/201609/20160929/namanl_218_20160929_1800_006.grb"
     - conda inspect linkages -p $PREFIX libnetcdf  # [not win]
     - conda inspect objects -p $PREFIX libnetcdf  # [osx]
 
