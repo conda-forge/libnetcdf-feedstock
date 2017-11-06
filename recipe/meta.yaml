@@ -1,4 +1,4 @@
-{% set version = "4.5.0" %}
+{% set version = "4.4.1.1" %}
 
 package:
   name: libnetcdf
@@ -6,18 +6,21 @@ package:
 
 source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  sha256: f7d1cb2a82100b9bf9a1130a50bc5c7baf0de5b5022860ac3e09a0a32f83cf4a
+  sha256: 7f040a0542ed3f6d27f3002b074e509614e18d6c515b2005d1537fec01b24909
   patches:
-    # https://github.com/Unidata/netcdf-c/pull/512
-    - back_port_512.patch
+    - dfile.c.patch  # [win]
+    - dim.c.patch  # [win]
+    - semantics.c.patch  # [win]
+    - dap.patch  # [win]
     # https://github.com/Unidata/netcdf-c/pull/573
     - back_port_573.patch
     - CMakeLists.patch  # [win]
 
 build:
-  number: 1
-  skip: True  # [win and py36 or py27]
+  number: 9
+  skip: True  # [win and py36]
   features:
+    - vc9  # [win and py27]
     - vc14  # [win and (py35 or py36)]
 
 requirements:
@@ -26,16 +29,18 @@ requirements:
     - cmake
     - pkg-config  # [not win]
     - msinttypes  # [win]
-    - curl >=7.44.0,<8
-    - zlib 1.2.8
+    - curl >=7.54.1,<8
+    - zlib 1.2.11
     - hdf4
     - hdf5 1.8.18|1.8.18.*
+    - vc 9  # [win and py27]
     - vc 14  # [win and (py35 or py36)]
   run:
-    - curl >=7.44.0,<8
-    - zlib 1.2.8
+    - curl >=7.54.1,<8
+    - zlib 1.2.11
     - hdf4
     - hdf5 1.8.18|1.8.18.*
+    - vc 9  # [win and py27]
     - vc 14  # [win and (py35 or py36)]
 
 test:
@@ -46,11 +51,11 @@ test:
     - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
     - ncdump -h "http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic"
     - ncdump -h "https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc"
-    - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/hioos/model/atm/ncep_pac/NCEP_Pacific_Atmospheric_Model_best.ncd"
-    - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/usgs_dem_10m_tinian"
-    - ncdump -h "https://www.ncei.noaa.gov/thredds/dodsC/namanl/201609/20160929/namanl_218_20160929_1800_006.grb"
-    - conda inspect linkages -p $PREFIX libnetcdf  # [not win]
-    - conda inspect objects -p $PREFIX libnetcdf  # [osx]
+    - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/hioos/model/atm/ncep_pac/NCEP_Pacific_Atmospheric_Model_best.ncd"  # [not (win and py27)]
+    - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/usgs_dem_10m_tinian"  # [not (win and py27)]
+    - ncdump -h "https://www.ncei.noaa.gov/thredds/dodsC/namanl/201609/20160929/namanl_218_20160929_1800_006.grb"  # [not (win and py27)]
+    - conda inspect linkages -p $PREFIX $PKG_NAME  # [not win]
+    - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
 
 about:
   home: http://www.unidata.ucar.edu/software/netcdf/
