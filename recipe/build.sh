@@ -18,6 +18,8 @@ cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
       -D ENABLE_LOGGING=ON \
       -D CURL_INCLUDE_DIR=$PREFIX/include \
       -D CURL_LIBRARY=$PREFIX/lib/libcurl${SHLIB_EXT} \
+      -D CMAKE_PLATFORM=Linux \
+      -D CMAKE_TOOLCHAIN_FILE="${RECIPE_DIR}/cross-linux.cmake" \
       $SRC_DIR
 make -j$CPU_COUNT
 # ctest  # Run only for the shared lib build to save time.
@@ -38,6 +40,8 @@ cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
       -D ENABLE_LOGGING=ON \
       -D CURL_INCLUDE_DIR=$PREFIX/include \
       -D CURL_LIBRARY=$PREFIX/lib/libcurl${SHLIB_EXT} \
+      -D CMAKE_PLATFORM=Linux \
+      -D CMAKE_TOOLCHAIN_FILE="${RECIPE_DIR}/cross-linux.cmake" \
       $SRC_DIR
 make -j$CPU_COUNT
 make install -j$CPU_COUNT

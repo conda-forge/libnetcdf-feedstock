@@ -1,0 +1,1 @@
+set(CMAKE_FIND_ROOT_PATH $ENV{PREFIX}/$ENV{HOST}/sysroot)
