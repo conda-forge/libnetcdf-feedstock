@@ -13,6 +13,10 @@ source:
     # https://github.com/Unidata/netcdf-c/pull/573
     - back_port_573.patch
     - CMakeLists.patch  # [win]
+    - 0001-Use-refactored-variable-names-introduced-by-773fe807.patch  # [win]
+    - 0002-Fix-build-on-pre-C99-compilers.patch                        # [win]
+    - 0003-Add-workaround-for-sscanf-NaN.patch                         # [win]
+    - 0004-Make-ncdump_tst_h_rdc0-test-conditional.patch               # [win]
 
 build:
   number: 4
@@ -27,6 +31,7 @@ requirements:
     - cmake
     - pkg-config  # [not win]
     - {{ compiler('c') }}
+    - m2-patch    # [win]
     # not sure if we need cxx compiler here - seems to be presently disabled.
     # - {{ compiler('cxx') }}
     # not sure if we need fortran compiler here - seems to be presently disabled.

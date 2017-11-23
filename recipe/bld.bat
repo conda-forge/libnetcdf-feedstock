@@ -1,7 +1,7 @@
 mkdir %SRC_DIR%\build
 cd %SRC_DIR%\build
 
-cmake -G "NMake Makefiles" ^
+cmake -G "%CMAKE_GENERATOR%" ^
       -D CMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
       -D BUILD_SHARED_LIBS=ON ^
       -D ENABLE_TESTS=OFF ^
@@ -13,11 +13,11 @@ cmake -G "NMake Makefiles" ^
       %SRC_DIR%
 if errorlevel 1 exit 1
 
-nmake
+cmake --build . --config Release
 if errorlevel 1 exit 1
 
 ctest
 if errorlevel 1 exit 1
 
-nmake install
+cmake --build . --config Release --target install
 if errorlevel 1 exit 1
