@@ -31,7 +31,6 @@ requirements:
     - cmake
     - pkg-config  # [not win]
     - {{ compiler('c') }}
-    - m2-patch    # [win]
     # not sure if we need cxx compiler here - seems to be presently disabled.
     # - {{ compiler('cxx') }}
     # not sure if we need fortran compiler here - seems to be presently disabled.
