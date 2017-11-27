@@ -22,7 +22,6 @@ cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
       -D ENABLE_LOGGING=ON \
       -D CURL_INCLUDE_DIR=$PREFIX/include \
       -D CURL_LIBRARY=$PREFIX/lib/libcurl${SHLIB_EXT} \
-      -D CMAKE_PLATFORM=Linux \
       $CMAKE_TOOLCHAIN_FLAGS \
       $SRC_DIR
 make -j$CPU_COUNT
@@ -43,7 +42,6 @@ cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
       -D ENABLE_LOGGING=ON \
       -D CURL_INCLUDE_DIR=$PREFIX/include \
       -D CURL_LIBRARY=$PREFIX/lib/libcurl${SHLIB_EXT} \
-      -D CMAKE_PLATFORM=Linux \
       $CMAKE_TOOLCHAIN_FLAGS \
       $SRC_DIR
 make -j$CPU_COUNT
