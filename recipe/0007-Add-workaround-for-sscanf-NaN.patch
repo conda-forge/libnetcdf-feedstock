@@ -1,0 +1,39 @@
+From b52f70f269caaad9c2ef394392393c76d4e436c0 Mon Sep 17 00:00:00 2001
+From: Nehal J Wani <nehaljw.kkd1@gmail.com>
+Date: Sat, 25 Nov 2017 01:06:37 -0800
+Subject: [PATCH 7/8] Add workaround for sscanf('NaN')
+
+---
+ libdap2/dapcvt.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/libdap2/dapcvt.c b/libdap2/dapcvt.c
+index b0e75832..7c762032 100644
+--- a/libdap2/dapcvt.c
++++ b/libdap2/dapcvt.c
+@@ -236,10 +236,22 @@ dapcvtattrval(nc_type etype, void* dst, NClist* src)
+ 	case NC_FLOAT: {
+ 	    float* p = (float*)dstmem;
+ 	    ok = sscanf(s,"%g%n",p,&nread);
++#if defined(_MSC_VER) && (_MSC_VER == 1500)
++	    if (!_strnicmp(s, "NaN", 3)) {
++	      ok = 1;
++	      nread = 3;
++	    }
++#endif
+ 	    } break;
+ 	case NC_DOUBLE: {
+ 	    double* p = (double*)dstmem;
+ 	    ok = sscanf(s,"%lg%n",p,&nread);
++#if defined(_MSC_VER) && (_MSC_VER == 1500)
++	    if (!_strnicmp(s, "NaN", 3)) {
++	      ok = 1;
++	      nread = 3;
++	    }
++#endif
+ 	    } break;
+ 	case NC_UBYTE: {
+ 	    unsigned char* p = (unsigned char*)dstmem;
+-- 
+2.14.3 (Apple Git-98)
+

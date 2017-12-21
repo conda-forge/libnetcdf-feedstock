@@ -1,0 +1,36 @@
+From 17c802375562fd0984af3a31dce58d0ea14ba01d Mon Sep 17 00:00:00 2001
+From: Ray Donnelly <mingw.android@gmail.com>
+Date: Wed, 20 Dec 2017 21:38:34 +0000
+Subject: [PATCH 3/8] Fix buffer overrun in tabs[MAX_NESTS] by adding space for
+ \0 terminator
+
+.. also speed it up by not using strcat when direct array access works just fine.
+---
+ libsrc4/nc4internal.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/libsrc4/nc4internal.c b/libsrc4/nc4internal.c
+index 89526d84..e83d5b95 100644
+--- a/libsrc4/nc4internal.c
++++ b/libsrc4/nc4internal.c
+@@ -1474,14 +1474,15 @@ rec_print_metadata(NC_GRP_INFO_T *grp, int tab_count)
+    NC_DIM_INFO_T *dim;
+    NC_TYPE_INFO_T *type;
+    NC_FIELD_INFO_T *field;
+-   char tabs[MAX_NESTS] = "";
++   char tabs[MAX_NESTS+1] = "";
+    char *dims_string = NULL;
+    char temp_string[10];
+    int t, retval, d, i;
+ 
+    /* Come up with a number of tabs relative to the group. */
+    for (t = 0; t < tab_count && t < MAX_NESTS; t++)
+-      strcat(tabs, "\t");
++      tabs[t] = '\t';
++   tabs[t] = '\0';
+ 
+    LOG((2, "%s GROUP - %s nc_grpid: %d nvars: %d natts: %d",
+ 	tabs, grp->name, grp->nc_grpid, grp->nvars, grp->natts));
+-- 
+2.14.3 (Apple Git-98)
+

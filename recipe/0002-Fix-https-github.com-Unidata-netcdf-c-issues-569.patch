@@ -1,0 +1,61 @@
+From 25322ddef258deb7267fc6c2eea10952807e7dda Mon Sep 17 00:00:00 2001
+From: Dennis Heimbigner <dmh@ucar.edu>
+Date: Thu, 2 Nov 2017 13:04:03 -0600
+Subject: [PATCH 2/8] Fix https://github.com/Unidata/netcdf-c/issues/569
+
+Serious bad on my part. For some reason, I changed the set of
+characters allowed n a DAP name. In particular, characters that
+are legal according to the DAP spec were removed. So when one of
+this removed characters was encountered, it produced a parse
+error.
+
+In this case, the offending character was a single quote character in the name:
+Blackadar's_mixing_length_scale_hybrid
+
+The reason it worked for java is because the escape character set
+is correct and different than the one in the netcdf-c dap code.
+---
+ oc2/daplex.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/oc2/daplex.c b/oc2/daplex.c
+index cf13282b..98b10fed 100644
+--- a/oc2/daplex.c
++++ b/oc2/daplex.c
+@@ -40,16 +40,28 @@ static char* ddsworddelims =
+   "{}[]:;=,";
+ 
+ /* Define 1 and > 1st legal characters */
++/* Note: for some reason I added # and removed !~'"
++   what was I thinking?
++*/
+ static char* ddswordchars1 =
+-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+_/%\\.*";
++  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
++  "-+_/%\\.*!~'\"";
+ static char* ddswordcharsn =
+-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+_/%\\.*#";
++  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
++  "-+_/%\\.*!~'\"";
++
++/* This includes sharp and colon for historical reasons */
+ static char* daswordcharsn =
+-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+_/%\\.*#:";
++  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
++  "-+_/%\\.*#:!~'\"";
++
++/* Need to remove '.' to allow for fqns */
+ static char* cewordchars1 =
+-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+_/%\\";
++  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
++  "-+_/%\\*!~'\"";
+ static char* cewordcharsn =
+-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+_/%\\";
++  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
++  "-+_/%\\*!~'\"";
+ 
+ /* Current sets of legal characters */
+ /*
+-- 
+2.14.3 (Apple Git-98)
+
