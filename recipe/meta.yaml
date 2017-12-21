@@ -41,6 +41,7 @@ requirements:
     # - {{ compiler('fortran') }}
   host:
     - msinttypes  # [win and vc<14]
+    - bzip2
     - curl
     - zlib
     - hdf4
