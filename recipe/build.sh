@@ -14,6 +14,10 @@ else
   CMAKE_BUILD_TYPE=Release
 fi
 
+# Trying to fix https://gist.github.com/ArchangeGabriel/a5d0abb6363b31f71ce4ad44736c60da
+export CFLAGS="${CFLAGS} -O2"
+CMAKE_BUILD_TYPE=Release
+
 # Build static.
 cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR:PATH=${PREFIX}/lib \
