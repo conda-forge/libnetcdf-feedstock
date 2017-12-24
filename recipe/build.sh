@@ -14,10 +14,6 @@ else
   CMAKE_BUILD_TYPE=Release
 fi
 
-# Trying to fix https://gist.github.com/ArchangeGabriel/a5d0abb6363b31f71ce4ad44736c60da
-export CFLAGS="${CFLAGS} -O2"
-CMAKE_BUILD_TYPE=Release
-
 # Build static.
 cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR:PATH=${PREFIX}/lib \
@@ -30,6 +26,8 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DBUILD_UTILITIES=ON \
       -DENABLE_DOXYGEN=OFF \
       -DENABLE_LOGGING=ON \
+      -DCMAKE_C_FLAGS_RELEASE=${CFLAGS} \
+      -DCMAKE_C_FLAGS_DEBUG=${CFLAGS} \
       -DCURL_INCLUDE_DIR=${PREFIX}/include \
       -DCURL_LIBRARY=${PREFIX}/lib/libcurl${SHLIB_EXT} \
       ${CMAKE_PLATFORM_FLAGS[@]} \
@@ -51,10 +49,12 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DBUILD_UTILITIES=ON \
       -DENABLE_DOXYGEN=OFF \
       -DENABLE_LOGGING=ON \
+      -DCMAKE_C_FLAGS_RELEASE=${CFLAGS} \
+      -DCMAKE_C_FLAGS_DEBUG=${CFLAGS} \
       -DCURL_INCLUDE_DIR=${PREFIX}/include \
       -DCURL_LIBRARY=${PREFIX}/lib/libcurl${SHLIB_EXT} \
       ${CMAKE_PLATFORM_FLAGS[@]} \
       ${SRC_DIR}
 make -j${CPU_COUNT} ${VERBOSE_CM}
 make install -j${CPU_COUNT}
-ctest --extra-verbose --debug
+ctest
