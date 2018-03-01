@@ -1,4 +1,4 @@
-{% set version = "4.5.0" %}
+{% set version = "4.6.0" %}
 
 package:
   name: libnetcdf
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  sha256: f7d1cb2a82100b9bf9a1130a50bc5c7baf0de5b5022860ac3e09a0a32f83cf4a
+  sha256: 6d740356399aac12290650325a05aec2fe92c1905df10761b2b0100994197725
   patches:
     # https://github.com/Unidata/netcdf-c/pull/512
     - back_port_512.patch
@@ -15,7 +15,7 @@ source:
     - CMakeLists.patch  # [win]
 
 build:
-  number: 3
+  number: 0
   skip: True  # [win and py36 or py27]
   features:
     - vc14  # [win and (py35 or py36)]
