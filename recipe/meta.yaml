@@ -8,10 +8,6 @@ source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
   sha256: 6d740356399aac12290650325a05aec2fe92c1905df10761b2b0100994197725
   patches:
-    # https://github.com/Unidata/netcdf-c/pull/512
-    - back_port_512.patch
-    # https://github.com/Unidata/netcdf-c/pull/573
-    - back_port_573.patch
     - CMakeLists.patch  # [win]
 
 build:
