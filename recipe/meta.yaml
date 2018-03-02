@@ -22,7 +22,7 @@ requirements:
     - cmake
     - pkg-config  # [not win]
     - msinttypes  # [win]
-    - curl 7.44.*
+    - curl 7.55.*
     - zlib 1.2.11
     - hdf4
     - hdf5 1.10.1
