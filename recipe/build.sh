@@ -2,6 +2,7 @@
 
 # Build static.
 cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
+      -D CMAKE_BUILD_TYPE=Release \
       -D CMAKE_INSTALL_LIBDIR:PATH=$PREFIX/lib \
       -D ENABLE_DAP=ON \
       -D ENABLE_HDF4=ON \
@@ -21,6 +22,7 @@ make clean
 
 # Build shared.
 cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
+      -D CMAKE_BUILD_TYPE=Release \
       -D CMAKE_INSTALL_LIBDIR:PATH=$PREFIX/lib \
       -D ENABLE_DAP=ON \
       -D ENABLE_HDF4=ON \
