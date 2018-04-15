@@ -2,6 +2,7 @@ mkdir %SRC_DIR%\build
 cd %SRC_DIR%\build
 
 cmake -G "NMake Makefiles" ^
+      -D CMAKE_BUILD_TYPE=Release ^
       -D CMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
       -D BUILD_SHARED_LIBS=ON ^
       -D ENABLE_TESTS=OFF ^
