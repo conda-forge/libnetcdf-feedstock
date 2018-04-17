@@ -34,6 +34,7 @@ cmake -D CMAKE_INSTALL_PREFIX=$PREFIX \
       -D ENABLE_LOGGING=ON \
       -D CURL_INCLUDE_DIR=$PREFIX/include \
       -D CURL_LIBRARY=$PREFIX/lib/libcurl${SHLIB_EXT} \
+      -D ENABLE_HDF4_FILE_TESTS=OFF \
       $SRC_DIR
 make -j$CPU_COUNT
 ctest
