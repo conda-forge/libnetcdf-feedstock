@@ -11,7 +11,7 @@ source:
     - CMakeLists.patch  # [win]
 
 build:
-  number: 1
+  number: 2
   skip: True  # [win and py36 or py27]
   features:
     - vc14  # [win and (py35 or py36)]
@@ -36,7 +36,6 @@ requirements:
 
 test:
   commands:
-    - nc-config --all  # [not win]
     - test -f ${PREFIX}/lib/libnetcdf.a  # [not win]
     - test -f ${PREFIX}/lib/libnetcdf.so  # [linux]
     - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
@@ -45,6 +44,7 @@ test:
     - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/hioos/model/atm/ncep_pac/NCEP_Pacific_Atmospheric_Model_best.ncd"
     - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/usgs_dem_10m_tinian"
     - ncdump -h "https://www.ncei.noaa.gov/thredds/dodsC/namanl/201609/20160929/namanl_218_20160929_1800_006.grb"
+    - nc-config --all  # [not win]
     - conda inspect linkages -p $PREFIX $PKG_NAME  # [not win]
     - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
 
