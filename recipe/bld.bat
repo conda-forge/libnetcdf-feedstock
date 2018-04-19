@@ -11,6 +11,7 @@ cmake -G "NMake Makefiles" ^
       -D ZLIB_LIBRARY=%LIBRARY_LIB%\zlib.lib ^
       -D ZLIB_INCLUDE_DIR=%LIBRARY_INC% ^
       -D CMAKE_BUILD_TYPE=Release ^
+      -D ENABLE_CDF5=ON ^
       %SRC_DIR%
 if errorlevel 1 exit 1
 
