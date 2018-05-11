@@ -1,4 +1,4 @@
-{% set version = "4.5.0" %}
+{% set version = "4.6.1" %}
 
 package:
   name: libnetcdf
@@ -6,24 +6,14 @@ package:
 
 source:
   git_url: https://github.com/Unidata/netcdf-c
-  git_tag: v4.5.0
+  git_tag: v{{ version }}
   sha256: f7d1cb2a82100b9bf9a1130a50bc5c7baf0de5b5022860ac3e09a0a32f83cf4a
   patches:
-    # https://github.com/Unidata/netcdf-c/pull/512
-    - 0001-Force-attribute-value-to-be-in-range-vs-causing-erro.patch
-    # https://github.com/Unidata/netcdf-c/pull/573
-    - 0002-Fix-https-github.com-Unidata-netcdf-c-issues-569.patch
-    # https://github.com/Unidata/netcdf-c/pull/729
-    - 0003-Fix-buffer-overrun-in-tabs-MAX_NESTS-by-adding-space.patch
-    - 0004-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch
-    - 0005-Use-refactored-variable-names-introduced-by-773fe807.patch
-    - 0006-Fix-build-on-pre-C99-compilers.patch
-    - 0007-Add-workaround-for-sscanf-NaN.patch
-    - 0008-Make-ncdump_tst_h_rdc0-test-conditional.patch
-    - 0009-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
+    - 0001-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch
+    - 0002-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
 
 build:
-  number: 7
+  number: 0
   run_exports:
     # C has good backcompat, C++ has poor.  Since we only build C, go with good
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
