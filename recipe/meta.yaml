@@ -11,6 +11,7 @@ source:
   patches:
     - 0001-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch
     - 0002-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
+    - 0003-Convert-some-c99-to-c89-by-hand.patch
 
 build:
   number: 0
@@ -48,15 +49,11 @@ test:
     - test -f ${PREFIX}/lib/libnetcdf.a  # [not win]
     - test -f ${PREFIX}/lib/libnetcdf.so  # [linux]
     - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
-    # Has started to return code 400 (Unrecognized request)
-    # - ncdump -h "http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic"
-    # - ncdump -h "https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc"
-    - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/hioos/model/atm/ncep_pac/NCEP_Pacific_Atmospheric_Model_best.ncd"
-    - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/usgs_dem_10m_tinian"
-    # Results in: NCEI is temporarily unavailable
-    # - ncdump -h "https://www.ncei.noaa.gov/thredds/dodsC/namanl/201609/20160929/namanl_218_20160929_1800_006.grb"
-    - conda inspect linkages -p $PREFIX $PKG_NAME  # [not win]
-    - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+    - ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
+    - ncdump -h https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc
+    - ncdump -h http://oos.soest.hawaii.edu/thredds/dodsC/hioos/model/atm/ncep_pac/NCEP_Pacific_Atmospheric_Model_best.ncd
+    - ncdump -h http://oos.soest.hawaii.edu/thredds/dodsC/usgs_dem_10m_tinian
+    - ncdump -h https://www.ncei.noaa.gov/thredds/dodsC/namanl/201609/20160929/namanl_218_20160929_1800_006.grb
 
 about:
   home: http://www.unidata.ucar.edu/software/netcdf/

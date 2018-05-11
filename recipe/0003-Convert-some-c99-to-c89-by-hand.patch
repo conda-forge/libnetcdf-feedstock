@@ -1,0 +1,102 @@
+From 1a417db451cf3e4fbe65e757e135c760672da279 Mon Sep 17 00:00:00 2001
+From: Ray Donnelly <mingw.android@gmail.com>
+Date: Fri, 11 May 2018 17:13:39 -0500
+Subject: [PATCH 3/3] Convert some c99 to c89 (by hand)
+
+---
+ libdispatch/drc.c       | 6 ++++--
+ libdispatch/nchashmap.c | 6 ++++--
+ libsrc4/nc4hdf.c        | 1 +
+ oc2/ocnode.c            | 3 ++-
+ 4 files changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/libdispatch/drc.c b/libdispatch/drc.c
+index e2de99de..ffe6c60b 100644
+--- a/libdispatch/drc.c
++++ b/libdispatch/drc.c
+@@ -19,6 +19,7 @@ See LICENSE.txt for license information.
+ #include "ncrc.h"
+ #include "nclog.h"
+ #include "ncwinpath.h"
++#include <stdint.h>
+ 
+ #define RCFILEENV "DAPRCFILE"
+ 
+@@ -366,9 +367,10 @@ rclocate(const char* key, const char* hostport)
+     if(hostport == NULL) hostport = "";
+ 
+     for(found=0,i=0;i<nclistlength(rc);i++) {
+-	triple = (NCTriple*)nclistget(rc,i);
+-        size_t hplen = (triple->host == NULL ? 0 : strlen(triple->host));
+         int t;
++        size_t hplen;
++	triple = (NCTriple*)nclistget(rc,i);
++        hplen = (triple->host == NULL ? 0 : strlen(triple->host));
+         if(strcmp(key,triple->key) != 0) continue; /* keys do not match */
+         /* If the triple entry has no url, then use it
+            (because we have checked all other cases)*/
+diff --git a/libdispatch/nchashmap.c b/libdispatch/nchashmap.c
+index 584c0b19..0a42b35e 100644
+--- a/libdispatch/nchashmap.c
++++ b/libdispatch/nchashmap.c
+@@ -150,11 +150,12 @@ NC_hashmapadd(NC_hashmap* hash, void* data, const char* key)
+ 
+     for(;;) {
+ 	size_t index, hashkey;
++	NC_hentry* entry;
+ 	if(!locate(hash,key,&index,&hashkey,1)) {
+ 	    rehash(hash);
+ 	    continue; /* try on larger table */
+ 	}
+-        NC_hentry* entry = &hash->table[index];
++        entry = &hash->table[index];
+ 	if(entry->flags & ACTIVE) {
+ 	    /* key already exists in table => overwrite */
+ 	    entry->data = data;
+@@ -263,8 +264,9 @@ findPrimeGreaterThan(size_t val)
+       v = (unsigned int)val;
+ 
+       for(;;) {
++	int m;
+ 	if(L >= R) break;
+-            int m = (L + R) / 2;
++            m = (L + R) / 2;
+ 	/* is this an acceptable prime? */
+             if(NC_primes[m-1] < v && NC_primes[m] >= v)
+ 	    return NC_primes[m]; /* acceptable*/
+diff --git a/libsrc4/nc4hdf.c b/libsrc4/nc4hdf.c
+index 597f7ebc..2943c1ac 100644
+--- a/libsrc4/nc4hdf.c
++++ b/libsrc4/nc4hdf.c
+@@ -20,6 +20,7 @@
+ #include "nc4dispatch.h"
+ #include <H5DSpublic.h>
+ #include <math.h>
++#include <inttypes.h>
+ 
+ #ifdef HAVE_INTTYPES_H
+ #define __STDC_FORMAT_MACROS
+diff --git a/oc2/ocnode.c b/oc2/ocnode.c
+index 46604837..9e84d940 100644
+--- a/oc2/ocnode.c
++++ b/oc2/ocnode.c
+@@ -393,6 +393,7 @@ mergedods1(OCnode* dds, OCnode* dods)
+ 	OCnode* attnode = (OCnode*)nclistget(dods->subnodes,i);
+ 	if(attnode->octype == OC_Attribute) {
+ 	    OCattribute* att;
++	    char* newname;
+ 	    /* prefix the attribute name with the name of the attribute
+                set plus "."
+             */
+@@ -400,7 +401,7 @@ mergedods1(OCnode* dds, OCnode* dods)
+                          + strlen(dods->name)
+ 			 + strlen(".");
+ 	    len++; /*strlcat nul*/
+-	    char* newname = (char*)malloc(len+1);
++	    newname = (char*)malloc(len+1);
+ 	    if(newname == NULL) return OC_ENOMEM;
+ 	    strncpy(newname,dods->name,len);
+ 	    strlcat(newname,".",len);
+-- 
+2.15.0
+
