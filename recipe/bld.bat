@@ -1,6 +1,8 @@
 mkdir %SRC_DIR%\build
 cd %SRC_DIR%\build
 
+set HDF5_DIR=%LIBRARY_PREFIX%\cmake\hdf5
+
 cmake -G "%CMAKE_GENERATOR%" ^
       -D CMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
       -D BUILD_SHARED_LIBS=ON ^
