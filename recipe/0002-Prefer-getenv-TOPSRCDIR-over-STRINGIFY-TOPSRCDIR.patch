@@ -1,7 +1,7 @@
 From e29b8c1596ec6cbe232022e8c96ae57861cdf227 Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Sun, 24 Dec 2017 19:00:57 +0000
-Subject: [PATCH 2/3] Prefer getenv("TOPSRCDIR") over STRINGIFY(TOPSRCDIR)
+Subject: [PATCH 2/5] Prefer getenv("TOPSRCDIR") over STRINGIFY(TOPSRCDIR)
 
 Because STRINGIFY is greedy and will convert all parts of the string that match
 any define. In my case I had -D"TOPSRCDIR=/opt/conda-linux-32/.." which got

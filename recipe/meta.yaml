@@ -12,6 +12,8 @@ source:
     - 0001-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch
     - 0002-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - 0003-Convert-some-c99-to-c89-by-hand.patch
+    - 0004-Add-some-extra-debugging.patch
+    - 0005-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
 
 build:
   number: 0
@@ -27,6 +29,9 @@ requirements:
     - git
     - make  # [unix]
     - pkg-config  # [not win]
+    # Needed for tests: Bash shell not found; disabling shell script tests.
+    - posix  # [win]
+    - m2-m4  # [win]
     - {{ compiler('c') }}
     # not sure if we need cxx compiler here - seems to be presently disabled.
     # - {{ compiler('cxx') }}
