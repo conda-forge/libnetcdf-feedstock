@@ -1,0 +1,24 @@
+From 0f173a28b9394da7607cf585081183f5dd66a0b5 Mon Sep 17 00:00:00 2001
+From: Ray Donnelly <mingw.android@gmail.com>
+Date: Sat, 12 May 2018 16:52:56 -0500
+Subject: [PATCH 7/8] Fix broken test
+
+---
+ ncdump/tst_nccopy4.sh | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/ncdump/tst_nccopy4.sh b/ncdump/tst_nccopy4.sh
+index 6784664c..c4668a43 100755
+--- a/ncdump/tst_nccopy4.sh
++++ b/ncdump/tst_nccopy4.sh
+@@ -31,7 +31,6 @@ ${NCDUMP} copy_of_$i.nc > copy_of_$i.cdl
+     rm copy_of_$i.nc copy_of_$i.cdl tmp.cdl
+ done
+ # echo "*** Testing compression of deflatable files ..."
+-./tst_compress
+ echo "*** Test nccopy -d1 can compress a classic format file ..."
+ $NCCOPY -d1 tst_inflated.nc tst_deflated.nc
+ if test `wc -c < tst_deflated.nc` -ge  `wc -c < tst_inflated.nc`; then
+-- 
+2.15.0
+

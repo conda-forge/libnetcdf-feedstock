@@ -14,7 +14,12 @@ source:
     - 0003-Convert-some-c99-to-c89-by-hand.patch
     - 0004-Add-some-extra-debugging.patch
     - 0005-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
-    - 0006-Add-new-DNC_USE_RELEASE_CRT-ON-option-to-allow-Debug.patch
+    # This does not work fully (at all?), I think it is applied only to some of the build.
+    # - 0006-Add-new-DNC_USE_RELEASE_CRT-ON-option-to-allow-Debug.patch
+    - 0007-Fix-broken-test.patch
+    # This one should be reworked so it touches far fewer files, 1 or 2 only.
+    # (we need to prepend VS to execdir instead).
+    - 0008-Finish-the-missing-code-to-handle-VS-in-test_common..patch
 
 build:
   number: 0
