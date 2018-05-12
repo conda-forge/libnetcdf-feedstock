@@ -14,6 +14,7 @@ source:
     - 0003-Convert-some-c99-to-c89-by-hand.patch
     - 0004-Add-some-extra-debugging.patch
     - 0005-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
+    - 0006-Add-new-DNC_USE_RELEASE_CRT-ON-option-to-allow-Debug.patch
 
 build:
   number: 0

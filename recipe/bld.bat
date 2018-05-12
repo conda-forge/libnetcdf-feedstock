@@ -2,7 +2,8 @@ mkdir %SRC_DIR%\build
 cd %SRC_DIR%\build
 
 :: set BUILD_TYPE=Release
-set BUILD_TYPE=RelWithDebInfo
+:: set BUILD_TYPE=RelWithDebInfo
+set BUILD_TYPE=Debug
 set HDF5_DIR=%LIBRARY_PREFIX%\cmake\hdf5
 
 cmake -G "%CMAKE_GENERATOR%" ^
@@ -11,6 +12,7 @@ cmake -G "%CMAKE_GENERATOR%" ^
       -DENABLE_TESTS=ON ^
       -DENABLE_HDF4=ON ^
       -DENABLE_LOGGING=ON ^
+      -DNC_USE_RELEASE_CRT=ON ^
       -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
       -DZLIB_LIBRARY="%LIBRARY_LIB%\zlib.lib" ^
       -DZLIB_INCLUDE_DIR="%LIBRARY_INC%" ^
@@ -24,7 +26,7 @@ if errorlevel 1 exit \b 1
 :: Please do not remove this.
 :: If you need to debug the VC9 build this shows how (set BUILD_TYPE=RelWithDebInfo too)
 echo If you need to debug this in Visual Studio:
-echo set PATH=%CD%\liblib\%BUILD_TYPE%;%PREFIX%\Library\bin;%PATH%
+echo set PATH=%CD%\liblib\%BUILD_TYPE%;%CD%\liblib;%PREFIX%\Library\bin;%PATH%
 echo "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe" /debugexe %CD%\ncdump\%BUILD_TYPE%\ncdump.exe -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
 
 ctest
