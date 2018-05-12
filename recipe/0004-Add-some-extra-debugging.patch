@@ -120,7 +120,7 @@ index 199472d4..5f8023fb 100644
          varp->len += 4 - varp->len % 4; /* round up */
  
 -#if 0
-+#if 1
++#if 0
  	arrayp("\tshape", varp->ndims, varp->shape);
 -	arrayp("\tdsizes", varp->ndims, varp->dsizes);
 +	arrayp2("\tdsizes", varp->ndims, varp->dsizes);
