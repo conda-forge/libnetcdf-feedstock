@@ -1,7 +1,7 @@
-From 8446208f3e4e007c4efae47c92de1c6878d3f335 Mon Sep 17 00:00:00 2001
+From e6417c0209ffcd5b080005355ef2794c93220da7 Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Sat, 12 May 2018 16:52:56 -0500
-Subject: [PATCH 7/8] Fix broken test
+Subject: [PATCH 7/9] Fix broken test
 
 ---
  ncdump/tst_nccopy4.sh | 3 +--
@@ -36,5 +36,5 @@ index 6784664c..01da96c0 100755
  $NCCOPY tst_chunking.nc tmp.nc
  ${NCDUMP} tmp.nc > tmp.cdl
 -- 
-2.15.1 (Apple Git-101)
+2.15.0
 

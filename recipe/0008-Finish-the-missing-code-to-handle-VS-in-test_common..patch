@@ -1,4 +1,4 @@
-From a8664c3fe1ba2009b39e1c342c41c94b53f86c7d Mon Sep 17 00:00:00 2001
+From cfd8c1558648975786e925cc86fd19a0be314bfe Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Sat, 12 May 2018 11:35:22 -0500
 Subject: [PATCH 8/9] Finish the missing code to handle VS in test_common.in
@@ -113,5 +113,5 @@ index b8af5185..30e4c4a5 100644
  thisdir=`basename $srcdir`
  
 -- 
-2.17.0
+2.15.0
 

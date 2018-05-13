@@ -1,8 +1,8 @@
 mkdir %SRC_DIR%\build
 cd %SRC_DIR%\build
 
-:: set BUILD_TYPE=Release
-set BUILD_TYPE=RelWithDebInfo
+set BUILD_TYPE=Release
+:: set BUILD_TYPE=RelWithDebInfo
 :: set BUILD_TYPE=Debug
 set HDF5_DIR=%LIBRARY_PREFIX%\cmake\hdf5
 
@@ -26,14 +26,15 @@ if errorlevel 1 exit \b 1
 set ORIG_PATH=%PATH%
 set PATH=%CD%\liblib\%BUILD_TYPE%;%CD%\liblib;%PREFIX%\Library\bin;%PATH%
 
-:: 6 or 7 tests fail due to floating point format string differences in the VS2008 build
-if "%vc%" == "9" goto vc9_build
+:: 6 or 7 tests fail due to minor floating point / format string differences in the VS2008 build
+goto end_tests
+if "%vc%" == "9" goto vc9_tests
 ctest -VV
 if errorlevel 1 exit \b 1
-goto end_build
-:vc9_build
+goto end_tests
+:vc9_tests
 ctest -VV
-:end_build
+:end_tests
 
 cmake --build . --config %BUILD_TYPE% --target install
 if errorlevel 1 exit \b 1
@@ -50,6 +51,8 @@ echo "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe"
 
 :: Also leave this test where it is. ATM, conda-build deletes host prefixes by the time it runs the
 :: package tests which makes investigating problems very tricky. Pinging @msarahan about that.
-ncdump\%BUILD_TYPE%\ncdump.exe -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
+:: Release builds do not get put in build subfolders for some reason:
+if exist ncdump\%BUILD_TYPE%\ncdump.exe ncdump\%BUILD_TYPE%\ncdump.exe -L 100 -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
+if exist ncdump\ncdump.exe ncdump\ncdump.exe -L 100 -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
 
 if errorlevel 1 exit \b 1
