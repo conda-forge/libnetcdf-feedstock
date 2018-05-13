@@ -20,6 +20,7 @@ source:
     # This one should be reworked so it touches far fewer files, 1 or 2 only.
     # (we need to prepend VS to execdir instead).
     - 0008-Finish-the-missing-code-to-handle-VS-in-test_common..patch
+    - 0009-run_get_hdf4_files.sh-Use-curl-if-wget-fails-macOS-d.patch
 
 build:
   number: 0
