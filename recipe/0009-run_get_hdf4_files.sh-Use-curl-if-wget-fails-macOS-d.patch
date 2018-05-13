@@ -1,4 +1,4 @@
-From 1ed1a4662f40698cd188ec9648a33cb7040f9cf8 Mon Sep 17 00:00:00 2001
+From 4521e73642953bb0384b6b8fbe3298ad15dafeaa Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Sun, 13 May 2018 01:55:55 +0100
 Subject: [PATCH 9/9] run_get_hdf4_files.sh: Use curl if wget fails (macOS
@@ -9,7 +9,7 @@ Subject: [PATCH 9/9] run_get_hdf4_files.sh: Use curl if wget fails (macOS
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/hdf4_test/run_get_hdf4_files.sh b/hdf4_test/run_get_hdf4_files.sh
-index 815b0260..9dbbbe61 100755
+index 566dee94..d3d46a9b 100755
 --- a/hdf4_test/run_get_hdf4_files.sh
 +++ b/hdf4_test/run_get_hdf4_files.sh
 @@ -21,7 +21,9 @@ echo "Getting HDF4 test files $file_list"
