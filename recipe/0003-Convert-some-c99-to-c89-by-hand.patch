@@ -1,7 +1,7 @@
-From dfee79bf4b23eeee002ba73925d398f0a6d32390 Mon Sep 17 00:00:00 2001
+From cee1647ba05359e31c974329e41a35e48747c1ca Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Fri, 11 May 2018 17:13:39 -0500
-Subject: [PATCH 3/5] Convert some c99 to c89 (by hand)
+Subject: [PATCH 3/7] Convert some c99 to c89 (by hand)
 
 ---
  libdispatch/drc.c          | 6 ++++--
@@ -120,5 +120,5 @@ index 46604837..9e84d940 100644
  	    strncpy(newname,dods->name,len);
  	    strlcat(newname,".",len);
 -- 
-2.15.0
+2.15.1 (Apple Git-101)
 

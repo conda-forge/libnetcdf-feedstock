@@ -39,13 +39,13 @@ index 93e2806a..47308b85 100644
  
 -# Option to use Static Runtimes in MSVC
 +MACRO(specify_static_crt_flag)
-+  swap_c_cxx_flag("/MDd", "/MTd")
-+  swap_c_cxx_flag("/MD", "/MT")
++  swap_c_cxx_flag("/MDd" "/MTd")
++  swap_c_cxx_flag("/MD" "/MT")
 +ENDMACRO()
 +
 +MACRO(specify_release_crt_flag)
-+  swap_c_cxx_flag("/MDd", "/MD")
-+  swap_c_cxx_flag("/MTd", "/MT")
++  swap_c_cxx_flag("/MDd" "/MD")
++  swap_c_cxx_flag("/MTd" "/MT")
 +ENDMACRO()
 +
 +# Option to use Release (non-Debug) Runtimes in MSVC (only relvant

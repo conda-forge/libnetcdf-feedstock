@@ -1,7 +1,7 @@
-From 86f66d32a6b46301648cfd2209754ed085f2377b Mon Sep 17 00:00:00 2001
+From 991ecbe733cbc6dcdb6a3fd188af1dce54c62291 Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Sat, 12 May 2018 08:15:05 -0500
-Subject: [PATCH 5/5] Fix tests for Windows VS2008 (define __func__ as
+Subject: [PATCH 5/7] Fix tests for Windows VS2008 (define __func__ as
  __FUNCTION__)
 
 .. also adds a missing include config.h for the snprintf macro
@@ -37,5 +37,5 @@ index ee4ba6d3..248dcbbd 100644
  #include <stdlib.h>
  #include <string.h>
 -- 
-2.15.0
+2.15.1 (Apple Git-101)
 

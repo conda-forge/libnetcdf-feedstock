@@ -1,4 +1,4 @@
-From f3f3991a9756b8bde84561ed1365c74f28b1ef8d Mon Sep 17 00:00:00 2001
+From 1ed5eaf52b5c13283c05ee0221756fe010a9f63f Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Sat, 12 May 2018 11:35:22 -0500
 Subject: [PATCH 8/8] Finish the missing code to handle VS in test_common.in
@@ -10,7 +10,7 @@ execdir to include VS and be done with it.
 
 Now the testsuite should be able to run.
 ---
- CMakeLists.txt                     |  1 +
+ CMakeLists.txt                     |  7 +++++++
  configure.ac                       |  1 +
  dap4_test/test_data.sh             |  4 ++--
  dap4_test/test_meta.sh             |  4 ++--
@@ -47,22 +47,28 @@ Now the testsuite should be able to run.
  ncdump/tst_fillbug.sh              |  2 +-
  ncdump/tst_h_scalar.sh             |  2 +-
  ncdump/tst_lengths.sh              | 14 +++++++-------
- ncdump/tst_nccopy4.sh              |  4 ++--
+ ncdump/tst_nccopy4.sh              |  6 +++---
  ncdump/tst_netcdf4.sh              | 22 +++++++++++-----------
  ncdump/tst_netcdf4_4.sh            |  2 +-
  ncdump/tst_output.sh               |  4 ++--
- test_common.in                     |  4 ++--
- 42 files changed, 115 insertions(+), 111 deletions(-)
+ test_common.in                     |  6 +++---
+ 42 files changed, 123 insertions(+), 113 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 93e2806a..14903695 100644
+index 93e2806a..7085e26e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1876,6 +1876,7 @@ FILE(COPY ${netCDF_SOURCE_DIR}/include/netcdf_meta.h
+@@ -1876,6 +1876,13 @@ FILE(COPY ${netCDF_SOURCE_DIR}/include/netcdf_meta.h
  SET(EXTRA_DIST ${EXTRA_DIST} ${CMAKE_SOURCE_DIR}/test_common.in)
  SET(TOPSRCDIR "${CMAKE_SOURCE_DIR}")
  SET(TOPBUILDDIR "${CMAKE_BINARY_DIR}")
-+SET(VS_CONFIGURATION "/${CMAKE_BUILD_TYPE}")
++IF(MSVC)
++  # Seems this is always upper-case by this point :-(
++  SET(VS_CONFIGURATION "/${CMAKE_BUILD_TYPE}")
++ELSE()
++  SET(VS_CONFIGURATION "")
++ENDIF()
++
  configure_file(${CMAKE_SOURCE_DIR}/test_common.in ${CMAKE_BINARY_DIR}/test_common.sh @ONLY NEWLINE_STYLE LF)
  
  #####
@@ -898,17 +904,19 @@ index dbe5c681..104422ac 100755
      #    exit 1
      #fi
 diff --git a/ncdump/tst_nccopy4.sh b/ncdump/tst_nccopy4.sh
-index c4668a43..350421bc 100755
+index 01da96c0..621c2288 100755
 --- a/ncdump/tst_nccopy4.sh
 +++ b/ncdump/tst_nccopy4.sh
-@@ -17,8 +17,8 @@ TESTFILES='tst_comp tst_comp2 tst_enum_data tst_fillbug
+@@ -17,9 +17,9 @@ TESTFILES='tst_comp tst_comp2 tst_enum_data tst_fillbug
   tst_vlen_data'
  
  # Run these programs to create some test files.
 -${execdir}/tst_comp2
 -${execdir}/tst_compress
+-${execdir}/tst_chunking
 +${execdir}${VS}/tst_comp2
 +${execdir}${VS}/tst_compress
++${execdir}${VS}/tst_chunking
  
  echo "*** Testing netCDF-4 features of nccopy on ncdump/*.nc files"
  for i in $TESTFILES ; do
@@ -1024,7 +1032,7 @@ index 87a53186..a4d589a8 100755
  diff -b tst_output_ctest64.c $srcdir/ref_ctest64.c
  
 diff --git a/test_common.in b/test_common.in
-index b8af5185..45aebb39 100644
+index b8af5185..295acd90 100644
 --- a/test_common.in
 +++ b/test_common.in
 @@ -59,8 +59,8 @@ if test "x$SETX" = x1 ; then set -x ; fi
@@ -1038,6 +1046,15 @@ index b8af5185..45aebb39 100644
  
  # srcdir may or may not be defined, but if not, then create it
  if test "x$srcdir" = x ; then
+@@ -75,7 +75,7 @@ fi
+ builddir=`pwd`
+ 
+ # execdir is an alias for builddir
+-execdir="${builddir}"
++execdir="${builddir}${VS}"
+ 
+ # pick off the last component as the relative name of this directory
+ thisdir=`basename $srcdir`
 -- 
-2.15.0
+2.15.1 (Apple Git-101)
 

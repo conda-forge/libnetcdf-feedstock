@@ -73,4 +73,8 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       ${SRC_DIR}
 make -j${CPU_COUNT} ${VERBOSE_CM}
 make install -j${CPU_COUNT}
-ctest
+ctest -VV
+
+# Leave this test where it is. ATM, conda-build deletes host prefixes by the time it runs the
+# package tests which makes investigating problems very tricky. Pinging @msarahan about that.
+ncdump/ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic || exit $?

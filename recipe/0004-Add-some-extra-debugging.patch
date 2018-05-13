@@ -1,16 +1,16 @@
-From 3e99700438fd70d035666df6a459ab29fdcd0e92 Mon Sep 17 00:00:00 2001
+From eff346c27d289354121a9bcc684956c107a2a7e2 Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Sat, 12 May 2018 07:17:17 -0500
-Subject: [PATCH 4/5] Add some extra debugging
+Subject: [PATCH 4/7] Add some extra debugging
 
 ---
  libsrc/putget.c  | 21 ++++++++++++++++++++-
- libsrc/putget.m4 | 21 ++++++++++++++++++++-
- libsrc/var.c     |  7 +++++--
- 3 files changed, 45 insertions(+), 4 deletions(-)
+ libsrc/putget.m4 | 19 +++++++++++++++++++
+ libsrc/var.c     |  5 ++++-
+ 3 files changed, 43 insertions(+), 2 deletions(-)
 
 diff --git a/libsrc/putget.c b/libsrc/putget.c
-index 0d5510ea..945a8738 100644
+index 0d5510ea..eb727808 100644
 --- a/libsrc/putget.c
 +++ b/libsrc/putget.c
 @@ -27,6 +27,11 @@
@@ -18,9 +18,9 @@ index 0d5510ea..945a8738 100644
  #  endif
  #endif
 +#ifdef _MSC_VER
-+#  if (_MSC_VER < 1900)
-+#    define PRId64       "I64d"
-+#  endif
++#  define PRId64       "I64d"
++#else
++#  define PRId64       "lld"
 +#endif
  
  
@@ -56,7 +56,7 @@ index 0d5510ea..945a8738 100644
  
  
 diff --git a/libsrc/putget.m4 b/libsrc/putget.m4
-index 192aeb3b..14b95487 100644
+index 192aeb3b..f01094b0 100644
 --- a/libsrc/putget.m4
 +++ b/libsrc/putget.m4
 @@ -34,6 +34,11 @@ dnl
@@ -64,22 +64,13 @@ index 192aeb3b..14b95487 100644
  #  endif
  #endif
 +#ifdef _MSC_VER
-+#  if (_MSC_VER < 1900)
-+#    define PRId64       "I64d"
-+#  endif
++#  define PRId64       "I64d"
++#else
++#  define PRId64       "lld"
 +#endif
  
  
  #undef MIN  /* system may define MIN somewhere and complain */
-@@ -47,7 +52,7 @@ writeNCv(NC3_INFO* ncp, const NC_var* varp, const size_t* start,
-          const size_t nelems, const void* value, const nc_type memtype);
- 
- 
--/* #define ODEBUG 1 */
-+#define ODEBUG 1
- 
- #if ODEBUG
- #include <stdio.h>
 @@ -63,6 +68,20 @@ arrayp(const char *label, size_t count, const size_t *array)
  		(void) fprintf(stderr," %lu", (unsigned long)*array);
  	(void) fputc('\n',stderr);
@@ -102,7 +93,7 @@ index 192aeb3b..14b95487 100644
  
  
 diff --git a/libsrc/var.c b/libsrc/var.c
-index 199472d4..5f8023fb 100644
+index 199472d4..4deb0cf1 100644
 --- a/libsrc/var.c
 +++ b/libsrc/var.c
 @@ -428,6 +428,9 @@ ncx_szof(nc_type type)
@@ -115,12 +106,9 @@ index 199472d4..5f8023fb 100644
  int
  NC_var_shape(NC_var *varp, const NC_dimarray *dims)
  {
-@@ -500,9 +503,9 @@ out :
-     if (varp->len % 4 > 0)
-         varp->len += 4 - varp->len % 4; /* round up */
+@@ -502,7 +505,7 @@ out :
  
--#if 0
-+#if 0
+ #if 0
  	arrayp("\tshape", varp->ndims, varp->shape);
 -	arrayp("\tdsizes", varp->ndims, varp->dsizes);
 +	arrayp2("\tdsizes", varp->ndims, varp->dsizes);
@@ -128,5 +116,5 @@ index 199472d4..5f8023fb 100644
  	return NC_NOERR;
  }
 -- 
-2.15.0
+2.15.1 (Apple Git-101)
 
