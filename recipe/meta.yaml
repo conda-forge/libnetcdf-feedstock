@@ -18,6 +18,9 @@ source:
 
 build:
   number: 11
+  run_exports:
+    #   https://abi-laboratory.pro/tracker/timeline/netcdf/
+    - {{ pin_subpackage('libnetcdf') }}
 
 requirements:
   build:
