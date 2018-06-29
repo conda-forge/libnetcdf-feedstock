@@ -23,14 +23,14 @@ requirements:
   build:
     - cmake
     - pkg-config  # [not win]
-    - {{ compiler('fortran') }}
     - {{ compiler('c') }}
   host:
-    - msinttypes  # [win]
+    - msinttypes  # [win and vc14]
     - curl
     - zlib
     - hdf4
     - hdf5
+    - jpeg
   run:
     - curl
     - zlib
