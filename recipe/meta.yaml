@@ -11,7 +11,7 @@ source:
     - CMakeLists.patch  # [win]
 
 build:
-  number: 2
+  number: 3
   skip: True  # [win and py36 or py27]
   features:
     - vc14  # [win and (py35 or py36)]
@@ -22,16 +22,16 @@ requirements:
     - cmake
     - pkg-config  # [not win]
     - msinttypes  # [win]
-    - curl >=7.44.0,<8
+    - curl 7.59.*
     - zlib 1.2.11
     - hdf4
-    - hdf5 1.10.1
+    - hdf5 1.10.2
     - vc 14  # [win and (py35 or py36)]
   run:
-    - curl >=7.44.0,<8
+    - curl >=7.59,<8
     - zlib 1.2.11
     - hdf4
-    - hdf5 1.10.1
+    - hdf5 1.10.2
     - vc 14  # [win and (py35 or py36)]
 
 test:
