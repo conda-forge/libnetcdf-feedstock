@@ -1,0 +1,23 @@
+c_compiler:
+- toolchain_c
+curl:
+- '7.59'
+hdf4:
+- '4.2'
+hdf5:
+- 1.10.2
+jpeg:
+- '9'
+pin_run_as_build:
+  curl:
+    max_pin: x
+  hdf4:
+    max_pin: x.x
+  hdf5:
+    max_pin: x.x.x
+  jpeg:
+    max_pin: x
+  zlib:
+    max_pin: x.x
+zlib:
+- '1.2'
