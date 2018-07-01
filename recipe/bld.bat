@@ -6,6 +6,7 @@ cmake -G "NMake Makefiles" ^
       -D BUILD_SHARED_LIBS=ON ^
       -D ENABLE_TESTS=OFF ^
       -D ENABLE_HDF4=ON ^
+      -D HDF5_DIR=%LIBRARY_PREFIX%\cmake\hdf5 ^
       -D CMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
       -D ZLIB_LIBRARY=%LIBRARY_LIB%\zlib.lib ^
       -D ZLIB_INCLUDE_DIR=%LIBRARY_INC% ^
