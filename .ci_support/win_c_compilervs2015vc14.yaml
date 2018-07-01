@@ -1,0 +1,26 @@
+c_compiler:
+- vs2015
+curl:
+- '7.59'
+hdf4:
+- '4.2'
+hdf5:
+- 1.10.2
+pin_run_as_build:
+  curl:
+    max_pin: x
+  hdf4:
+    max_pin: x.x
+  hdf5:
+    max_pin: x.x.x
+  vc:
+    max_pin: x
+  zlib:
+    max_pin: x.x
+vc:
+- '14'
+zip_keys:
+- - vc
+  - c_compiler
+zlib:
+- '1.2'

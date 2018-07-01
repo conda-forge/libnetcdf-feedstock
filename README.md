@@ -7,21 +7,23 @@ Package license: MIT
 
 Feedstock license: BSD 3-Clause
 
-Summary: Libraries and data formats that support array-oriented scientific data.
+Summary: Libraries and data formats that support array-oriented scientific data
 
 
 
 Current build status
 ====================
 
-Linux: [![Circle CI](https://circleci.com/gh/conda-forge/libnetcdf-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/libnetcdf-feedstock)
-OSX: [![TravisCI](https://travis-ci.org/conda-forge/libnetcdf-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/libnetcdf-feedstock)
-Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/libnetcdf-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/libnetcdf-feedstock/branch/master)
+[![Linux](https://img.shields.io/circleci/project/github/conda-forge/libnetcdf-feedstock/master.svg?label=Linux)](https://circleci.com/gh/conda-forge/libnetcdf-feedstock)
+[![OSX](https://img.shields.io/travis/conda-forge/libnetcdf-feedstock/master.svg?label=macOS)](https://travis-ci.org/conda-forge/libnetcdf-feedstock)
+[![Windows](https://img.shields.io/appveyor/ci/conda-forge/libnetcdf-feedstock/master.svg?label=Windows)](https://ci.appveyor.com/project/conda-forge/libnetcdf-feedstock/branch/master)
 
 Current release info
 ====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/libnetcdf/badges/version.svg)](https://anaconda.org/conda-forge/libnetcdf)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/libnetcdf/badges/downloads.svg)](https://anaconda.org/conda-forge/libnetcdf)
+
+| Name | Downloads | Version | Platforms |
+| --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libnetcdf-green.svg)](https://anaconda.org/conda-forge/libnetcdf) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libnetcdf.svg)](https://anaconda.org/conda-forge/libnetcdf) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libnetcdf.svg)](https://anaconda.org/conda-forge/libnetcdf) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libnetcdf.svg)](https://anaconda.org/conda-forge/libnetcdf) |
 
 Installing libnetcdf
 ====================
