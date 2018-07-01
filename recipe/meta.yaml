@@ -11,34 +11,33 @@ source:
     - CMakeLists.patch  # [win]
 
 build:
-  number: 2
-  skip: True  # [win and py36 or py27]
-  features:
-    - vc14  # [win and (py35 or py36)]
+  number: 3
+  skip: True  # [win and vc<14]
+  run_exports:
+    #   https://abi-laboratory.pro/tracker/timeline/netcdf/
+    - {{ pin_subpackage('libnetcdf') }}
 
 requirements:
   build:
-    - python  # [win]
     - cmake
     - pkg-config  # [not win]
-    - msinttypes  # [win]
-    - curl >=7.44.0,<8
-    - zlib 1.2.11
+    - {{ compiler('c') }}
+  host:
+    - msinttypes  # [win and vc14]
+    - curl
+    - zlib
     - hdf4
-    - hdf5 1.10.1
-    - vc 14  # [win and (py35 or py36)]
+    - hdf5
   run:
-    - curl >=7.44.0,<8
-    - zlib 1.2.11
+    - curl
+    - zlib
     - hdf4
-    - hdf5 1.10.1
-    - vc 14  # [win and (py35 or py36)]
+    - hdf5
 
 test:
   commands:
     - test -f ${PREFIX}/lib/libnetcdf.a  # [not win]
-    - test -f ${PREFIX}/lib/libnetcdf.so  # [linux]
-    - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
+    - test -f ${PREFIX}/lib/libnetcdf${SHLIB_EXT}  # [not win]
     - ncdump -h "http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic"
     - ncdump -h "https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc"
     - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/hioos/model/atm/ncep_pac/NCEP_Pacific_Atmospheric_Model_best.ncd"
@@ -52,7 +51,7 @@ about:
   home: http://www.unidata.ucar.edu/software/netcdf/
   license: MIT
   license_file: COPYRIGHT
-  summary: 'Libraries and data formats that support array-oriented scientific data.'
+  summary: 'Libraries and data formats that support array-oriented scientific data'
 
 extra:
   recipe-maintainers:
