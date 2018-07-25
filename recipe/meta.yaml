@@ -5,11 +5,8 @@ package:
   version: {{ version }}
 
 source:
-  git_url: https://github.com/Unidata/netcdf-c
-  git_tag: v{{ version }}
-  sha256: f7d1cb2a82100b9bf9a1130a50bc5c7baf0de5b5022860ac3e09a0a32f83cf4a
-  # url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  # sha256: a2fabf27c72a5ee746e3843e1debbaad37cd035767eaede2045371322211eebb
+  url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
+  sha256: a2fabf27c72a5ee746e3843e1debbaad37cd035767eaede2045371322211eebb
   patches:
     - 0001-Fix-bug-Index-exceeds-dimension-bound.patch
     - 0002-run_get_hdf4_files.sh-Use-curl-if-wget-fails-macOS-d.patch
