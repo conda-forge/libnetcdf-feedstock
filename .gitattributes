@@ -1,6 +1,6 @@
 * text=auto
 
-*.patch binary
+**/*.patch binary
 *.diff binary
 meta.yaml text eol=lf
 build.sh text eol=lf
