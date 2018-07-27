@@ -5,3 +5,12 @@
 meta.yaml text eol=lf
 build.sh text eol=lf
 bld.bat text eol=crlf
+
+recipe/0001-Fix-bug-Index-exceeds-dimension-bound.patch binary
+recipe/0002-run_get_hdf4_files.sh-Use-curl-if-wget-fails-macOS-d.patch binary
+recipe/0003-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch binary
+recipe/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch binary
+recipe/0005-Convert-some-c99-to-c89-by-hand.patch binary
+recipe/0006-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch binary
+recipe/0007-Fix-broken-test.patch binary
+recipe/0008-Finish-the-missing-code-to-handle-VS-in-test_common..patch binary
