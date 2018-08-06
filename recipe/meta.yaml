@@ -45,6 +45,8 @@ requirements:
     - hdf4
     - hdf5
     - jpeg
+    # Curl should be pulling this... Investigate it later.
+    - libssh2  # [win]
 
 test:
   commands:
