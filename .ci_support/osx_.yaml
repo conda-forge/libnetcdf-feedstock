@@ -1,5 +1,7 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '10.9'
+bzip2:
+- '1'
 c_compiler:
 - toolchain_c
 curl:
@@ -8,17 +10,23 @@ hdf4:
 - '4.2'
 hdf5:
 - 1.10.2
+jpeg:
+- '9'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 macos_min_version:
 - '10.9'
 pin_run_as_build:
+  bzip2:
+    max_pin: x
   curl:
     max_pin: x
   hdf4:
     max_pin: x.x
   hdf5:
     max_pin: x.x.x
+  jpeg:
+    max_pin: x
   zlib:
     max_pin: x.x
 zlib:
