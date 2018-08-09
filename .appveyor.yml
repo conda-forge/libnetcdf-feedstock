@@ -43,7 +43,7 @@ install:
     - cmd: conda.exe config --add channels defaults
     - cmd: conda.exe config --add channels conda-forge
 
-    - cmd: copy .condarc C:\Users\appveyor\.condarc
+    - cmd: conda.exe config --set channel_alias https://conda-static.anaconda.org
 
     # Configure the VM.
     - cmd: conda.exe install -n root --quiet --yes conda-forge-ci-setup=1
