@@ -17,9 +17,10 @@ source:
     - 0006-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
     - 0007-Fix-broken-test.patch
     - 0008-Finish-the-missing-code-to-handle-VS-in-test_common..patch
+    - prevent_MS_runtime_libs_being_installed_again.patch  # [win]
 
 build:
-  number: 4
+  number: 5
   run_exports:
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
     - {{ pin_subpackage('libnetcdf') }}
