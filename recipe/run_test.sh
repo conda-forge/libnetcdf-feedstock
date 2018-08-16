@@ -1,0 +1,15 @@
+nc-config --has-c++      | grep -q no
+nc-config --has-c++4     | grep -q no
+nc-config --has-fortran  | grep -q no
+nc-config --has-dap      | grep -q yes
+nc-config --has-dap2     | grep -q yes
+nc-config --has-dap4     | grep -q yes
+nc-config --has-nc2      | grep -q yes
+nc-config --has-nc4      | grep -q yes
+nc-config --has-hdf5     | grep -q yes
+nc-config --has-hdf4     | grep -q yes
+nc-config --has-logging  | grep -q yes
+nc-config --has-pnetcdf  | grep -q no
+nc-config --has-szlib    | grep -q no
+nc-config --has-cdf5     | grep -q yes
+nc-config --has-parallel | grep -q no
