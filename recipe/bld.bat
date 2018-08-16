@@ -16,6 +16,7 @@ cmake -G "%CMAKE_GENERATOR%" ^
       -DZLIB_LIBRARY="%LIBRARY_LIB%\zlib.lib" ^
       -DZLIB_INCLUDE_DIR="%LIBRARY_INC%" ^
       -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
+      -D ENABLE_CDF5=ON ^
       %SRC_DIR%
 if errorlevel 1 exit \b 1
 
