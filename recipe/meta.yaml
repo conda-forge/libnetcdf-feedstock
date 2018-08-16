@@ -20,7 +20,7 @@ source:
     - prevent_MS_runtime_libs_being_installed_again.patch  # [win]
 
 build:
-  number: 5
+  number: 6
   run_exports:
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
     - {{ pin_subpackage('libnetcdf') }}
@@ -59,8 +59,7 @@ test:
     - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/usgs_dem_10m_tinian"
     - ncdump -h "https://www.ncei.noaa.gov/thredds/dodsC/namanl/201609/20160929/namanl_218_20160929_1800_006.grb"
     - nc-config --all  # [not win]
-    - conda inspect linkages -p $PREFIX $PKG_NAME  # [not win]
-    - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+    - nc-config --has-cdf5 | grep -q yes
 
 about:
   home: http://www.unidata.ucar.edu/software/netcdf/
