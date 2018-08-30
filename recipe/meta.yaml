@@ -17,9 +17,11 @@ source:
     - 0007-Fix-broken-test.patch
     - 0008-Finish-the-missing-code-to-handle-VS-in-test_common..patch
     - prevent_MS_runtime_libs_being_installed_again.patch  # [win]
+    # https://github.com/Unidata/netcdf4-python/issues/836
+    - higher_timeout.patch
 
 build:
-  number: 7
+  number: 8
   run_exports:
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
     - {{ pin_subpackage('libnetcdf') }}

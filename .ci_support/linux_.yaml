@@ -2,8 +2,14 @@ bzip2:
 - '1'
 c_compiler:
 - toolchain_c
+channel_sources:
+- conda-forge,defaults
+channel_targets:
+- conda-forge main
 curl:
 - '7.59'
+docker_image:
+- condaforge/linux-anvil
 hdf4:
 - '4.2'
 hdf5:

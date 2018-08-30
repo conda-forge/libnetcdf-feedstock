@@ -2,6 +2,10 @@ bzip2:
 - '1'
 c_compiler:
 - vs2008
+channel_sources:
+- conda-forge,defaults
+channel_targets:
+- conda-forge main
 curl:
 - '7.59'
 hdf4:
