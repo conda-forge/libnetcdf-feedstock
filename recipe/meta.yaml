@@ -56,15 +56,15 @@ requirements:
 
 test:
   commands:
-    - nc-config --all  # [not win]
     - test -f ${PREFIX}/lib/libnetcdf.a  # [not win]
-    - test -f ${PREFIX}/lib/libnetcdf.so  # [linux]
-    - test -f ${PREFIX}/lib/libnetcdf.dylib  # [osx]
-    - ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
-    - ncdump -h https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc
-    - ncdump -h http://oos.soest.hawaii.edu/thredds/dodsC/hioos/model/atm/ncep_pac/NCEP_Pacific_Atmospheric_Model_best.ncd
-    - ncdump -h http://oos.soest.hawaii.edu/thredds/dodsC/usgs_dem_10m_tinian
-    - ncdump -h https://www.ncei.noaa.gov/thredds/dodsC/namanl/201609/20160929/namanl_218_20160929_1800_006.grb
+    - test -f ${PREFIX}/lib/libnetcdf${SHLIB_EXT}  # [not win]
+    - nc-config --all  # [not win]
+    # All these endpotins failed at some point due to various reasons.
+    - ncdump -h "http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic"
+    - ncdump -h "https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc"
+    - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/hioos/model/atm/ncep_pac/NCEP_Pacific_Atmospheric_Model_best.ncd"
+    - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/usgs_dem_10m_tinian"
+    - ncdump -h "https://www.ncei.noaa.gov/thredds/dodsC/namanl/201609/20160929/namanl_218_20160929_1800_006.grb"
 
 about:
   home: http://www.unidata.ucar.edu/software/netcdf/
