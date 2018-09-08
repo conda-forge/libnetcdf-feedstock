@@ -46,6 +46,7 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_C_FLAGS_DEBUG=${CFLAGS} \
       -DCURL_INCLUDE_DIR=${PREFIX}/include \
       -DCURL_LIBRARY=${PREFIX}/lib/libcurl${SHLIB_EXT} \
+      -DENABLE_CDF5=ON \
       ${CMAKE_PLATFORM_FLAGS[@]} \
       ${SRC_DIR}
 make -j${CPU_COUNT} ${VERBOSE_CM}
@@ -69,6 +70,7 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_C_FLAGS_DEBUG=${CFLAGS} \
       -DCURL_INCLUDE_DIR=${PREFIX}/include \
       -DCURL_LIBRARY=${PREFIX}/lib/libcurl${SHLIB_EXT} \
+      -DENABLE_CDF5=ON \
       ${CMAKE_PLATFORM_FLAGS[@]} \
       ${SRC_DIR}
 make -j${CPU_COUNT} ${VERBOSE_CM}
