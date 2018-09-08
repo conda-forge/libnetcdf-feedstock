@@ -40,6 +40,7 @@ ctest -VV
 cmake --build . --config %BUILD_TYPE% --target install
 if errorlevel 1 exit \b 1
 
+:: These next few tests require a writable TEMP directory and may fail on hosts where this is not true
 :: Please do not remove this.
 echo If you need to debug this in Visual Studio, set BUILD_TYPE=RelWithDebInfo then:
 echo set PATH=%CD%\liblib\%BUILD_TYPE%;%CD%\liblib;%PREFIX%\Library\bin;%ORIG_PATH%

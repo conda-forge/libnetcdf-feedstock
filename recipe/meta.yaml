@@ -63,6 +63,9 @@ test:
     - test -f ${PREFIX}/lib/libnetcdf.a  # [not win]
     - test -f ${PREFIX}/lib/libnetcdf${SHLIB_EXT}  # [not win]
     - nc-config --all  # [not win]
+    # ncdump from a URL needs a writeable TEMP directory for storing cookies.
+    # Point TEMP to PREFIX on windows to make certain this is true
+    - set "TEMP=%PREFIX%"  # [win]
     # All these endpotins failed at some point due to various reasons.
     - ncdump -h "http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic"
     - ncdump -h "https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc"
