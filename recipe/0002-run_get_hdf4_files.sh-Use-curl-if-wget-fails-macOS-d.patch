@@ -6,18 +6,17 @@ Subject: [PATCH 2/9] run_get_hdf4_files.sh: Use curl if wget fails (macOS
 
 ---
  hdf4_test/run_get_hdf4_files.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/hdf4_test/run_get_hdf4_files.sh b/hdf4_test/run_get_hdf4_files.sh
 index 566dee94..d3d46a9b 100755
 --- a/hdf4_test/run_get_hdf4_files.sh
 +++ b/hdf4_test/run_get_hdf4_files.sh
-@@ -21,7 +21,9 @@ echo "Getting HDF4 test files $file_list"
+@@ -21,7 +21,8 @@ echo "Getting HDF4 test files $file_list"
  for f1 in $file_list
  do
      if ! test -f $f1; then
 -	wget "ftp://ftp.unidata.ucar.edu/pub/netcdf/sample_data/hdf4/$f1.gz"
-+	type /opt/conda/conda-bld/libnetcdf_1526172369124/work/hdf4_test/run_get_hdf4_files.sh
 +	wget "ftp://ftp.unidata.ucar.edu/pub/netcdf/sample_data/hdf4/$f1.gz" || \
 +	  curl -O "ftp://ftp.unidata.ucar.edu/pub/netcdf/sample_data/hdf4/$f1.gz"
  	gunzip $f1.gz
