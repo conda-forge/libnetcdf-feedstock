@@ -22,6 +22,8 @@ source:
     - 0007-Fix-broken-test.patch
     - 0008-Finish-the-missing-code-to-handle-VS-in-test_common..patch
     # - 0009-Add-some-extra-debugging.patch
+    # https://github.com/Unidata/netcdf4-python/issues/836
+    - higher_timeout.patch
 
 build:
   number: 0
