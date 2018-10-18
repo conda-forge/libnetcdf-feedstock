@@ -9,7 +9,7 @@ channel_sources:
 channel_targets:
 - conda-forge gcc7
 curl:
-- '7.59'
+- '7.61.1'
 docker_image:
 - condaforge/linux-anvil-comp7
 hdf4:
