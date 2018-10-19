@@ -32,7 +32,7 @@ fi
 
 # Build static.
 cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-      -DCMAKE_INSTALL_LIBDIR:PATH=${PREFIX}/lib \
+      -DCMAKE_INSTALL_LIBDIR="lib" \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
       -DENABLE_DAP=ON \
       -DENABLE_HDF4=ON \
@@ -56,7 +56,7 @@ make clean
 
 # Build shared.
 cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-      -DCMAKE_INSTALL_LIBDIR:PATH=${PREFIX}/lib \
+      -DCMAKE_INSTALL_LIBDIR="lib" \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
       -DENABLE_DAP=ON \
       -DENABLE_HDF4=ON \

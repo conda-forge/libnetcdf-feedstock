@@ -26,7 +26,7 @@ source:
     - higher_timeout.patch
 
 build:
-  number: 1
+  number: 2
   run_exports:
     # C has good backcompat, C++ has poor.  Since we only build C, go with good
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
