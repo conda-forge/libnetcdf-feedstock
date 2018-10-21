@@ -21,7 +21,7 @@ source:
     - higher_timeout.patch
 
 build:
-  number: 11
+  number: 200
   run_exports:
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
     - {{ pin_subpackage('libnetcdf') }}
@@ -38,14 +38,14 @@ requirements:
     - curl
     - zlib
     - hdf4
-    - hdf5
+    - hdf5 1.10.2
     - jpeg
   run:
     - bzip2
     - curl
     - zlib
     - hdf4
-    - hdf5
+    - hdf5 1.10.2
     - jpeg
     # Curl should be pulling this... Investigate it later.
     - libssh2  # [win]
