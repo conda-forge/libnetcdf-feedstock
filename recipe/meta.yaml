@@ -38,14 +38,14 @@ requirements:
     - curl
     - zlib
     - hdf4
-    - hdf5 1.10.2
+    - hdf5
     - jpeg
   run:
     - bzip2
     - curl
     - zlib
     - hdf4
-    - hdf5 1.10.2
+    - hdf5
     - jpeg
     # Curl should be pulling this... Investigate it later.
     - libssh2  # [win]
