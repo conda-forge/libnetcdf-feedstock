@@ -21,7 +21,7 @@ source:
     - higher_timeout.patch
 
 build:
-  number: 200
+  number: 1010
   run_exports:
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
     - {{ pin_subpackage('libnetcdf') }}
@@ -38,14 +38,14 @@ requirements:
     - curl
     - zlib
     - hdf4
-    - hdf5 1.10.2
+    - hdf5
     - jpeg
   run:
     - bzip2
     - curl
     - zlib
     - hdf4
-    - hdf5 1.10.2
+    - hdf5
     - jpeg
     # Curl should be pulling this... Investigate it later.
     - libssh2  # [win]
@@ -60,7 +60,7 @@ test:
     - ncdump -h "https://data.nodc.noaa.gov/thredds/dodsC/ioos/sccoos/scripps_pier/scripps_pier-2016.nc"
     - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/hioos/model/atm/ncep_pac/NCEP_Pacific_Atmospheric_Model_best.ncd"
     - ncdump -h "http://oos.soest.hawaii.edu/thredds/dodsC/usgs_dem_10m_tinian"
-    - ncdump -h "https://www.ncei.noaa.gov/thredds/dodsC/namanl/201609/20160929/namanl_218_20160929_1800_006.grb"
+     #- ncdump -h "https://www.ncei.noaa.gov/thredds/dodsC/namanl/201609/20160929/namanl_218_20160929_1800_006.grb"
 
 about:
   home: http://www.unidata.ucar.edu/software/netcdf/
