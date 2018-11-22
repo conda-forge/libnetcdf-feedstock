@@ -4,79 +4,9 @@ Date: Fri, 11 May 2018 17:13:39 -0500
 Subject: [PATCH 5/9] Convert some c99 to c89 (by hand)
 
 ---
- libdispatch/drc.c          | 6 ++++--
- libdispatch/nchashmap.c    | 6 ++++--
- libsrc4/nc4hdf.c           | 1 +
  nc_test/tst_def_var_fill.c | 3 ++-
  oc2/ocnode.c               | 3 ++-
- 5 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/libdispatch/drc.c b/libdispatch/drc.c
-index e2de99de..ffe6c60b 100644
---- a/libdispatch/drc.c
-+++ b/libdispatch/drc.c
-@@ -19,6 +19,7 @@ See LICENSE.txt for license information.
- #include "ncrc.h"
- #include "nclog.h"
- #include "ncwinpath.h"
-+#include <stdint.h>
- 
- #define RCFILEENV "DAPRCFILE"
- 
-@@ -366,9 +367,10 @@ rclocate(const char* key, const char* hostport)
-     if(hostport == NULL) hostport = "";
- 
-     for(found=0,i=0;i<nclistlength(rc);i++) {
--	triple = (NCTriple*)nclistget(rc,i);
--        size_t hplen = (triple->host == NULL ? 0 : strlen(triple->host));
-         int t;
-+        size_t hplen;
-+	triple = (NCTriple*)nclistget(rc,i);
-+        hplen = (triple->host == NULL ? 0 : strlen(triple->host));
-         if(strcmp(key,triple->key) != 0) continue; /* keys do not match */
-         /* If the triple entry has no url, then use it
-            (because we have checked all other cases)*/
-diff --git a/libdispatch/nchashmap.c b/libdispatch/nchashmap.c
-index 584c0b19..0a42b35e 100644
---- a/libdispatch/nchashmap.c
-+++ b/libdispatch/nchashmap.c
-@@ -150,11 +150,12 @@ NC_hashmapadd(NC_hashmap* hash, void* data, const char* key)
- 
-     for(;;) {
- 	size_t index, hashkey;
-+	NC_hentry* entry;
- 	if(!locate(hash,key,&index,&hashkey,1)) {
- 	    rehash(hash);
- 	    continue; /* try on larger table */
- 	}
--        NC_hentry* entry = &hash->table[index];
-+        entry = &hash->table[index];
- 	if(entry->flags & ACTIVE) {
- 	    /* key already exists in table => overwrite */
- 	    entry->data = data;
-@@ -263,8 +264,9 @@ findPrimeGreaterThan(size_t val)
-       v = (unsigned int)val;
- 
-       for(;;) {
-+	int m;
- 	if(L >= R) break;
--            int m = (L + R) / 2;
-+            m = (L + R) / 2;
- 	/* is this an acceptable prime? */
-             if(NC_primes[m-1] < v && NC_primes[m] >= v)
- 	    return NC_primes[m]; /* acceptable*/
-diff --git a/libsrc4/nc4hdf.c b/libsrc4/nc4hdf.c
-index 597f7ebc..2943c1ac 100644
---- a/libsrc4/nc4hdf.c
-+++ b/libsrc4/nc4hdf.c
-@@ -20,6 +20,7 @@
- #include "nc4dispatch.h"
- #include <H5DSpublic.h>
- #include <math.h>
-+#include <inttypes.h>
- 
- #ifdef HAVE_INTTYPES_H
- #define __STDC_FORMAT_MACROS
 diff --git a/nc_test/tst_def_var_fill.c b/nc_test/tst_def_var_fill.c
 index 30d256b1..ee4ba6d3 100644
 --- a/nc_test/tst_def_var_fill.c
