@@ -13,7 +13,6 @@ source:
     - 0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - 0005-Convert-some-c99-to-c89-by-hand.patch
     - 0006-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
-    - 0007-Fix-broken-test.patch
     - 0008-Finish-the-missing-code-to-handle-VS-in-test_common..patch
     - prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     # https://github.com/Unidata/netcdf4-python/issues/836
