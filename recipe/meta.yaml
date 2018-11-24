@@ -21,7 +21,7 @@ source:
     - higher_timeout.patch
 
 build:
-  number: 1010
+  number: 1011
   run_exports:
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
     - {{ pin_subpackage('libnetcdf') }}
