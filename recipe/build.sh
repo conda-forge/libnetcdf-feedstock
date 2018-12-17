@@ -1,6 +1,10 @@
 #!/bin/bash
 
 if [[ ${c_compiler} != "toolchain_c" ]]; then
+    # This is needed to make sure the build env path doesn't
+    # leak into the build.
+    export CC=$(basename ${CC})
+
     declare -a CMAKE_PLATFORM_FLAGS
     if [[ ${HOST} =~ .*darwin.* ]]; then
         CMAKE_PLATFORM_FLAGS+=(-DCMAKE_OSX_SYSROOT="${CONDA_BUILD_SYSROOT}")
@@ -82,3 +86,15 @@ ctest -VV
 # Leave this test where it is. ATM, conda-build deletes host prefixes by the time it runs the
 # package tests which makes investigating problems very tricky. Pinging @msarahan about that.
 ncdump/ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic || exit $?
+
+if [[ ${c_compiler} != "toolchain_c" ]]; then
+    # Fix build paths in cmake artifacts
+    for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
+        sed -i.bak "s#${BUILD_PREFIX}#\$ENV\{BUILD_PREFIX\}#g" ${fname}
+        rm ${fname}.bak
+    done
+
+    # Fix build paths in nc-config
+    sed -i.bak "s#${BUILD_PREFIX}/bin/${CC}#${CC}#g" ${PREFIX}/bin/nc-config
+    rm ${PREFIX}/bin/nc-config.bak
+fi
