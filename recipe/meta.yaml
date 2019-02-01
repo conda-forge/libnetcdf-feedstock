@@ -16,7 +16,7 @@ source:
     - prevent_MS_runtime_libs_being_installed_again.patch  # [win]
 
 build:
-  number: 1001
+  number: 1002
   skip: True  # [win and vc<14]
   run_exports:
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
