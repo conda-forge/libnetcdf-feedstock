@@ -52,9 +52,8 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_CDF5=ON \
       ${CMAKE_PLATFORM_FLAGS[@]} \
       ${SRC_DIR}
-make -j${CPU_COUNT} ${VERBOSE_CM}
 # ctest  # Run only for the shared lib build to save time.
-make install -j${CPU_COUNT}
+make install -j${CPU_COUNT} ${VERBOSE_CM}
 make clean
 
 # Build shared.
@@ -73,9 +72,8 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_CDF5=ON \
       ${CMAKE_PLATFORM_FLAGS[@]} \
       ${SRC_DIR}
-make -j${CPU_COUNT} ${VERBOSE_CM}
-make install -j${CPU_COUNT}
-ctest -VV
+make install -j${CPU_COUNT} ${VERBOSE_CM}
+ctest -VV -E nc_test
 
 # Leave this test where it is. ATM, conda-build deletes host prefixes by the time it runs the
 # package tests which makes investigating problems very tricky. Pinging @msarahan about that.
