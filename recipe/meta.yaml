@@ -1,4 +1,4 @@
-{% set version = "4.6.2" %}
+{% set version = "4.6.2.1" %}
 
 package:
   name: libnetcdf
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  sha256: 673936c76ae0c496f6dde7e077f5be480afc1e300adb2c200bf56fbe22e5a82a
+  sha256: 8a62b2b5890fef10c1e32b266924f1974ac1c153358e111e764163097b3793b0
   patches:
     - 0002-run_get_hdf4_files.sh-Use-curl-if-wget-fails-macOS-d.patch
     - 0003-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch
@@ -16,7 +16,7 @@ source:
     - prevent_MS_runtime_libs_being_installed_again.patch  # [win]
 
 build:
-  number: 1001
+  number: 0
   skip: True  # [win and vc<14]
   run_exports:
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
