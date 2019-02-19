@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  sha256: f5526423f11ec6c582025710d144438a707afca0499dc00f9fe6067aa8676aac
+  sha256: ee3bde9b3322644c05c752d0b56fcb71d30df4a5d33ccf5daa738eaebd0c382b
   patches:
     # - patches/0002-run_get_hdf4_files.sh-Use-curl-if-wget-fails-macOS-d.patch
     - patches/0003-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch
