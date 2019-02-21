@@ -81,7 +81,7 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       ${SRC_DIR}
 make -j${CPU_COUNT} ${VERBOSE_CM}
 make install -j${CPU_COUNT}
-ctest -VV
+ctest -VV --output-on-failure
 
 # Leave this test where it is. ATM, conda-build deletes host prefixes by the time it runs the
 # package tests which makes investigating problems very tricky. Pinging @msarahan about that.
