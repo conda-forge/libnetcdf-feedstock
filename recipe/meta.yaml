@@ -8,7 +8,7 @@ source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
   sha256: 734a629cdaed907201084d003cfa091806d6080eeffbd4204e7c7f73ff9d3564
   patches:
-    - 0002-run_get_hdf4_files.sh-Use-curl-if-wget-fails-macOS-d.patch
+    # - 0002-run_get_hdf4_files.sh-Use-curl-if-wget-fails-macOS-d.patch
     - 0003-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch
     - 0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - 0006-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
