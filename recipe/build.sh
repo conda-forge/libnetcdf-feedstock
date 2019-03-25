@@ -26,7 +26,9 @@ if [[ ${c_compiler} != "toolchain_c" ]]; then
         #  or to fix ld64 so that it checks for symbols being used in this section).
         export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
     else
-        CMAKE_PLATFORM_FLAGS+=(-DCMAKE_TOOLCHAIN_FILE="${RECIPE_DIR}/cross-linux.cmake")
+        export PATH="${PATH}:${BUILD_PREFIX}/${HOST}/sysroot/usr/lib:${BUILD_PREFIX}/${HOST}/sysroot/usr/include"
+        # Please don't add this again
+        # CMAKE_PLATFORM_FLAGS+=(-DCMAKE_TOOLCHAIN_FILE="${RECIPE_DIR}/cross-linux.cmake")
     fi
 fi
 
@@ -34,6 +36,7 @@ if [[ ${DEBUG_C} == yes ]]; then
   CMAKE_BUILD_TYPE=Debug
 else
   CMAKE_BUILD_TYPE=Release
+  export CFLAGS="$CFLAGS -DNDEBUG"
 fi
 
 # Build static.
