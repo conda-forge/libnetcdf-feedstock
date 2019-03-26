@@ -1,6 +1,0 @@
-show_channel_urls: true
-featureless_minimization_disabled_feature_flag: true
-
-channels:
-  - conda-forge
-  - defaults
