@@ -1,9 +1,11 @@
+CMAKE_GENERATOR:
+- NMake Makefiles
 bzip2:
 - '1'
 c_compiler:
 - vs2015
 channel_sources:
-- conda-forge,defaults
+- c3i_test2,conda-forge,defaults
 channel_targets:
 - conda-forge main
 curl:

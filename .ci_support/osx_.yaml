@@ -4,8 +4,10 @@ bzip2:
 - '1'
 c_compiler:
 - clang
+c_compiler_version:
+- '4'
 channel_sources:
-- conda-forge,defaults
+- c3i_test2,conda-forge,defaults
 channel_targets:
 - conda-forge main
 curl:
