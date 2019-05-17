@@ -1,9 +1,11 @@
-CMAKE_GENERATOR:
-- NMake Makefiles
+MACOSX_DEPLOYMENT_TARGET:
+- '10.9'
 bzip2:
 - '1'
 c_compiler:
-- vs2015
+- clang
+c_compiler_version:
+- '4'
 channel_sources:
 - conda-forge,defaults
 channel_targets:
@@ -14,8 +16,12 @@ hdf4:
 - '4.2'
 jpeg:
 - '9'
+macos_machine:
+- x86_64-apple-darwin13.4.0
+macos_min_version:
+- '10.9'
 mpi:
-- nompi
+- openmpi
 pin_run_as_build:
   bzip2:
     max_pin: x
@@ -25,14 +31,7 @@ pin_run_as_build:
     max_pin: x.x
   jpeg:
     max_pin: x
-  vc:
-    max_pin: x
   zlib:
     max_pin: x.x
-vc:
-- '14'
-zip_keys:
-- - vc
-  - c_compiler
 zlib:
 - '1.2'
