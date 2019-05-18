@@ -1,4 +1,12 @@
 {% set version = "4.6.3" %}
+{% set build = 2 %}
+
+# recipe-lint fails if mpi is undefined
+{% set mpi = mpi or 'nompi' %}
+{% if mpi == "nompi" %}
+# prioritize nompi via build number
+{% set build = build + 100 %}
+{% endif %}
 
 package:
   name: libnetcdf
@@ -15,11 +23,34 @@ source:
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
 
 build:
-  number: 1
+  number: {{ build }}
   skip: True  # [win and vc<14]
+  {% if mpi != "nompi" %}
+  {% set mpi_prefix = "mpi_" + mpi %}
+  {% else %}
+  {% set mpi_prefix = "nompi" %}
+  {% endif %}
+  # add build string so packages can depend on
+  # mpi or nompi variants
+  # dependencies:
+  # `PKG_NAME * mpi_mpich_*` for mpich
+  # `PKG_NAME * mpi_*` for any mpi
+  # `PKG_NAME * nompi_*` for no mpi
+  string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
+
+  # mpi builds require the right mpi
+  # non-mpi builds *do not* appear to require non-mpi builds
+  # at least not always
+
+  {% if mpi != 'nompi' %}
+  {% set build_pin = mpi_prefix + '_*' %}
+  {% else %}
+  {% set build_pin = '' %}
+  {% endif %}
+
   run_exports:
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
-    - {{ pin_subpackage('libnetcdf') }}
+    - {{ pin_subpackage('libnetcdf') }} {{ build_pin }}
 
 requirements:
   build:
@@ -28,19 +59,21 @@ requirements:
     - pkg-config  # [not win]
     - {{ compiler('c') }}
   host:
+    - {{ mpi }}  # [mpi != 'nompi']
     - msinttypes  # [win and vc<14]
     - bzip2
     - curl
     - zlib
     - hdf4
-    - hdf5
+    - hdf5 * {{ mpi_prefix }}_*
     - jpeg
   run:
+    - {{ mpi }}  # [mpi != 'nompi']
     - bzip2
     - curl
     - zlib
     - hdf4
-    - hdf5
+    - hdf5 * {{ mpi_prefix }}_*
     - jpeg
     # Curl should be pulling this... Investigate it later.
     - libssh2  # [win]
