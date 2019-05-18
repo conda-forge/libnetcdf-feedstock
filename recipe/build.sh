@@ -5,6 +5,11 @@ if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export CC=mpicc
   export TESTPROC=4
   export OMPI_MCA_rmaps_base_oversubscribe=yes
+  export OMPI_MCA_btl=self,tcp
+  export OMPI_MCA_plm=isolated
+  export OMPI_MCA_rmaps_base_oversubscribe=yes
+  export OMPI_MCA_btl_vader_single_copy_mechanism=none
+  mpiexec="mpiexec --allow-run-as-root"
 else
   export CC=$(basename ${CC})
   PARALLEL=""
