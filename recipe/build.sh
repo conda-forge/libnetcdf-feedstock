@@ -3,6 +3,8 @@
 if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON"
   export CC=mpicc
+  export TESTPROC=4
+  export OMPI_MCA_rmaps_base_oversubscribe=yes
 else
   export CC=$(basename ${CC})
   PARALLEL=""
