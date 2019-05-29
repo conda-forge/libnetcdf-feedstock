@@ -21,6 +21,7 @@ source:
     - patches/0006-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
     - patches/0008-Finish-the-missing-code-to-handle-VS-in-test_common..patch
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
+    - patches/strdup.patch
 
 build:
   number: {{ build }}

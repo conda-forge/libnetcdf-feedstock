@@ -1,0 +1,15 @@
+--- netcdf-c-4.7.0.orig/include/ncconfigure.h	2019-04-29 13:54:26.000000000 -0300
++++ netcdf-c-4.7.0/include/ncconfigure.h	2019-05-24 16:43:22.954239768 -0300
+@@ -25,9 +25,9 @@
+ defined and missing types defined.
+ */
+ 
+-#ifndef HAVE_STRDUP
+-extern char* strdup(const char*);
+-#endif
++// #ifndef HAVE_STRDUP
++// extern char* strdup(const char*);
++// #endif
+ 
+ /* handle null arguments */
+ #ifndef nulldup
