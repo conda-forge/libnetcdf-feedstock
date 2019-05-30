@@ -1,22 +1,7 @@
-From cfd8c1558648975786e925cc86fd19a0be314bfe Mon Sep 17 00:00:00 2001
-From: Ray Donnelly <mingw.android@gmail.com>
-Date: Sat, 12 May 2018 11:35:22 -0500
-Subject: [PATCH 8/9] Finish the missing code to handle VS in test_common.in
-
-Now the testsuite should be able to run.
----
- CMakeLists.txt           | 7 +++++++
- configure.ac             | 1 +
- examples/CDL/do_comps.sh | 8 +++++---
- ncdump/tst_netcdf4.sh    | 2 +-
- test_common.in           | 9 +++++++--
- 5 files changed, 21 insertions(+), 6 deletions(-)
-
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 93e2806a..7085e26e 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -1876,6 +1876,13 @@ FILE(COPY ${netCDF_SOURCE_DIR}/include/netcdf_meta.h
+diff -Naur netcdf-c-4.7.0.orig/CMakeLists.txt netcdf-c-4.7.0/CMakeLists.txt
+--- netcdf-c-4.7.0.orig/CMakeLists.txt	2019-04-29 13:54:26.000000000 -0300
++++ netcdf-c-4.7.0/CMakeLists.txt	2019-05-24 16:54:56.463280922 -0300
+@@ -2004,6 +2004,13 @@
  SET(EXTRA_DIST ${EXTRA_DIST} ${CMAKE_SOURCE_DIR}/test_common.in)
  SET(TOPSRCDIR "${CMAKE_SOURCE_DIR}")
  SET(TOPBUILDDIR "${CMAKE_BINARY_DIR}")
@@ -30,23 +15,21 @@ index 93e2806a..7085e26e 100644
  configure_file(${CMAKE_SOURCE_DIR}/test_common.in ${CMAKE_BINARY_DIR}/test_common.sh @ONLY NEWLINE_STYLE LF)
  
  #####
-diff --git a/configure.ac b/configure.ac
-index b0552d60..edef2db1 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -1333,6 +1333,7 @@ AC_SUBST(HAS_MMAP,[$enable_mmap])
+diff -Naur netcdf-c-4.7.0.orig/configure.ac netcdf-c-4.7.0/configure.ac
+--- netcdf-c-4.7.0.orig/configure.ac	2019-04-29 13:54:26.000000000 -0300
++++ netcdf-c-4.7.0/configure.ac	2019-05-24 16:55:35.063263646 -0300
+@@ -1423,6 +1423,7 @@
  AC_SUBST(HAS_JNA,[$enable_jna])
- AC_SUBST(RELAX_COORD_BOUND,[$enable_relax_coord_bound])
+ AC_SUBST(RELAX_COORD_BOUND,[$enable_zero_length_coord_bound])
  AC_SUBST(HAS_ERANGE_FILL,[$enable_erange_fill])
 +AC_SUBST(VS_CONFIGURATION,[])
+ AC_SUBST(HAS_BYTERANGE,[$enable_byterange])
  
  # Include some specifics for netcdf on windows.
- #AH_VERBATIM([_WIN32_STRICMP],
-diff --git a/examples/CDL/do_comps.sh b/examples/CDL/do_comps.sh
-index 88f80f91..e25ffe2c 100755
---- a/examples/CDL/do_comps.sh
-+++ b/examples/CDL/do_comps.sh
-@@ -2,6 +2,8 @@
+diff -Naur netcdf-c-4.7.0.orig/examples/CDL/do_comps.sh netcdf-c-4.7.0/examples/CDL/do_comps.sh
+--- netcdf-c-4.7.0.orig/examples/CDL/do_comps.sh	2019-04-29 13:54:26.000000000 -0300
++++ netcdf-c-4.7.0/examples/CDL/do_comps.sh	2019-05-24 16:57:21.719448576 -0300
+@@ -9,6 +9,8 @@
  # This shell script runs the cmp test on the example programs.
  # $Id: do_comps.sh,v 1.1 2006/06/27 17:44:54 ed Exp $
  
@@ -55,7 +38,7 @@ index 88f80f91..e25ffe2c 100755
  set -e
  
  ##
-@@ -11,13 +13,13 @@ set -e
+@@ -18,13 +20,13 @@
  echo ""
  echo "*** Creating example data files from CDL scripts."
  echo "*** creating simple_xy.nc..."
@@ -72,11 +55,10 @@ index 88f80f91..e25ffe2c 100755
  
  echo "*** All example creations worked!"
  
-diff --git a/ncdump/tst_netcdf4.sh b/ncdump/tst_netcdf4.sh
-index 4c126025..8e8f8948 100755
---- a/ncdump/tst_netcdf4.sh
-+++ b/ncdump/tst_netcdf4.sh
-@@ -74,7 +74,7 @@ ${NCDUMP} tst_nans.nc | sed 's/e+0/e+/g' > tst_nans.cdl ; ERR
+diff -Naur netcdf-c-4.7.0.orig/ncdump/tst_netcdf4.sh netcdf-c-4.7.0/ncdump/tst_netcdf4.sh
+--- netcdf-c-4.7.0.orig/ncdump/tst_netcdf4.sh	2019-04-29 13:54:26.000000000 -0300
++++ netcdf-c-4.7.0/ncdump/tst_netcdf4.sh	2019-05-24 16:58:36.655755694 -0300
+@@ -89,7 +89,7 @@
  diff -b tst_nans.cdl $srcdir/ref_tst_nans.cdl ; ERR
  
  # Do unicode test only if it exists => BUILD_UTF8 is true
@@ -85,11 +67,10 @@ index 4c126025..8e8f8948 100755
    echo "*** dumping tst_unicode.nc to tst_unicode.cdl..."
    ${execdir}/tst_unicode ; ERR
  ${NCDUMP} tst_unicode.nc | sed 's/e+0/e+/g' > tst_unicode.cdl ; ERR
-diff --git a/test_common.in b/test_common.in
-index b8af5185..30e4c4a5 100644
---- a/test_common.in
-+++ b/test_common.in
-@@ -59,8 +59,8 @@ if test "x$SETX" = x1 ; then set -x ; fi
+diff -Naur netcdf-c-4.7.0.orig/test_common.in netcdf-c-4.7.0/test_common.in
+--- netcdf-c-4.7.0.orig/test_common.in	2019-04-29 13:54:26.000000000 -0300
++++ netcdf-c-4.7.0/test_common.in	2019-05-24 16:59:34.376077455 -0300
+@@ -66,8 +66,8 @@
  top_srcdir="$TOPSRCDIR"
  top_builddir="$TOPBUILDDIR"
  
@@ -100,7 +81,7 @@ index b8af5185..30e4c4a5 100644
  
  # srcdir may or may not be defined, but if not, then create it
  if test "x$srcdir" = x ; then
-@@ -77,6 +77,11 @@ builddir=`pwd`
+@@ -84,6 +84,11 @@
  # execdir is an alias for builddir
  execdir="${builddir}"
  
@@ -112,6 +93,3 @@ index b8af5185..30e4c4a5 100644
  # pick off the last component as the relative name of this directory
  thisdir=`basename $srcdir`
  
--- 
-2.15.0
-
