@@ -1,21 +1,10 @@
 #!/bin/bash
 
-if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
-  export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON"
-  export CC=mpicc
-  export TESTPROC=4
-  export OMPI_MCA_rmaps_base_oversubscribe=yes
-  export OMPI_MCA_btl=self,tcp
-  export OMPI_MCA_plm=isolated
-  export OMPI_MCA_rmaps_base_oversubscribe=yes
-  export OMPI_MCA_btl_vader_single_copy_mechanism=none
-  mpiexec="mpiexec --allow-run-as-root"
-else
-  export CC=$(basename ${CC})
-  PARALLEL=""
-fi
-
 if [[ ${c_compiler} != "toolchain_c" ]]; then
+    # This is needed to make sure the build env path doesn't
+    # leak into the build.
+    export CC=$(basename ${CC})
+
     declare -a CMAKE_PLATFORM_FLAGS
     if [[ ${HOST} =~ .*darwin.* ]]; then
         CMAKE_PLATFORM_FLAGS+=(-DCMAKE_OSX_SYSROOT="${CONDA_BUILD_SYSROOT}")
@@ -64,7 +53,6 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCURL_LIBRARY=${PREFIX}/lib/libcurl${SHLIB_EXT} \
       -DENABLE_CDF5=ON \
       ${CMAKE_PLATFORM_FLAGS[@]} \
-      ${PARALLEL} \
       ${SRC_DIR}
 make -j${CPU_COUNT} ${VERBOSE_CM}
 # ctest  # Run only for the shared lib build to save time.
@@ -88,7 +76,6 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCURL_LIBRARY=${PREFIX}/lib/libcurl${SHLIB_EXT} \
       -DENABLE_CDF5=ON \
       ${CMAKE_PLATFORM_FLAGS[@]} \
-      ${PARALLEL} \
       ${SRC_DIR}
 make -j${CPU_COUNT} ${VERBOSE_CM}
 make install -j${CPU_COUNT}

@@ -1,12 +1,4 @@
-{% set version = "4.7.0" %}
-{% set build = 1 %}
-
-# recipe-lint fails if mpi is undefined
-{% set mpi = mpi or 'nompi' %}
-{% if mpi == "nompi" %}
-# prioritize nompi via build number
-{% set build = build + 100 %}
-{% endif %}
+{% set version = "4.6.2" %}
 
 package:
   name: libnetcdf
@@ -14,44 +6,21 @@ package:
 
 source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  sha256: 26d03164074363b3911ed79b7cddd045c22adf5ebaf978943db11a1d9f15e9d3
+  sha256: 673936c76ae0c496f6dde7e077f5be480afc1e300adb2c200bf56fbe22e5a82a
   patches:
+    - patches/0002-run_get_hdf4_files.sh-Use-curl-if-wget-fails-macOS-d.patch
     - patches/0003-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - patches/0006-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
     - patches/0008-Finish-the-missing-code-to-handle-VS-in-test_common..patch
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
-    - patches/strdup.patch
 
 build:
-  number: {{ build }}
+  number: 1002
   skip: True  # [win and vc<14]
-  {% if mpi != "nompi" %}
-  {% set mpi_prefix = "mpi_" + mpi %}
-  {% else %}
-  {% set mpi_prefix = "nompi" %}
-  {% endif %}
-  # add build string so packages can depend on
-  # mpi or nompi variants
-  # dependencies:
-  # `PKG_NAME * mpi_mpich_*` for mpich
-  # `PKG_NAME * mpi_*` for any mpi
-  # `PKG_NAME * nompi_*` for no mpi
-  string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
-
-  # mpi builds require the right mpi
-  # non-mpi builds *do not* appear to require non-mpi builds
-  # at least not always
-
-  {% if mpi != 'nompi' %}
-  {% set build_pin = mpi_prefix + '_*' %}
-  {% else %}
-  {% set build_pin = '' %}
-  {% endif %}
-
   run_exports:
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
-    - {{ pin_subpackage('libnetcdf') }} {{ build_pin }}
+    - {{ pin_subpackage('libnetcdf') }}
 
 requirements:
   build:
@@ -60,21 +29,19 @@ requirements:
     - pkg-config  # [not win]
     - {{ compiler('c') }}
   host:
-    - {{ mpi }}  # [mpi != 'nompi']
     - msinttypes  # [win and vc<14]
     - bzip2
     - curl
     - zlib
     - hdf4
-    - hdf5 * {{ mpi_prefix }}_*
+    - hdf5
     - jpeg
   run:
-    - {{ mpi }}  # [mpi != 'nompi']
     - bzip2
     - curl
     - zlib
     - hdf4
-    - hdf5 * {{ mpi_prefix }}_*
+    - hdf5
     - jpeg
     # Curl should be pulling this... Investigate it later.
     - libssh2  # [win]
