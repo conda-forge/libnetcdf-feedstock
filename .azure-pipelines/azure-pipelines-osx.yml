@@ -10,11 +10,8 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      osx_mpinompi:
-        CONFIG: osx_mpinompi
-        UPLOAD_PACKAGES: True
-      osx_mpiopenmpi:
-        CONFIG: osx_mpiopenmpi
+      osx_:
+        CONFIG: osx_
         UPLOAD_PACKAGES: True
 
   steps:
