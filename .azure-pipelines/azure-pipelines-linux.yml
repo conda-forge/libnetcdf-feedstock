@@ -10,6 +10,10 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
+      linux_mpimpich:
+        CONFIG: linux_mpimpich
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
       linux_mpinompi:
         CONFIG: linux_mpinompi
         UPLOAD_PACKAGES: True
