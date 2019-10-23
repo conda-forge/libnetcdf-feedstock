@@ -6,7 +6,7 @@ set BUILD_TYPE=Release
 :: set BUILD_TYPE=Debug
 set HDF5_DIR=%LIBRARY_PREFIX%\cmake\hdf5
 
-cmake -G "%CMAKE_GENERATOR%" ^
+cmake -G "NMake Makefiles" ^
       -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
       -DBUILD_SHARED_LIBS=ON ^
       -DENABLE_TESTS=ON ^
