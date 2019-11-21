@@ -2,9 +2,9 @@ diff -Naur netcdf-c-4.7.0.orig/CMakeLists.txt netcdf-c-4.7.0/CMakeLists.txt
 --- netcdf-c-4.7.0.orig/CMakeLists.txt	2019-04-29 13:54:26.000000000 -0300
 +++ netcdf-c-4.7.0/CMakeLists.txt	2019-05-24 16:54:56.463280922 -0300
 @@ -2013,6 +2013,13 @@
-SET(EXTRA_DIST ${EXTRA_DIST} ${CMAKE_CURRENT_SOURCE_DIR}/test_common.in)
-SET(TOPSRCDIR "${CMAKE_CURRENT_SOURCE_DIR}")
-SET(TOPBUILDDIR "${CMAKE_CURRENT_BINARY_DIR}")
+ SET(EXTRA_DIST ${EXTRA_DIST} ${CMAKE_CURRENT_SOURCE_DIR}/test_common.in)
+ SET(TOPSRCDIR "${CMAKE_CURRENT_SOURCE_DIR}")
+ SET(TOPBUILDDIR "${CMAKE_CURRENT_BINARY_DIR}")
 +IF(MSVC)
 +  # Seems this is always upper-case by this point :-(
 +  SET(VS_CONFIGURATION "/${CMAKE_BUILD_TYPE}")
