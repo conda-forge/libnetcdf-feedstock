@@ -1,5 +1,5 @@
-{% set version = "4.7.1" %}
-{% set build = 2 %}
+{% set version = "4.7.2" %}
+{% set build = 1 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -14,7 +14,7 @@ package:
 
 source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  sha256: 583e6b89c57037293fc3878c9181bb89151da8c6015ecea404dd426fea219b2c
+  sha256: 7648db7bd75fdd198f7be64625af7b276067de48a49dcdfd160f1c2ddff8189c
   patches:
     - patches/0003-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
