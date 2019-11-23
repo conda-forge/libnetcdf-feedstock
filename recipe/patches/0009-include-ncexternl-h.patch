@@ -1,0 +1,12 @@
+index 9f34b80..97bf41c 100644
+--- a/include/CMakeLists.txt
++++ b/include/CMakeListFix.txt
+@@ -28,6 +28,10 @@ IF(ENABLE_PNETCDF OR ENABLE_PARALLEL4)
+   INSTALL(FILES ${netCDF_SOURCE_DIR}/include/netcdf_par.h
+     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+     COMPONENT headers)
++
++  INSTALL(FILES ${netCDF_SOURCE_DIR}/include/ncexternl.h
++    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
++    COMPONENT headers)
+ ENDIF()
