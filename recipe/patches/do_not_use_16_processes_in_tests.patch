@@ -1,0 +1,15 @@
+diff --git a/nc_test4/run_par_test.sh.in b/nc_test4/run_par_test.sh.in
+index 2bd12fff..cc492ce5 100644
+--- a/nc_test4/run_par_test.sh.in
++++ b/nc_test4/run_par_test.sh.in
+@@ -17,8 +17,8 @@ echo
+ echo "Testing very simple parallel I/O with 4 processors..."
+ @MPIEXEC@ -n 4 ./tst_parallel
+ echo
+-echo "Testing simple parallel I/O with 16 processors..."
+-@MPIEXEC@ -n 16 ./tst_parallel3
++echo "Testing simple parallel I/O with 16 processors... [Patched to 4 processors]"
++@MPIEXEC@ -n 4 ./tst_parallel3
+ echo
+ echo "num_proc   time(s)  write_rate(B/s)"
+ @MPIEXEC@ -n 1 ./tst_parallel4

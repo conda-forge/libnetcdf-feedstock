@@ -23,6 +23,7 @@ source:
     - patches/0009-topsrcdir.patch
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     - patches/strdup.patch
+    - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
 
 build:
   number: {{ build }}
