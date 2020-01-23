@@ -68,7 +68,7 @@ requirements:
     - curl
     - zlib
     - hdf4
-    # without this repeat reference, conda-smithy doesn pin correctly
+    # without this repeat reference, conda-smithy doesn't pin correctly
     - hdf5
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
@@ -78,7 +78,7 @@ requirements:
     - curl
     - zlib
     - hdf4
-    # without this repeat reference, conda-smithy doesn pin correctly
+    # without this repeat reference, conda-smithy doesn't pin correctly
     - hdf5
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
