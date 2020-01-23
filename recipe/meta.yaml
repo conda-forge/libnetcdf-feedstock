@@ -78,8 +78,6 @@ requirements:
     - curl
     - zlib
     - hdf4
-    # without this repeat reference, conda-smithy doesn't pin correctly
-    - hdf5
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
     # Curl should be pulling this... Investigate it later.
