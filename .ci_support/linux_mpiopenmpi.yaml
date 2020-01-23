@@ -14,6 +14,8 @@ docker_image:
 - condaforge/linux-anvil-comp7
 hdf4:
 - '4.2'
+hdf5:
+- 1.10.5
 jpeg:
 - '9'
 mpi:
