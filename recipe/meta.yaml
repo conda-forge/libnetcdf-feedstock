@@ -67,7 +67,9 @@ requirements:
     - bzip2
     - curl
     - zlib
-    - hdf4
+    # hdf4 doesn't seem to be well tested for Little Endian Arches
+    # I don't think it is wise to block on that in 2020
+    - hdf4  # [not aarch64]
     # without this repeat reference, conda-smithy doesn't pin correctly
     - hdf5
     - hdf5 * {{ mpi_prefix }}_*
@@ -77,7 +79,7 @@ requirements:
     - bzip2
     - curl
     - zlib
-    - hdf4
+    - hdf4  # [not aarch64]
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
     # Curl should be pulling this... Investigate it later.
