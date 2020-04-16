@@ -94,10 +94,6 @@ make -j${CPU_COUNT} ${VERBOSE_CM}
 make install -j${CPU_COUNT}
 ctest -VV --output-on-failure
 
-# Leave this test where it is. ATM, conda-build deletes host prefixes by the time it runs the
-# package tests which makes investigating problems very tricky. Pinging @msarahan about that.
-ncdump/ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic || exit $?
-
 if [[ ${c_compiler} != "toolchain_c" ]]; then
     # Fix build paths in cmake artifacts
     for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do

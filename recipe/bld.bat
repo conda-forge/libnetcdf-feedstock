@@ -38,21 +38,3 @@ ctest -VV
 
 cmake --build . --config %BUILD_TYPE% --target install
 if errorlevel 1 exit \b 1
-
-:: Please do not remove this.
-echo If you need to debug this in Visual Studio, set BUILD_TYPE=RelWithDebInfo then:
-echo set PATH=%CD%\liblib\%BUILD_TYPE%;%CD%\liblib;%PREFIX%\Library\bin;%ORIG_PATH%
-if "%vc%" == "9" goto vc9_build2
-echo "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\devenv.exe" /debugexe %CD%\ncdump\%BUILD_TYPE%\ncdump.exe -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
-goto end_build2
-:vc9_build2
-echo "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe" /debugexe %CD%\ncdump\%BUILD_TYPE%\ncdump.exe -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
-:end_build2
-
-:: Also leave this test where it is. ATM, conda-build deletes host prefixes by the time it runs the
-:: package tests which makes investigating problems very tricky. Pinging @msarahan about that.
-:: Release builds do not get put in build subfolders for some reason:
-if exist ncdump\%BUILD_TYPE%\ncdump.exe ncdump\%BUILD_TYPE%\ncdump.exe -L 100 -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
-if exist ncdump\ncdump.exe ncdump\ncdump.exe -L 100 -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic
-
-if errorlevel 1 exit \b 1
