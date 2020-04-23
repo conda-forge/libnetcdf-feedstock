@@ -12,14 +12,12 @@ cmake -G "NMake Makefiles" ^
       -DENABLE_TESTS=ON ^
       -DENABLE_HDF4=ON ^
       -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
-      -DZLIB_LIBRARY="%LIBRARY_LIB%\zlib.lib" ^
-      -DZLIB_INCLUDE_DIR="%LIBRARY_INC%" ^
       -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
       -D ENABLE_CDF5=ON ^
       %SRC_DIR%
 if errorlevel 1 exit \b 1
 
-cmake --build . --config %BUILD_TYPE%
+cmake --build . --config %BUILD_TYPE% --target install
 if errorlevel 1 exit \b 1
 
 :: We need to add some entries to PATH before running the tests
@@ -36,5 +34,3 @@ goto end_tests
 ctest -VV
 :end_tests
 
-cmake --build . --config %BUILD_TYPE% --target install
-if errorlevel 1 exit \b 1
