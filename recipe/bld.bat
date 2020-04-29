@@ -20,6 +20,9 @@ if errorlevel 1 exit \b 1
 cmake --build . --config %BUILD_TYPE% --target install
 if errorlevel 1 exit \b 1
 
+type %LIBRARY_PREFIX%\lib\cmake\netCDF\netCDFTargets.cmake
+if errorlevel 1 exit \b 1
+
 :: We need to add some entries to PATH before running the tests
 set ORIG_PATH=%PATH%
 set PATH=%CD%\liblib\%BUILD_TYPE%;%CD%\liblib;%PREFIX%\Library\bin;%PATH%

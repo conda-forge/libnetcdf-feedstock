@@ -1,0 +1,24 @@
+From 023d3e92dfc7679dec8a9e16790aced74533a296 Mon Sep 17 00:00:00 2001
+From: Ward Fisher <wfisher@ucar.edu>
+Date: Tue, 28 Apr 2020 14:28:55 -0600
+Subject: [PATCH] Working on HDF5 package logic (when HDF5 is built using
+ cmake) in support of https://github.com/Unidata/netcdf-c/issues/1444
+
+---
+ netCDFConfig.cmake.in | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/netCDFConfig.cmake.in b/netCDFConfig.cmake.in
+index 9d68eec5a..f14bdf5b5 100644
+--- a/netCDFConfig.cmake.in
++++ b/netCDFConfig.cmake.in
+@@ -10,6 +10,9 @@ set_and_check(netCDF_INCLUDE_DIR "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@")
+ set_and_check(netCDF_LIB_DIR "@PACKAGE_CMAKE_INSTALL_LIBDIR@")
+ 
+ set(netCDF_LIBRARIES netCDF::netcdf)
++if(@HAS_HDF5@ STREQUAL "yes")
++  find_package(HDF5 COMPONENTS C HL NO_MODULE QUIET)
++endif()
+ 
+ # include target information
+ include("${CMAKE_CURRENT_LIST_DIR}/netCDFTargets.cmake")
