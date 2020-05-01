@@ -4,16 +4,20 @@ cd %SRC_DIR%\build
 set BUILD_TYPE=Release
 :: set BUILD_TYPE=RelWithDebInfo
 :: set BUILD_TYPE=Debug
-set HDF5_DIR=%LIBRARY_PREFIX%\cmake\hdf5
 
-cmake -G "NMake Makefiles" ^
+rem manually specify hdf5 paths to work-around https://github.com/Unidata/netcdf-c/issues/1444
+cmake -LAH -G "NMake Makefiles" ^
       -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
       -DBUILD_SHARED_LIBS=ON ^
       -DENABLE_TESTS=ON ^
       -DENABLE_HDF4=ON ^
       -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
       -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
-      -D ENABLE_CDF5=ON ^
+      -DENABLE_CDF5=ON ^
+      -DHDF5_C_LIBRARY="%LIBRARY_LIB:\=/%/hdf5.lib" ^
+      -DHDF5_HL_LIBRARY="%LIBRARY_LIB:\=/%/hdf5_hl.lib" ^
+      -DHDF5_INCLUDE_DIR="%LIBRARY_INC:\=/%" ^
+      -DCMAKE_C_FLAGS="-DH5_BUILT_AS_DYNAMIC_LIB" ^
       %SRC_DIR%
 if errorlevel 1 exit \b 1
 
