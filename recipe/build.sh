@@ -48,7 +48,7 @@ fi
 #       seeing as it is pretty old, I proposed skipping it as a dependency for
 #       aarch64 It seems that hdf4 is built for ppc64le, so I'm leaving it
 #       enabled for that.  We don't have
-if [[ ${target_platform} == "aarch64" ]]; then
+if [[ ${target_platform} == "linux-aarch64" ]]; then
     ENABLE_HDF4=OFF
 else
     ENABLE_HDF4=ON
