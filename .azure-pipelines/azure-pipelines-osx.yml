@@ -10,14 +10,14 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      osx_mpimpich:
-        CONFIG: osx_mpimpich
+      osx_mpimpichtarget_platformosx-64:
+        CONFIG: osx_mpimpichtarget_platformosx-64
         UPLOAD_PACKAGES: True
-      osx_mpinompi:
-        CONFIG: osx_mpinompi
+      osx_mpinompitarget_platformosx-64:
+        CONFIG: osx_mpinompitarget_platformosx-64
         UPLOAD_PACKAGES: True
-      osx_mpiopenmpi:
-        CONFIG: osx_mpiopenmpi
+      osx_mpiopenmpitarget_platformosx-64:
+        CONFIG: osx_mpiopenmpitarget_platformosx-64
         UPLOAD_PACKAGES: True
 
   steps:

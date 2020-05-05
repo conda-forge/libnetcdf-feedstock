@@ -1,17 +1,13 @@
 bzip2:
 - '1'
 c_compiler:
-- gcc
-c_compiler_version:
-- '7'
+- vs2017
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
 curl:
 - '7'
-docker_image:
-- condaforge/linux-anvil-comp7
 hdf4:
 - '4.2'
 hdf5:
@@ -19,7 +15,7 @@ hdf5:
 jpeg:
 - '9'
 mpi:
-- mpich
+- nompi
 pin_run_as_build:
   bzip2:
     max_pin: x
@@ -31,5 +27,9 @@ pin_run_as_build:
     max_pin: x
   zlib:
     max_pin: x.x
+target_platform:
+- win-64
+vc:
+- '14'
 zlib:
 - '1.2'

@@ -23,7 +23,7 @@ macos_machine:
 macos_min_version:
 - '10.9'
 mpi:
-- nompi
+- mpich
 pin_run_as_build:
   bzip2:
     max_pin: x
@@ -35,5 +35,7 @@ pin_run_as_build:
     max_pin: x
   zlib:
     max_pin: x.x
+target_platform:
+- osx-64
 zlib:
 - '1.2'

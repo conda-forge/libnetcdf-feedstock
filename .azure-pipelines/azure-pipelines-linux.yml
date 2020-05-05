@@ -10,18 +10,30 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      linux_mpimpich:
-        CONFIG: linux_mpimpich
+      linux_mpimpichtarget_platformlinux-64:
+        CONFIG: linux_mpimpichtarget_platformlinux-64
         UPLOAD_PACKAGES: True
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_mpinompi:
-        CONFIG: linux_mpinompi
+      linux_mpinompitarget_platformlinux-64:
+        CONFIG: linux_mpinompitarget_platformlinux-64
         UPLOAD_PACKAGES: True
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_mpiopenmpi:
-        CONFIG: linux_mpiopenmpi
+      linux_mpiopenmpitarget_platformlinux-64:
+        CONFIG: linux_mpiopenmpitarget_platformlinux-64
         UPLOAD_PACKAGES: True
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_ppc64le_mpimpichtarget_platformlinux-ppc64le:
+        CONFIG: linux_ppc64le_mpimpichtarget_platformlinux-ppc64le
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-ppc64le
+      linux_ppc64le_mpinompitarget_platformlinux-ppc64le:
+        CONFIG: linux_ppc64le_mpinompitarget_platformlinux-ppc64le
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-ppc64le
+      linux_ppc64le_mpiopenmpitarget_platformlinux-ppc64le:
+        CONFIG: linux_ppc64le_mpiopenmpitarget_platformlinux-ppc64le
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-ppc64le
   steps:
   # configure qemu binfmt-misc running.  This allows us to run docker containers
   # embedded qemu-static
