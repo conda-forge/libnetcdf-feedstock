@@ -10,16 +10,16 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      linux_mpimpich:
-        CONFIG: linux_mpimpich
+      linux_mpimpichtarget_platformlinux-64:
+        CONFIG: linux_mpimpichtarget_platformlinux-64
         UPLOAD_PACKAGES: True
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_mpinompi:
-        CONFIG: linux_mpinompi
+      linux_mpinompitarget_platformlinux-64:
+        CONFIG: linux_mpinompitarget_platformlinux-64
         UPLOAD_PACKAGES: True
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_mpiopenmpi:
-        CONFIG: linux_mpiopenmpi
+      linux_mpiopenmpitarget_platformlinux-64:
+        CONFIG: linux_mpiopenmpitarget_platformlinux-64
         UPLOAD_PACKAGES: True
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
   steps:

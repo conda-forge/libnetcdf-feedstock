@@ -1,0 +1,78 @@
+---
+kind: pipeline
+name: linux_aarch64_mpimpichtarget_platfo_h2a3a64957e
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: Install and build
+  image: condaforge/linux-anvil-aarch64
+  environment:
+    CONFIG: linux_aarch64_mpimpichtarget_platformlinux-aarch64
+    UPLOAD_PACKAGES: True
+    PLATFORM: linux-aarch64
+    BINSTAR_TOKEN:
+      from_secret: BINSTAR_TOKEN
+  commands:
+    - export FEEDSTOCK_ROOT="$DRONE_WORKSPACE"
+    - export RECIPE_ROOT="$FEEDSTOCK_ROOT/recipe"
+    - export CI=drone
+    - export GIT_BRANCH="$DRONE_BRANCH"
+    - sed -i '$ichown -R conda:conda "$FEEDSTOCK_ROOT"' /opt/docker/bin/entrypoint
+    - /opt/docker/bin/entrypoint $FEEDSTOCK_ROOT/.scripts/build_steps.sh
+    - echo "Done building"
+
+---
+kind: pipeline
+name: linux_aarch64_mpinompitarget_platfo_h06e0210015
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: Install and build
+  image: condaforge/linux-anvil-aarch64
+  environment:
+    CONFIG: linux_aarch64_mpinompitarget_platformlinux-aarch64
+    UPLOAD_PACKAGES: True
+    PLATFORM: linux-aarch64
+    BINSTAR_TOKEN:
+      from_secret: BINSTAR_TOKEN
+  commands:
+    - export FEEDSTOCK_ROOT="$DRONE_WORKSPACE"
+    - export RECIPE_ROOT="$FEEDSTOCK_ROOT/recipe"
+    - export CI=drone
+    - export GIT_BRANCH="$DRONE_BRANCH"
+    - sed -i '$ichown -R conda:conda "$FEEDSTOCK_ROOT"' /opt/docker/bin/entrypoint
+    - /opt/docker/bin/entrypoint $FEEDSTOCK_ROOT/.scripts/build_steps.sh
+    - echo "Done building"
+
+---
+kind: pipeline
+name: linux_aarch64_mpiopenmpitarget_plat_hda59cfbc41
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: Install and build
+  image: condaforge/linux-anvil-aarch64
+  environment:
+    CONFIG: linux_aarch64_mpiopenmpitarget_platformlinux-aarch64
+    UPLOAD_PACKAGES: True
+    PLATFORM: linux-aarch64
+    BINSTAR_TOKEN:
+      from_secret: BINSTAR_TOKEN
+  commands:
+    - export FEEDSTOCK_ROOT="$DRONE_WORKSPACE"
+    - export RECIPE_ROOT="$FEEDSTOCK_ROOT/recipe"
+    - export CI=drone
+    - export GIT_BRANCH="$DRONE_BRANCH"
+    - sed -i '$ichown -R conda:conda "$FEEDSTOCK_ROOT"' /opt/docker/bin/entrypoint
+    - /opt/docker/bin/entrypoint $FEEDSTOCK_ROOT/.scripts/build_steps.sh
+    - echo "Done building"
+

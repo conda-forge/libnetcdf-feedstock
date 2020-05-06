@@ -41,6 +41,19 @@ if [[ ${c_compiler} != "toolchain_c" ]]; then
     fi
 fi
 
+# hmaarrfk, 2020/05/04:
+#       I found that hdf4 is likely seriously broken for aarch64 (and maybe
+#       ppc64le).  Debian seems to have packaged has packaged it with some
+#       large patches.
+#       seeing as it is pretty old, I proposed skipping it as a dependency for
+#       aarch64 It seems that hdf4 is built for ppc64le, so I'm leaving it
+#       enabled for that.  We don't have
+if [[ ${target_platform} == "linux-aarch64" ]]; then
+    ENABLE_HDF4=OFF
+else
+    ENABLE_HDF4=ON
+fi
+
 if [[ ${DEBUG_C} == yes ]]; then
   CMAKE_BUILD_TYPE=Debug
 else
@@ -53,7 +66,7 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
       -DENABLE_DAP=ON \
-      -DENABLE_HDF4=ON \
+      -DENABLE_HDF4=${ENABLE_HDF4} \
       -DENABLE_NETCDF_4=ON \
       -DBUILD_SHARED_LIBS=OFF \
       -DENABLE_TESTS=ON \
@@ -75,7 +88,7 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
       -DENABLE_DAP=ON \
-      -DENABLE_HDF4=ON \
+      -DENABLE_HDF4=${ENABLE_HDF4} \
       -DENABLE_NETCDF_4=ON \
       -DBUILD_SHARED_LIBS=ON \
       -DENABLE_TESTS=ON \

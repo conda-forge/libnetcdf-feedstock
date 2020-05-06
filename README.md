@@ -22,6 +22,13 @@ Current build status
         <img alt="macOS" src="https://img.shields.io/travis/com/conda-forge/libnetcdf-feedstock/master.svg?label=macOS">
       </a>
     </td>
+  </tr><tr>
+    <td>Drone</td>
+    <td>
+      <a href="https://cloud.drone.io/conda-forge/libnetcdf-feedstock">
+        <img alt="linux" src="https://img.shields.io/drone/build/conda-forge/libnetcdf-feedstock/master.svg?label=Linux">
+      </a>
+    </td>
   </tr>
     
   <tr>
@@ -36,73 +43,94 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_mpimpich</td>
+              <td>linux_aarch64_mpimpichtarget_platformlinux-aarch64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_mpimpich" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_mpimpichtarget_platformlinux-aarch64" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_mpinompi</td>
+              <td>linux_aarch64_mpinompitarget_platformlinux-aarch64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_mpinompi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_mpinompitarget_platformlinux-aarch64" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_mpiopenmpi</td>
+              <td>linux_aarch64_mpiopenmpitarget_platformlinux-aarch64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_mpiopenmpi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_mpiopenmpitarget_platformlinux-aarch64" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_mpimpich</td>
+              <td>linux_mpimpichtarget_platformlinux-64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_mpimpich" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_mpimpichtarget_platformlinux-64" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_mpinompi</td>
+              <td>linux_mpinompitarget_platformlinux-64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_mpinompi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_mpinompitarget_platformlinux-64" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_mpiopenmpi</td>
+              <td>linux_mpiopenmpitarget_platformlinux-64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_mpiopenmpi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_mpiopenmpitarget_platformlinux-64" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_mpimpich</td>
+              <td>linux_ppc64le_mpimpichtarget_platformlinux-ppc64le</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=osx&configuration=osx_mpimpich" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_mpimpichtarget_platformlinux-ppc64le" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_mpinompi</td>
+              <td>linux_ppc64le_mpinompitarget_platformlinux-ppc64le</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=osx&configuration=osx_mpinompi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_mpinompitarget_platformlinux-ppc64le" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_mpiopenmpi</td>
+              <td>linux_ppc64le_mpiopenmpitarget_platformlinux-ppc64le</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=osx&configuration=osx_mpiopenmpi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_mpiopenmpitarget_platformlinux-ppc64le" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>win</td>
+              <td>osx_mpimpichtarget_platformosx-64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=win&configuration=win_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=osx&configuration=osx_mpimpichtarget_platformosx-64" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_mpinompitarget_platformosx-64</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=osx&configuration=osx_mpinompitarget_platformosx-64" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_mpiopenmpitarget_platformosx-64</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=osx&configuration=osx_mpiopenmpitarget_platformosx-64" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_target_platformwin-64</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=master&jobName=win&configuration=win_target_platformwin-64" alt="variant">
                 </a>
               </td>
             </tr>
