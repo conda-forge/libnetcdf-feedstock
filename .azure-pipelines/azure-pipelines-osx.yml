@@ -6,19 +6,19 @@ jobs:
 - job: osx
   pool:
     vmImage: macOS-10.14
-  timeoutInMinutes: 360
   strategy:
-    maxParallel: 8
     matrix:
       osx_mpimpichtarget_platformosx-64:
         CONFIG: osx_mpimpichtarget_platformosx-64
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
       osx_mpinompitarget_platformosx-64:
         CONFIG: osx_mpinompitarget_platformosx-64
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
       osx_mpiopenmpitarget_platformosx-64:
         CONFIG: osx_mpiopenmpitarget_platformosx-64
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
+    maxParallel: 8
+  timeoutInMinutes: 360
 
   steps:
   # TODO: Fast finish on azure pipelines?
@@ -30,3 +30,5 @@ jobs:
     displayName: Run OSX build
     env:
       BINSTAR_TOKEN: $(BINSTAR_TOKEN)
+      FEEDSTOCK_TOKEN: $(FEEDSTOCK_TOKEN)
+      STAGING_BINSTAR_TOKEN: $(STAGING_BINSTAR_TOKEN)
