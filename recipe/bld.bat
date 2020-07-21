@@ -14,6 +14,7 @@ cmake -LAH -G "NMake Makefiles" ^
       -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
       -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
       -DENABLE_CDF5=ON ^
+      -DENABLE_BYTERANGE=ON ^
       -DHDF5_C_LIBRARY="%LIBRARY_LIB:\=/%/hdf5.lib" ^
       -DHDF5_HL_LIBRARY="%LIBRARY_LIB:\=/%/hdf5_hl.lib" ^
       -DHDF5_INCLUDE_DIR="%LIBRARY_INC:\=/%" ^
