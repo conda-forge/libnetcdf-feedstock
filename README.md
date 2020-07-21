@@ -5,7 +5,7 @@ Home: http://www.unidata.ucar.edu/software/netcdf/
 
 Package license: MIT
 
-Feedstock license: BSD 3-Clause
+Feedstock license: BSD-3-Clause
 
 Summary: Libraries and data formats that support array-oriented scientific data
 
