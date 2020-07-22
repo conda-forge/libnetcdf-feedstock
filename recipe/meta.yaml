@@ -1,5 +1,5 @@
 {% set version = "4.7.4" %}
-{% set build = 4 %}
+{% set build = 5 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -24,6 +24,7 @@ source:
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     - patches/strdup.patch
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
+    - patches/fix-474-for-new-curl.patch
 
 build:
   number: {{ build }}
