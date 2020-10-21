@@ -20,8 +20,6 @@ jpeg:
 - '9'
 macos_machine:
 - x86_64-apple-darwin13.4.0
-macos_min_version:
-- '10.9'
 mpi:
 - openmpi
 pin_run_as_build:
