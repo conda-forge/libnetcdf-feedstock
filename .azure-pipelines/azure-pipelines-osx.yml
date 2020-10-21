@@ -5,19 +5,18 @@
 jobs:
 - job: osx
   pool:
-    vmImage: macOS-10.14
+    vmImage: macOS-10.15
   strategy:
     matrix:
-      osx_mpimpichtarget_platformosx-64:
-        CONFIG: osx_mpimpichtarget_platformosx-64
+      osx_64_mpimpichtarget_platformosx-64:
+        CONFIG: osx_64_mpimpichtarget_platformosx-64
         UPLOAD_PACKAGES: 'True'
-      osx_mpinompitarget_platformosx-64:
-        CONFIG: osx_mpinompitarget_platformosx-64
+      osx_64_mpinompitarget_platformosx-64:
+        CONFIG: osx_64_mpinompitarget_platformosx-64
         UPLOAD_PACKAGES: 'True'
-      osx_mpiopenmpitarget_platformosx-64:
-        CONFIG: osx_mpiopenmpitarget_platformosx-64
+      osx_64_mpiopenmpitarget_platformosx-64:
+        CONFIG: osx_64_mpiopenmpitarget_platformosx-64
         UPLOAD_PACKAGES: 'True'
-    maxParallel: 8
   timeoutInMinutes: 360
 
   steps:
