@@ -1,0 +1,13 @@
+diff --git a/ncdump/ocprint.c b/ncdump/ocprint.c
+index d429181b..c8288229 100644
+--- a/ncdump/ocprint.c
++++ b/ncdump/ocprint.c
+@@ -56,7 +56,7 @@ char* optarg;
+ /*Mnemonic*/
+ #define TOPLEVEL 1
+ 
+-int ocdebug;
++extern int ocdebug;
+ 
+ static OCerror ocstat;
+ static OClink glink;
