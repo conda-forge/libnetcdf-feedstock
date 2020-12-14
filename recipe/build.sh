@@ -107,8 +107,10 @@ ctest -VV --output-on-failure -j${CPU_COUNT}
 if [[ ${c_compiler} != "toolchain_c" ]]; then
     # Fix build paths in cmake artifacts
     for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
-        sed -i.bak "s#${BUILD_PREFIX}#\$ENV\{BUILD_PREFIX\}#g" ${fname}
+        sed -i.bak "s#${CONDA_BUILD_SYSROOT}/usr/lib/lib\([a-z]*\).so#\1#g" ${fname}
+        sed -i.bak "s#/Applications/Xcode_.*app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.*sdk/usr/lib/lib\([a-z]*\).dylib#\1#g" ${fname}
         rm ${fname}.bak
+        cat ${fname}
     done
 
     # Fix build paths in nc-config
