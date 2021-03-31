@@ -1,27 +1,25 @@
-BUILD:
-- aarch64-conda_cos7-linux-gnu
+MACOSX_DEPLOYMENT_TARGET:
+- '10.9'
 bzip2:
 - '1'
 c_compiler:
-- gcc
+- clang
 c_compiler_version:
-- '7'
-cdt_arch:
-- aarch64
-cdt_name:
-- cos7
+- '11'
 channel_sources:
-- conda-forge
+- conda-forge,defaults
 channel_targets:
 - conda-forge main
 curl:
 - '7'
-docker_image:
-- condaforge/linux-anvil-aarch64
+hdf4:
+- '4.2'
 hdf5:
 - 1.10.6
 jpeg:
 - '9'
+macos_machine:
+- x86_64-apple-darwin13.4.0
 mpi:
 - openmpi
 pin_run_as_build:
@@ -29,11 +27,13 @@ pin_run_as_build:
     max_pin: x
   curl:
     max_pin: x
+  hdf4:
+    max_pin: x.x
   jpeg:
     max_pin: x
   zlib:
     max_pin: x.x
 target_platform:
-- linux-aarch64
+- osx-64
 zlib:
 - '1.2'

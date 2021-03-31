@@ -3,7 +3,7 @@ bzip2:
 c_compiler:
 - gcc
 c_compiler_version:
-- '7'
+- '9'
 cdt_name:
 - cos6
 channel_sources:
@@ -13,7 +13,7 @@ channel_targets:
 curl:
 - '7'
 docker_image:
-- condaforge/linux-anvil-comp7
+- quay.io/condaforge/linux-anvil-comp7
 hdf4:
 - '4.2'
 hdf5:
@@ -21,7 +21,7 @@ hdf5:
 jpeg:
 - '9'
 mpi:
-- openmpi
+- mpich
 pin_run_as_build:
   bzip2:
     max_pin: x
@@ -35,5 +35,8 @@ pin_run_as_build:
     max_pin: x.x
 target_platform:
 - linux-64
+zip_keys:
+- - cdt_name
+  - docker_image
 zlib:
 - '1.2'
