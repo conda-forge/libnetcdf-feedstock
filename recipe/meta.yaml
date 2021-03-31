@@ -16,7 +16,6 @@ source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
   sha256: aff58f02b1c3e91dc68f989746f652fe51ff39e6270764e484920cb8db5ad092
   patches:
-    - patches/0003-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - patches/0006-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
     - patches/0008-Finish-the-missing-code-to-handle-VS-in-test_common..patch
