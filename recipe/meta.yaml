@@ -62,6 +62,7 @@ requirements:
     - make  # [not win]
     - pkg-config  # [not win]
     - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - msinttypes  # [win and vc<14]
