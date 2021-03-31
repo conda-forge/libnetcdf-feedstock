@@ -12,6 +12,10 @@ channel_targets:
 - conda-forge main
 curl:
 - '7'
+cxx_compiler:
+- gxx
+cxx_compiler_version:
+- '9'
 docker_image:
 - quay.io/condaforge/linux-anvil-comp7
 hdf4:
@@ -36,6 +40,8 @@ pin_run_as_build:
 target_platform:
 - linux-64
 zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
 - - cdt_name
   - docker_image
 zlib:

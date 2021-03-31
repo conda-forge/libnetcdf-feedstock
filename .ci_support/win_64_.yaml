@@ -8,6 +8,8 @@ channel_targets:
 - conda-forge main
 curl:
 - '7'
+cxx_compiler:
+- vs2017
 hdf4:
 - '4.2'
 hdf5:
