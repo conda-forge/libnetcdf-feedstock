@@ -3,7 +3,7 @@ bzip2:
 c_compiler:
 - gcc
 c_compiler_version:
-- '8'
+- '9'
 cdt_name:
 - cos7
 channel_sources:
@@ -12,8 +12,12 @@ channel_targets:
 - conda-forge main
 curl:
 - '7'
+cxx_compiler:
+- gxx
+cxx_compiler_version:
+- '9'
 docker_image:
-- condaforge/linux-anvil-ppc64le
+- quay.io/condaforge/linux-anvil-ppc64le
 hdf4:
 - '4.2'
 hdf5:
@@ -21,7 +25,7 @@ hdf5:
 jpeg:
 - '9'
 mpi:
-- openmpi
+- nompi
 pin_run_as_build:
   bzip2:
     max_pin: x
@@ -35,5 +39,8 @@ pin_run_as_build:
     max_pin: x.x
 target_platform:
 - linux-ppc64le
+zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
 zlib:
 - '1.2'

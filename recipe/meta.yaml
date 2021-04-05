@@ -1,5 +1,5 @@
-{% set version = "4.7.4" %}
-{% set build = 7 %}
+{% set version = "4.8.0" %}
+{% set build = 0 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -14,9 +14,8 @@ package:
 
 source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  sha256: 99930ad7b3c4c1a8e8831fb061cb02b2170fc8e5ccaeda733bd99c3b9d31666b
+  sha256: aff58f02b1c3e91dc68f989746f652fe51ff39e6270764e484920cb8db5ad092
   patches:
-    - patches/0003-Add-find_package-Threads-REQUIRED-to-CMakeLists.txt.patch
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - patches/0006-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
     - patches/0008-Finish-the-missing-code-to-handle-VS-in-test_common..patch
@@ -24,7 +23,8 @@ source:
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     - patches/strdup.patch
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
-    - patches/fix-474-for-new-curl.patch
+    # Fixes from upstream, remove with 4.8.1
+    - patches/cmake_fixes.patch
 
 build:
   number: {{ build }}
@@ -62,6 +62,7 @@ requirements:
     - make  # [not win]
     - pkg-config  # [not win]
     - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - msinttypes  # [win and vc<14]

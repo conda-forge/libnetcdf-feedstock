@@ -5,13 +5,17 @@ bzip2:
 c_compiler:
 - clang
 c_compiler_version:
-- '10'
+- '11'
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
 curl:
 - '7'
+cxx_compiler:
+- clangxx
+cxx_compiler_version:
+- '11'
 hdf4:
 - '4.2'
 hdf5:
@@ -21,7 +25,7 @@ jpeg:
 macos_machine:
 - x86_64-apple-darwin13.4.0
 mpi:
-- nompi
+- mpich
 pin_run_as_build:
   bzip2:
     max_pin: x
@@ -35,5 +39,8 @@ pin_run_as_build:
     max_pin: x.x
 target_platform:
 - osx-64
+zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
 zlib:
 - '1.2'

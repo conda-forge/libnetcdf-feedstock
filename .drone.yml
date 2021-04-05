@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-name: linux_aarch64_mpimpichtarget_platfo_h2a3a64957e
+name: linux_aarch64_mpimpich
 
 platform:
   os: linux
@@ -8,9 +8,9 @@ platform:
 
 steps:
 - name: Install and build
-  image: condaforge/linux-anvil-aarch64
+  image: quay.io/condaforge/linux-anvil-aarch64
   environment:
-    CONFIG: linux_aarch64_mpimpichtarget_platformlinux-aarch64
+    CONFIG: linux_aarch64_mpimpich
     UPLOAD_PACKAGES: True
     PLATFORM: linux-aarch64
     BINSTAR_TOKEN:
@@ -31,7 +31,7 @@ steps:
 
 ---
 kind: pipeline
-name: linux_aarch64_mpinompitarget_platfo_h06e0210015
+name: linux_aarch64_mpinompi
 
 platform:
   os: linux
@@ -39,9 +39,9 @@ platform:
 
 steps:
 - name: Install and build
-  image: condaforge/linux-anvil-aarch64
+  image: quay.io/condaforge/linux-anvil-aarch64
   environment:
-    CONFIG: linux_aarch64_mpinompitarget_platformlinux-aarch64
+    CONFIG: linux_aarch64_mpinompi
     UPLOAD_PACKAGES: True
     PLATFORM: linux-aarch64
     BINSTAR_TOKEN:
@@ -62,7 +62,7 @@ steps:
 
 ---
 kind: pipeline
-name: linux_aarch64_mpiopenmpitarget_plat_hda59cfbc41
+name: linux_aarch64_mpiopenmpi
 
 platform:
   os: linux
@@ -70,9 +70,9 @@ platform:
 
 steps:
 - name: Install and build
-  image: condaforge/linux-anvil-aarch64
+  image: quay.io/condaforge/linux-anvil-aarch64
   environment:
-    CONFIG: linux_aarch64_mpiopenmpitarget_platformlinux-aarch64
+    CONFIG: linux_aarch64_mpiopenmpi
     UPLOAD_PACKAGES: True
     PLATFORM: linux-aarch64
     BINSTAR_TOKEN:
