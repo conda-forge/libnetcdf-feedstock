@@ -76,6 +76,7 @@ requirements:
     - hdf5
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
+    - libzip
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - bzip2
@@ -84,6 +85,7 @@ requirements:
     - hdf4  # [not aarch64]
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
+    - libzip
     # Curl should be pulling this... Investigate it later.
     - libssh2  # [win]
 
