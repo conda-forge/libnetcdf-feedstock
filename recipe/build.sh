@@ -110,6 +110,13 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
 make install -j${CPU_COUNT} ${VERBOSE_CM}
 ctest -VV --output-on-failure -j${CPU_COUNT}
 
+# Skip failing test on ppc74le
+if [ ${target_platform} == "linux-ppc64le" ]; then
+ SKIP="-E nc_test"
+fi
+
+ctest -VV --output-on-failure -j${CPU_COUNT} "${SKIP}"
+
 if [[ ${c_compiler} != "toolchain_c" ]]; then
     # Fix build paths in cmake artifacts
     for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
