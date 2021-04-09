@@ -106,7 +106,7 @@ if [ ${target_platform} == "linux-ppc64le" ]; then
  SKIP="-E nc_test"
 fi
 
-ctest -VV --output-on-failure -j${CPU_COUNT} "${SKIP}"
+ctest -VV --output-on-failure -j${CPU_COUNT} ${SKIP}
 
 # Fix build paths in cmake artifacts
 for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
