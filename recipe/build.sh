@@ -102,7 +102,7 @@ ctest -VV --output-on-failure -j${CPU_COUNT}
 
 SKIP=""
 # Skip failing test on ppc74le
-if [ ${target_platform} == "linux-ppc64le" ]; then
+if [[ ${target_platform} == "linux-ppc64le" ]]; then
  SKIP="-E nc_test"
 fi
 
