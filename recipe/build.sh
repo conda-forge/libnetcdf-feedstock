@@ -98,7 +98,6 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_NCZARR_S3_TESTS=off \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
-ctest -VV --output-on-failure -j${CPU_COUNT}
 
 SKIP=""
 # Skip failing test on ppc74le
