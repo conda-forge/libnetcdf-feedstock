@@ -50,17 +50,16 @@ else
     ENABLE_HDF4=ON
 fi
 
-if [[ ${target_platform} == "linux-ppc64le" ]]; then
-    export CFLAGS=${CFLAGS//-O3/-O0}
-    echo CHANGING CFLAGS: ${CFLAGS}
-    export CMAKE_ARGS=${CMAKE_ARGS//-O3/-O0}
-    echo CHANGING CMAKE ARGS: ${CMAKE_ARGS}
-fi
-
 if [[ ${DEBUG_C} == yes ]]; then
   CMAKE_BUILD_TYPE=Debug
 else
   CMAKE_BUILD_TYPE=Release
+fi
+
+if [[ ${target_platform} == "linux-ppc64le" ]]; then
+    export CFLAGS=${CFLAGS//-O3/-O0}
+    # This is the easiest way to get CMake to stop appending -O3
+    CMAKE_BUILD_TYPE=None
 fi
 
 # Build static.
