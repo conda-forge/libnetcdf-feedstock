@@ -51,8 +51,10 @@ else
 fi
 
 if [[ ${target_platform} == "linux-ppc64le" ]]; then
-    export CFLAGS=$(echo "${CFLAGS}" | sed "s/-O3/-O0/g")
+    export CFLAGS=${CFLAGS//-O3/-O0}
     echo CHANGING CFLAGS: ${CFLAGS}
+    export CMAKE_ARGS=${CMAKE_ARGS//-O3/-O0}
+    echo CHANGING CMAKE ARGS: ${CMAKE_ARGS}
 fi
 
 if [[ ${DEBUG_C} == yes ]]; then
