@@ -54,6 +54,11 @@ else
     ENABLE_HDF4=ON
 fi
 
+if [[ ${target_platform} == "linux-ppc64le" ]]; then
+    export CFLAGS=$(echo "${CFLAGS}" | sed "s/-O3/-O0/g")
+    echo CHANGING CFLAGS: ${CFLAGS}
+fi
+
 if [[ ${DEBUG_C} == yes ]]; then
   CMAKE_BUILD_TYPE=Debug
 else
