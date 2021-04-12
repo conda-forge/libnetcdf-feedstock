@@ -66,7 +66,7 @@ else
 fi
 
 # Build static.
-cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
@@ -77,11 +77,8 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_TESTS=ON \
       -DBUILD_UTILITIES=ON \
       -DENABLE_DOXYGEN=OFF \
-      -DCMAKE_C_FLAGS_RELEASE=${CFLAGS} \
-      -DCMAKE_C_FLAGS_DEBUG=${CFLAGS} \
       -DENABLE_CDF5=ON \
       -DENABLE_BYTERANGE=ON \
-      ${CMAKE_PLATFORM_FLAGS[@]} \
       ${PARALLEL} \
       ${SRC_DIR}
 # ctest  # Run only for the shared lib build to save time.
@@ -89,7 +86,7 @@ make install -j${CPU_COUNT} ${VERBOSE_CM}
 make clean
 
 # Build shared.
-cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
@@ -100,10 +97,7 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_TESTS=ON \
       -DBUILD_UTILITIES=ON \
       -DENABLE_DOXYGEN=OFF \
-      -DCMAKE_C_FLAGS_RELEASE=${CFLAGS} \
-      -DCMAKE_C_FLAGS_DEBUG=${CFLAGS} \
       -DENABLE_CDF5=ON \
-      ${CMAKE_PLATFORM_FLAGS[@]} \
       ${PARALLEL} \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
