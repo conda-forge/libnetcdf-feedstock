@@ -15,30 +15,25 @@ else
   PARALLEL=""
 fi
 
-if [[ ${c_compiler} != "toolchain_c" ]]; then
-    declare -a CMAKE_PLATFORM_FLAGS
-    if [[ ${HOST} =~ .*darwin.* ]]; then
-        CMAKE_PLATFORM_FLAGS+=(-DCMAKE_OSX_SYSROOT="${CONDA_BUILD_SYSROOT}")
-        # We have a problem with over-stripping of dylibs in the test programs:
-        # nm ${PREFIX}/lib/libdf.dylib | grep error_top
-        #   000000000006197c S _error_top
-        # Then, despite this being linked to explicitly when creating the test programs:
-        # ./hdf4_test_tst_chunk_hdf4
-        # dyld: Symbol not found: _error_top
-        #   Referenced from: ${PREFIX}/lib/libmfhdf.0.dylib
-        #   Expected in: flat namespace
-        #  in ${PREFIX}/lib/libmfhdf.0.dylib
-        # Abort trap: 56
-        # Now clearly libmfhdf should autoload libdf but it does not and that is not going to change:
-        # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=556439
-        # .. so we must remove our unused stripping instead :-(
-        # (it may be possible to arrange this symbol to be in the 'D'ata section instead of 'S'
-        #  (symbol in a section other than those above according to man nm), instead though
-        #  or to fix ld64 so that it checks for symbols being used in this section).
-        export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
-    else
-        CMAKE_PLATFORM_FLAGS+=(-DCMAKE_TOOLCHAIN_FILE="${RECIPE_DIR}/cross-linux.cmake")
-    fi
+if [[ ${HOST} =~ .*darwin.* ]]; then
+    CMAKE_PLATFORM_FLAGS+=(-DCMAKE_OSX_SYSROOT="${CONDA_BUILD_SYSROOT}")
+    # We have a problem with over-stripping of dylibs in the test programs:
+    # nm ${PREFIX}/lib/libdf.dylib | grep error_top
+    #   000000000006197c S _error_top
+    # Then, despite this being linked to explicitly when creating the test programs:
+    # ./hdf4_test_tst_chunk_hdf4
+    # dyld: Symbol not found: _error_top
+    #   Referenced from: ${PREFIX}/lib/libmfhdf.0.dylib
+    #   Expected in: flat namespace
+    #  in ${PREFIX}/lib/libmfhdf.0.dylib
+    # Abort trap: 56
+    # Now clearly libmfhdf should autoload libdf but it does not and that is not going to change:
+    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=556439
+    # .. so we must remove our unused stripping instead :-(
+    # (it may be possible to arrange this symbol to be in the 'D'ata section instead of 'S'
+    #  (symbol in a section other than those above according to man nm), instead though
+    #  or to fix ld64 so that it checks for symbols being used in this section).
+    export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
 fi
 
 # hmaarrfk, 2020/05/04:
@@ -72,11 +67,8 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_TESTS=ON \
       -DBUILD_UTILITIES=ON \
       -DENABLE_DOXYGEN=OFF \
-      -DCMAKE_C_FLAGS_RELEASE=${CFLAGS} \
-      -DCMAKE_C_FLAGS_DEBUG=${CFLAGS} \
       -DENABLE_CDF5=ON \
       -DENABLE_BYTERANGE=ON \
-      ${CMAKE_PLATFORM_FLAGS[@]} \
       ${PARALLEL} \
       ${SRC_DIR}
 # ctest  # Run only for the shared lib build to save time.
@@ -95,10 +87,7 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_TESTS=ON \
       -DBUILD_UTILITIES=ON \
       -DENABLE_DOXYGEN=OFF \
-      -DCMAKE_C_FLAGS_RELEASE=${CFLAGS} \
-      -DCMAKE_C_FLAGS_DEBUG=${CFLAGS} \
       -DENABLE_CDF5=ON \
-      ${CMAKE_PLATFORM_FLAGS[@]} \
       ${PARALLEL} \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
@@ -107,16 +96,14 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" != "1" ]]; then
     ctest -VV --output-on-failure -j${CPU_COUNT}
 fi
 
-if [[ ${c_compiler} != "toolchain_c" ]]; then
-    # Fix build paths in cmake artifacts
-    for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
-        sed -i.bak "s#${CONDA_BUILD_SYSROOT}/usr/lib/lib\([a-z]*\).so#\1#g" ${fname}
-        sed -i.bak "s#/Applications/Xcode_.*app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.*sdk/usr/lib/lib\([a-z]*\).dylib#\1#g" ${fname}
-        rm ${fname}.bak
-        cat ${fname}
-    done
+# Fix build paths in cmake artifacts
+for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
+    sed -i.bak "s#${CONDA_BUILD_SYSROOT}/usr/lib/lib\([a-z]*\).so#\1#g" ${fname}
+    sed -i.bak "s#/Applications/Xcode_.*app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.*sdk/usr/lib/lib\([a-z]*\).dylib#\1#g" ${fname}
+    rm ${fname}.bak
+    cat ${fname}
+done
 
-    # Fix build paths in nc-config
-    sed -i.bak "s#${BUILD_PREFIX}/bin/${CC}#${CC}#g" ${PREFIX}/bin/nc-config
-    rm ${PREFIX}/bin/nc-config.bak
-fi
+# Fix build paths in nc-config
+sed -i.bak "s#${BUILD_PREFIX}/bin/${CC}#${CC}#g" ${PREFIX}/bin/nc-config
+rm ${PREFIX}/bin/nc-config.bak
