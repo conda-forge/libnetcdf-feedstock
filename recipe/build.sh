@@ -1,4 +1,6 @@
 #!/bin/bash
+# Get an updated config.sub and config.guess
+cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
 if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON"
@@ -61,7 +63,7 @@ else
 fi
 
 # Build static.
-cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
@@ -102,7 +104,9 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       ${PARALLEL} \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
+if [[ "${CONDA_BUILD_CROSS_COMPILATION}" != "1" ]]; then
 ctest -VV --output-on-failure -j${CPU_COUNT}
+fi
 
 if [[ ${c_compiler} != "toolchain_c" ]]; then
     # Fix build paths in cmake artifacts
