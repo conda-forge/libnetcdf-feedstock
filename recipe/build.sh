@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON"
   export CC=mpicc
@@ -81,6 +83,9 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_CDF5=ON \
       -DENABLE_BYTERANGE=ON \
       ${PARALLEL} \
+      -DENABLE_NCZARR=on \
+      -DENABLE_NCZARR_S3=off \
+      -DENABLE_NCZARR_S3_TESTS=off \
       ${SRC_DIR}
 # ctest  # Run only for the shared lib build to save time.
 make install -j${CPU_COUNT} ${VERBOSE_CM}
@@ -100,6 +105,9 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_DOXYGEN=OFF \
       -DENABLE_CDF5=ON \
       ${PARALLEL} \
+      -DENABLE_NCZARR=on \
+      -DENABLE_NCZARR_S3=off \
+      -DENABLE_NCZARR_S3_TESTS=off \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
 ctest -VV --output-on-failure -j${CPU_COUNT}

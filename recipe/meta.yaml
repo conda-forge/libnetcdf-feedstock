@@ -1,5 +1,5 @@
 {% set version = "4.8.0" %}
-{% set build = 0 %}
+{% set build = 1 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -76,6 +76,7 @@ requirements:
     - hdf5
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
+    - libzip
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - bzip2
@@ -84,6 +85,7 @@ requirements:
     - hdf4  # [not aarch64]
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
+    - libzip
     # Curl should be pulling this... Investigate it later.
     - libssh2  # [win]
 
