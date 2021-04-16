@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON"
   export CC=mpicc
