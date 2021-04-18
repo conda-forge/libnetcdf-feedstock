@@ -7,6 +7,7 @@ set -x
 if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON"
   export CC=mpicc
+  export CXX=mpicxx
   export TESTPROC=4
   export OMPI_MCA_rmaps_base_oversubscribe=yes
   export OMPI_MCA_btl=self,tcp
@@ -18,6 +19,7 @@ if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export OPAL_PREFIX=$PREFIX
 else
   export CC=$(basename ${CC})
+  export CXX=$(basename ${CXX})
   PARALLEL=""
 fi
 
