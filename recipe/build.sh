@@ -5,7 +5,8 @@ set +e
 
 if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON"
-  export CC=mpicc
+  export CC=$PREFIX/bin/mpicc
+  export CC_FOR_BUILD=$BUILD_PREFIX/bin/mpicc
   export TESTPROC=4
   export OMPI_MCA_rmaps_base_oversubscribe=yes
   export OMPI_MCA_btl=self,tcp
