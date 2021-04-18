@@ -19,7 +19,6 @@ else
 fi
 
 if [[ ${HOST} =~ .*darwin.* ]]; then
-    CMAKE_PLATFORM_FLAGS+=(-DCMAKE_OSX_SYSROOT="${CONDA_BUILD_SYSROOT}")
     # We have a problem with over-stripping of dylibs in the test programs:
     # nm ${PREFIX}/lib/libdf.dylib | grep error_top
     #   000000000006197c S _error_top
@@ -58,6 +57,12 @@ else
   CMAKE_BUILD_TYPE=Release
 fi
 
+if [[ ${target_platform} == "linux-ppc64le" ]]; then
+    export CFLAGS=${CFLAGS//-O3/-O0}
+    # This is the easiest way to get CMake to stop appending -O3
+    CMAKE_BUILD_TYPE=None
+fi
+
 # Build static.
 cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
@@ -73,6 +78,9 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_CDF5=ON \
       -DENABLE_BYTERANGE=ON \
       ${PARALLEL} \
+      -DENABLE_NCZARR=on \
+      -DENABLE_NCZARR_S3=off \
+      -DENABLE_NCZARR_S3_TESTS=off \
       ${SRC_DIR}
 # ctest  # Run only for the shared lib build to save time.
 
@@ -95,6 +103,9 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_DOXYGEN=OFF \
       -DENABLE_CDF5=ON \
       ${PARALLEL} \
+      -DENABLE_NCZARR=on \
+      -DENABLE_NCZARR_S3=off \
+      -DENABLE_NCZARR_S3_TESTS=off \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
 
