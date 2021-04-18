@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -x
+set +e
 
 if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON"
@@ -74,6 +75,9 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       ${PARALLEL} \
       ${SRC_DIR}
 # ctest  # Run only for the shared lib build to save time.
+
+cat ${SRC_DIR}/CMakeFiles/CMakeError.log
+exit 44
 make install -j${CPU_COUNT} ${VERBOSE_CM}
 make clean
 
