@@ -61,6 +61,7 @@ requirements:
     - cmake
     - make  # [not win]
     - pkg-config  # [not win]
+    - gnuconfig  # [unix]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:

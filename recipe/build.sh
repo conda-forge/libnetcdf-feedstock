@@ -1,4 +1,6 @@
 #!/bin/bash
+# Get an updated config.sub and config.guess
+cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
 set -x
 
@@ -107,7 +109,9 @@ make install -j${CPU_COUNT} ${VERBOSE_CM}
 
 SKIP=""
 
+if [[ "${CONDA_BUILD_CROSS_COMPILATION}" != "1" ]]; then
 ctest -VV --output-on-failure -j${CPU_COUNT} ${SKIP}
+fi
 
 # Fix build paths in cmake artifacts
 for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
