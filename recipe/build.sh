@@ -14,6 +14,8 @@ if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export OMPI_MCA_rmaps_base_oversubscribe=yes
   export OMPI_MCA_btl_vader_single_copy_mechanism=none
   mpiexec="mpiexec --allow-run-as-root"
+  # for cross compiling using openmpi
+  export OPAL_PREFIX=$PREFIX
 else
   export CC=$(basename ${CC})
   PARALLEL=""
