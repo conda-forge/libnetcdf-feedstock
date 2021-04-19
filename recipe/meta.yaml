@@ -61,8 +61,10 @@ requirements:
     - cmake
     - make  # [not win]
     - pkg-config  # [not win]
+    - gnuconfig  # [unix]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - msinttypes  # [win and vc<14]

@@ -1,10 +1,13 @@
 #!/bin/bash
+# Get an updated config.sub and config.guess
+cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
 set -x
 
 if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON"
   export CC=mpicc
+  export CXX=mpicxx
   export TESTPROC=4
   export OMPI_MCA_rmaps_base_oversubscribe=yes
   export OMPI_MCA_btl=self,tcp
@@ -12,8 +15,11 @@ if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export OMPI_MCA_rmaps_base_oversubscribe=yes
   export OMPI_MCA_btl_vader_single_copy_mechanism=none
   mpiexec="mpiexec --allow-run-as-root"
+  # for cross compiling using openmpi
+  export OPAL_PREFIX=$PREFIX
 else
   export CC=$(basename ${CC})
+  export CXX=$(basename ${CXX})
   PARALLEL=""
 fi
 
@@ -107,7 +113,9 @@ make install -j${CPU_COUNT} ${VERBOSE_CM}
 
 SKIP=""
 
+if [[ "${CONDA_BUILD_CROSS_COMPILATION}" != "1" ]]; then
 ctest -VV --output-on-failure -j${CPU_COUNT} ${SKIP}
+fi
 
 # Fix build paths in cmake artifacts
 for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
