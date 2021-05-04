@@ -1,5 +1,5 @@
-{% set version = "4.8.0" %}
-{% set build = 1 %}
+{% set version = "4.9.0.dev" %}
+{% set build = 0 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -8,13 +8,15 @@
 {% set build = build + 100 %}
 {% endif %}
 
+{% set commit = "e6bdee59302a86ebd9960109aa7c22393113afe6" %}
+
 package:
   name: libnetcdf
   version: {{ version }}
 
 source:
-  url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  sha256: aff58f02b1c3e91dc68f989746f652fe51ff39e6270764e484920cb8db5ad092
+  url: https://github.com/Unidata/netcdf-c/archive/{{ commit }}.tar.gz
+  sha256: f070e6025709a256560549b7ab9bcc04e4b62b1f02d41596d89ba13c11ecf49e
   patches:
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - patches/0006-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
@@ -23,8 +25,6 @@ source:
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     - patches/strdup.patch
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
-    # Fixes from upstream, remove with 4.8.1
-    - patches/cmake_fixes.patch
 
 build:
   number: {{ build }}
