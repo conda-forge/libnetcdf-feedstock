@@ -64,6 +64,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
+    - m4  # dev only
     - {{ mpi }}  # [mpi != 'nompi']
     - msinttypes  # [win and vc<14]
     - bzip2
