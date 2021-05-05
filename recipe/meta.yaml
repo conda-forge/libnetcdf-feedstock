@@ -61,8 +61,10 @@ requirements:
     - cmake
     - make  # [not win]
     - pkg-config  # [not win]
+    - gnuconfig  # [unix]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]
   host:
     - m4  # dev only
     - {{ mpi }}  # [mpi != 'nompi']
@@ -77,6 +79,7 @@ requirements:
     - hdf5
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
+    - libzip
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - bzip2
@@ -85,6 +88,7 @@ requirements:
     - hdf4  # [not aarch64]
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
+    - libzip
     # Curl should be pulling this... Investigate it later.
     - libssh2  # [win]
 
