@@ -93,6 +93,8 @@ requirements:
     - libssh2  # [win]
 
 test:
+  requires:
+    - unzip
   commands:
     - test -f ${PREFIX}/lib/libnetcdf.a  # [not win]
     - test -f ${PREFIX}/lib/libnetcdf${SHLIB_EXT}  # [not win]
