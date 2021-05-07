@@ -84,7 +84,7 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_BYTERANGE=ON \
       ${PARALLEL} \
       -DENABLE_NCZARR=on \
-      -DENABLE_NCZARR_S3=off \
+      -DENABLE_NCZARR_S3=on \
       -DENABLE_NCZARR_S3_TESTS=off \
       ${SRC_DIR}
 # ctest  # Run only for the shared lib build to save time.
@@ -106,7 +106,7 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_CDF5=ON \
       ${PARALLEL} \
       -DENABLE_NCZARR=on \
-      -DENABLE_NCZARR_S3=off \
+      -DENABLE_NCZARR_S3=on \
       -DENABLE_NCZARR_S3_TESTS=off \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
