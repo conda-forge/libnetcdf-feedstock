@@ -65,7 +65,9 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]
-    - m4  # dev only
+    #  m4 is only needed for the dev version.
+    - m4  # [not win]
+    - m2-m4  # [win]
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - msinttypes  # [win and vc<14]
