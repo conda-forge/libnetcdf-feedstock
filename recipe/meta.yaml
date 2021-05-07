@@ -82,7 +82,9 @@ requirements:
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
     - libzip
-    - unzip
+    # dev version only
+    - unzip  # [not win]
+    - m2-unzip  # [win]
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - bzip2
