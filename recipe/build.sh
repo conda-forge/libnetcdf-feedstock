@@ -86,6 +86,7 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_NCZARR=on \
       -DENABLE_NCZARR_S3=on \
       -DENABLE_NCZARR_S3_TESTS=off \
+      -DENABLE_S3_SDK=on \
       ${SRC_DIR}
 # ctest  # Run only for the shared lib build to save time.
 make install -j${CPU_COUNT} ${VERBOSE_CM}
@@ -108,6 +109,7 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_NCZARR=on \
       -DENABLE_NCZARR_S3=on \
       -DENABLE_NCZARR_S3_TESTS=off \
+      -DENABLE_S3_SDK=on \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
 

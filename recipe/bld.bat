@@ -22,6 +22,7 @@ cmake -LAH -G "NMake Makefiles" ^
       -DENABLE_NCZARR=on ^
       -DENABLE_NCZARR_S3=on ^
       -DENABLE_NCZARR_S3_TESTS=off ^
+      -DENABLE_S3_SDK=on ^
       %SRC_DIR%
 if errorlevel 1 exit \b 1
 
