@@ -9,7 +9,7 @@ cdt_name:
 channel_sources:
 - conda-forge,defaults
 channel_targets:
-- conda-forge main
+- conda-forge libnetcdf_dev
 curl:
 - '7'
 cxx_compiler:
