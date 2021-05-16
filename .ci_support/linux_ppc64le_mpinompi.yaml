@@ -19,7 +19,7 @@ cxx_compiler_version:
 docker_image:
 - quay.io/condaforge/linux-anvil-ppc64le
 hdf4:
-- '4.2'
+- 4.2.15
 hdf5:
 - 1.10.6
 jpeg:
