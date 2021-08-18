@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Get an updated config.sub and config.guess
+cp $BUILD_PREFIX/share/gnuconfig/config.* .
+
 declare -a CMAKE_PLATFORM_FLAGS
 if [[ ${HOST} =~ .*darwin.* ]]; then
   CMAKE_PLATFORM_FLAGS+=(-DCMAKE_OSX_SYSROOT="${CONDA_BUILD_SYSROOT}")
@@ -31,7 +34,7 @@ else
 fi
 
 # Build static.
-cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
       -DENABLE_DAP=ON \
@@ -47,7 +50,9 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCURL_INCLUDE_DIR=${PREFIX}/include \
       -DCURL_LIBRARY=${PREFIX}/lib/libcurl${SHLIB_EXT} \
       -DENABLE_CDF5=ON \
+      -DENABLE_BYTERANGE=ON \
       ${CMAKE_PLATFORM_FLAGS[@]} \
+      -DENABLE_NCZARR=on -DENABLE_NCZARR_S3=off -DENABLE_NCZARR_S3_TESTS=off \
       ${SRC_DIR}
 make -j${CPU_COUNT} ${VERBOSE_CM}
 # ctest  # Run only for the shared lib build to save time.
@@ -55,7 +60,7 @@ make install -j${CPU_COUNT}
 make clean
 
 # Build shared.
-cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
       -DENABLE_DAP=ON \
@@ -72,11 +77,20 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCURL_LIBRARY=${PREFIX}/lib/libcurl${SHLIB_EXT} \
       -DENABLE_CDF5=ON \
       ${CMAKE_PLATFORM_FLAGS[@]} \
+      -DENABLE_NCZARR=on -DENABLE_NCZARR_S3=off -DENABLE_NCZARR_S3_TESTS=off \
       ${SRC_DIR}
 make -j${CPU_COUNT} ${VERBOSE_CM}
 make install -j${CPU_COUNT}
-ctest -VV
+ctest -VV --output-on-failure || true
 
-# Leave this test where it is. ATM, conda-build deletes host prefixes by the time it runs the
-# package tests which makes investigating problems very tricky. Pinging @msarahan about that.
-ncdump/ncdump -h http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic || exit $?
+# Fix build paths in cmake artifacts
+for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
+    sed -i.bak "s#${CONDA_BUILD_SYSROOT}/usr/lib/lib\([a-z]*\).so#\1#g" ${fname}
+    sed -i.bak "s#/Applications/Xcode_.*app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.*sdk/usr/lib/lib\([a-z]*\).dylib#\1#g" ${fname}
+    rm ${fname}.bak
+    cat ${fname}
+done
+
+# Fix build paths in nc-config
+sed -i.bak "s#${BUILD_PREFIX}/bin/${CC}#${CC}#g" ${PREFIX}/bin/nc-config
+rm ${PREFIX}/bin/nc-config.bak
