@@ -1,0 +1,37 @@
+commit 793ae8c2b4cc651d9c6670bb03ebb0740987f4f6
+Author: Ryan May <rmay@ucar.edu>
+Date:   Wed Aug 25 16:29:45 2021 -0600
+
+    Revert "Simply version check logic"
+    
+    This reverts commit e755a08f11dc7a3b31039a912334505bdd90ecd8.
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e1b620fee..dc95eeae9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -818,11 +818,19 @@ IF(USE_HDF5)
+ 
+   # Check to see if HDF5 library is 1.10.6 or greater.
+   # Used to control path name conversion
+-  IF(${HDF5_VERSION} VERSION_GREATER "1.10.5")
+-    SET(HDF5_UTF8_PATHS ON)
+-  ELSE()
+-    SET(HDF5_UTF8_PATHS OFF)
+-  ENDIF()
++  # Check HDF5 version
++  SET(HDF5_UTF8_PATHS OFF)
++  CHECK_C_SOURCE_COMPILES("
++  #include <H5public.h>
++  int main() {
++#if (H5_VERS_MAJOR*10000 + H5_VERS_MINOR*100 + H5_VERS_RELEASE < 11006)
++      choke me;
++#endif
++  }" HDF5_VERSION_1106)
++
++  IF(HDF5_VERSION_1106)
++   SET(HDF5_UTF8_PATHS ON)
++  ENDIF(HDF5_VERSION_1106)
+ 
+   MESSAGE("-- Checking for HDF5 version 1.10.6 or later: ${HDF5_UTF8_PATHS}")
+ 
