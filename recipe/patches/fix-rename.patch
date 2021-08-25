@@ -1,0 +1,26 @@
+commit 4f37d1a82648123d696e8490bfc54a792d21de1e
+Author: Dennis Heimbigner <dmh@ucar.edu>
+Date:   Tue Aug 24 15:11:26 2021 -0600
+
+    Make Issue https://github.com/Unidata/netcdf-c/issues/2077 work when build is repeated.
+    
+    re: https://github.com/Unidata/netcdf-c/pull/2075
+    
+    The long file name fix fails when the build is manually repeated
+    because the source file has already been renamed. Solution is to
+    test if the dest file exists or not before doing the rename.
+
+diff --git a/dap4_test/baselinethredds/CMakeLists.txt b/dap4_test/baselinethredds/CMakeLists.txt
+index 4420c0e54..50bc61111 100644
+--- a/dap4_test/baselinethredds/CMakeLists.txt
++++ b/dap4_test/baselinethredds/CMakeLists.txt
+@@ -12,7 +12,9 @@ FILE(COPY ${COPY_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/ FILE_PERMISSION
+ ##
+ # Rename file in support of https://github.com/Unidata/netcdf-c/issues/2077
+ ##
++IF(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/GOES16_CONUS_20170821_020218_0.47_1km_33.3N_91.4W.nc4.thredds)
+ FILE(RENAME ${CMAKE_CURRENT_BINARY_DIR}/GOES16_TEST1.nc4.thredds ${CMAKE_CURRENT_BINARY_DIR}/GOES16_CONUS_20170821_020218_0.47_1km_33.3N_91.4W.nc4.thredds)
++ENDIF()
+ 
+ FILE(GLOB CUR_EXTRA_DIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/*)
+ SET(CUR_EXTRA_DIST ${CUR_EXTRA_DIST} CMakeLists.txt)
