@@ -35,3 +35,18 @@ index e1b620fee..dc95eeae9 100644
  
    MESSAGE("-- Checking for HDF5 version 1.10.6 or later: ${HDF5_UTF8_PATHS}")
  
+diff --git a/nc_test4/CMakeLists.txt b/nc_test4/CMakeLists.txt
+index c5c345005..d4f97bfd7 100644
+--- a/nc_test4/CMakeLists.txt
++++ b/nc_test4/CMakeLists.txt
+@@ -47,10 +47,6 @@ ENDIF(ENABLE_FILTER_TESTING)
+ 
+ ENDIF(BUILD_UTILITIES)
+ 
+-IF(${HDF5_VERSION} VERSION_GREATER "1.10.0")
+-  SET(NC4_TESTS ${NC4_TESTS} tst_virtual_datasets)
+-ENDIF(${HDF5_VERSION} VERSION_GREATER "1.10.0")
+-
+ ##
+ # The shell script, run_empty_vlen_test.sh,
+ # depends on the 'tst_empty_vlen_unlim' binary.

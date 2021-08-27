@@ -24,7 +24,7 @@ source:
     - patches/strdup.patch
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
     # Revert upstream change in 4.8.1--maybe unnecessary in 4.8.2
-    - patches/fix_cmake.patch
+    - patches/fix_cmake.patch  # [win]
     # Fix renaming file with multiple builds--will be in 4.8.2
     - patches/fix-rename.patch
 
