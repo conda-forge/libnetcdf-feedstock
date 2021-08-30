@@ -1,52 +1,99 @@
-commit 793ae8c2b4cc651d9c6670bb03ebb0740987f4f6
-Author: Ryan May <rmay@ucar.edu>
-Date:   Wed Aug 25 16:29:45 2021 -0600
+commit ebbe3b438edd54b801b6465b8ab1b36b013ff96d
+Author: Ward Fisher <wfisher@ucar.edu>
+Date:   Mon Aug 30 09:10:14 2021 -0600
 
-    Revert "Simply version check logic"
-    
-    This reverts commit e755a08f11dc7a3b31039a912334505bdd90ecd8.
+    Revamping the HDF5_VERSION logic.
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e1b620fee..dc95eeae9 100644
+index 498cf8975..7ecd7f576 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -818,11 +818,19 @@ IF(USE_HDF5)
+@@ -670,12 +670,28 @@ IF(USE_HDF5)
+     ##
+     SET(HDF5_VERSION_REQUIRED 1.8.10)
  
-   # Check to see if HDF5 library is 1.10.6 or greater.
-   # Used to control path name conversion
++    # Some versions of HDF5 set HDF5_VERSION_STRING instead of HDF5_VERSION
+     IF(HDF5_VERSION_STRING AND NOT HDF5_VERSION)
+       SET(HDF5_VERSION ${HDF5_VERSION_STRING})
+     ENDIF()
++
++
++    ###
++    # If HDF5_VERSION is undefined, attempt to determine it programatically.
++    ###
+     IF("${HDF5_VERSION}" STREQUAL "")
+-      MESSAGE(STATUS "Unable to determine hdf5 version.  NetCDF requires at least version ${HDF5_VERSION_REQUIRED}")
+-    ELSE()
++      MESSAGE(STATUS "HDF5_VERSION not detected. Attempting to determine programatically.")
++      IF (EXISTS "${HDF5_INCLUDE_DIR}/H5pubconf.h")
++        file(READ "${HDF5_INCLUDE_DIR}/H5pubconf.h" _hdf5_version_lines
++          REGEX "#define[ \t]+H5_VERSION")
++        string(REGEX REPLACE ".*H5_VERSION .*\"\(.*\)\".*" "\\1" _hdf5_version "${_hdf5_version_lines}")
++        set(HDF5_VERSION "${_hdf5_version}")
++        unset(_hdf5_version)
++        unset(_hdf5_version_lines)
++        MESSAGE(STATUS "Found HDF5 libraries version ${HDF5_VERSION}")
++      ENDIF()
++
++    ELSE() # Original HDF5_VERSION blank check.
+       IF(${HDF5_VERSION} VERSION_LESS ${HDF5_VERSION_REQUIRED})
+         MESSAGE(FATAL_ERROR
+ 	      "netCDF requires at least HDF5 ${HDF5_VERSION_REQUIRED}. Found ${HDF5_VERSION}.")
+@@ -684,6 +700,29 @@ IF(USE_HDF5)
+       ENDIF()
+     ENDIF()
+ 
++
++
++    ###
++    # If HDF5_VERSION is still empty, we have a problem.
++    # Error out.
++    ###
++    IF("${HDF5_VERSION}" STREQUAL "")
++      MESSAGE(FATAL_ERR "Unable to determine HDF5 version.  NetCDF requires at least version ${HDF5_VERSION_REQUIRED}. Please ensure that libhdf5 is installed and accessible.")
++    ENDIF()
++
++    ####
++    # Check to see if HDF5 library is 1.10.6 or greater.
++    # Used to control path name conversion
++    ####
++    IF(${HDF5_VERSION} VERSION_GREATER "1.10.5")
++      SET(HDF5_UTF8_PATHS ON)
++    ELSE()
++      SET(HDF5_UTF8_PATHS OFF)
++    ENDIF()
++
++    MESSAGE("-- HDF5_UTF8_PATHS (HDF5 version 1.10.6+): ${HDF5_UTF8_PATHS}")
++
++
+     ##
+     # Include the HDF5 include directory.
+     ##
+@@ -718,6 +757,10 @@ IF(USE_HDF5)
+       ENDIF(${HDF5_VERSION} VERSION_GREATER "1.8.15")
+ 
+     ELSE(MSVC)
++      ####
++      # Environmental variables in Windows when using MSVC
++      # are a hot mess between versions.
++      ####
+ 
+       IF(HDF5_hdf5_LIBRARY AND NOT HDF5_C_LIBRARY)
+         SET(HDF5_C_LIBRARY ${HDF5_hdf5_LIBRARY})
+@@ -816,16 +859,6 @@ IF(USE_HDF5)
+     SET(HAS_PAR_FILTERS no CACHE STRING "")
+   ENDIF()
+ 
+-  # Check to see if HDF5 library is 1.10.6 or greater.
+-  # Used to control path name conversion
 -  IF(${HDF5_VERSION} VERSION_GREATER "1.10.5")
 -    SET(HDF5_UTF8_PATHS ON)
 -  ELSE()
 -    SET(HDF5_UTF8_PATHS OFF)
 -  ENDIF()
-+  # Check HDF5 version
-+  SET(HDF5_UTF8_PATHS OFF)
-+  CHECK_C_SOURCE_COMPILES("
-+  #include <H5public.h>
-+  int main() {
-+#if (H5_VERS_MAJOR*10000 + H5_VERS_MINOR*100 + H5_VERS_RELEASE < 11006)
-+      choke me;
-+#endif
-+  }" HDF5_VERSION_1106)
-+
-+  IF(HDF5_VERSION_1106)
-+   SET(HDF5_UTF8_PATHS ON)
-+  ENDIF(HDF5_VERSION_1106)
- 
-   MESSAGE("-- Checking for HDF5 version 1.10.6 or later: ${HDF5_UTF8_PATHS}")
- 
-diff --git a/nc_test4/CMakeLists.txt b/nc_test4/CMakeLists.txt
-index c5c345005..d4f97bfd7 100644
---- a/nc_test4/CMakeLists.txt
-+++ b/nc_test4/CMakeLists.txt
-@@ -47,10 +47,6 @@ ENDIF(ENABLE_FILTER_TESTING)
- 
- ENDIF(BUILD_UTILITIES)
- 
--IF(${HDF5_VERSION} VERSION_GREATER "1.10.0")
--  SET(NC4_TESTS ${NC4_TESTS} tst_virtual_datasets)
--ENDIF(${HDF5_VERSION} VERSION_GREATER "1.10.0")
 -
- ##
- # The shell script, run_empty_vlen_test.sh,
- # depends on the 'tst_empty_vlen_unlim' binary.
+-  MESSAGE("-- Checking for HDF5 version 1.10.6 or later: ${HDF5_UTF8_PATHS}")
+-
+   FIND_PATH(HAVE_HDF5_H hdf5.h PATHS ${HDF5_INCLUDE_DIR} NO_DEFAULT_PATH)
+   FIND_PATH(HAVE_HDF5_H hdf5.h)
+   IF(NOT HAVE_HDF5_H)

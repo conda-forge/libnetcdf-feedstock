@@ -23,8 +23,8 @@ source:
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     - patches/strdup.patch
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
-    # Revert upstream change in 4.8.1--maybe unnecessary in 4.8.2
-    - patches/fix_cmake.patch  # [win]
+    # Upstream fixes for hdf5 in 4.8.2
+    - patches/fix_cmake.patch
     # Fix renaming file with multiple builds--will be in 4.8.2
     - patches/fix-rename.patch
 
