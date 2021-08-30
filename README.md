@@ -253,6 +253,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@dopplershift](https://github.com/dopplershift/)
 * [@groutr](https://github.com/groutr/)
 * [@kmuehlbauer](https://github.com/kmuehlbauer/)
 * [@mingwandroid](https://github.com/mingwandroid/)

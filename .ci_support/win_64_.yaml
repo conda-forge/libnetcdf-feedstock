@@ -13,7 +13,7 @@ cxx_compiler:
 hdf4:
 - 4.2.15
 hdf5:
-- 1.10.6
+- 1.12.1
 jpeg:
 - '9'
 libzip:
