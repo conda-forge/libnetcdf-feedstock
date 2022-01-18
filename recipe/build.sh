@@ -61,8 +61,9 @@ else
     BUILD_SHARED_LIBS="-DBUILD_SHARED_LIBS=ON"
 fi
 
-
-# Build static.
+# Skip the remote tests since they seem to be causing spurious failures
+# -DENABLE_DAP_REMOTE_TESTS=OFF
+# https://github.com/Unidata/netcdf-c/issues/2188
 cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
@@ -76,6 +77,7 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_DOXYGEN=OFF \
       -DENABLE_CDF5=ON \
       -DENABLE_BYTERANGE=ON \
+      -DENABLE_DAP_REMOTE_TESTS=OFF \
       ${PARALLEL} \
       -DENABLE_NCZARR=on \
       -DENABLE_NCZARR_S3=off \
