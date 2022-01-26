@@ -99,6 +99,12 @@ for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
     cat ${fname}
 done
 
-# Fix build paths in nc-config
-sed -i.bak "s#${BUILD_PREFIX}/bin/${CC}#${CC}#g" ${PREFIX}/bin/nc-config
-rm ${PREFIX}/bin/nc-config.bak
+if [[ ${PKG_NAME} == "*-static" ]]; then
+    # https://github.com/conda-forge/libnetcdf-feedstock/pull/135
+    # Remove nc-config for static library. Is this a good idea?
+    rm ${PREFIX}/bin/nc-config
+else
+    # Fix build paths in nc-config
+    sed -i.bak "s#${BUILD_PREFIX}/bin/${CC}#${CC}#g" ${PREFIX}/bin/nc-config
+    rm ${PREFIX}/bin/nc-config.bak
+fi
