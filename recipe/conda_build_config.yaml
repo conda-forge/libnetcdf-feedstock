@@ -4,8 +4,10 @@ mpi:
   - mpich  # [not win]
 
 pin_run_as_build:
-  openmpi: x.x
+  openmpi:
+    max_pin: x.x
 
 pin_run_as_build:
-  mpich: x.x
+  mpich:
+    max_pin: x.x
 
