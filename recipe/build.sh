@@ -55,12 +55,17 @@ if [[ ${target_platform} == "linux-ppc64le" ]]; then
     CMAKE_BUILD_TYPE=None
 fi
 
+# 2022/04/25
+# DAP Remote tests are causing spurious failures at the momment
+# https://github.com/Unidata/netcdf-c/issues/2188#issuecomment-1015927961
+# -DENABLE_DAP_REMOTE_TESTS=OFF
 # Build static.
 cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
       -DENABLE_DAP=ON \
+      -DENABLE_DAP_REMOTE_TESTS=OFF \
       -DENABLE_HDF4=ON \
       -DENABLE_NETCDF_4=ON \
       -DBUILD_SHARED_LIBS=OFF \
@@ -84,6 +89,7 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
       -DENABLE_DAP=ON \
+      -DENABLE_DAP_REMOTE_TESTS=OFF \
       -DENABLE_HDF4=ON \
       -DENABLE_NETCDF_4=ON \
       -DBUILD_SHARED_LIBS=ON \

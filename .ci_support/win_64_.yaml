@@ -3,7 +3,7 @@ bzip2:
 c_compiler:
 - vs2017
 channel_sources:
-- conda-forge,defaults
+- conda-forge
 channel_targets:
 - conda-forge main
 curl:
@@ -20,6 +20,10 @@ libzip:
 - '1'
 mpi:
 - nompi
+mpich:
+- '4'
+openmpi:
+- '4'
 pin_run_as_build:
   bzip2:
     max_pin: x
@@ -29,6 +33,8 @@ pin_run_as_build:
     max_pin: x.x
   jpeg:
     max_pin: x
+  mpich:
+    max_pin: x.x
   zlib:
     max_pin: x.x
 target_platform:

@@ -4,8 +4,18 @@ mpi:
   - mpich  # [not win]
 
 pin_run_as_build:
-  openmpi: x.x
+  openmpi:
+    max_pin: x.x
 
 pin_run_as_build:
-  mpich: x.x
+  mpich:
+    max_pin: x.x
 
+# OSX Compilers 13 seem to be incompatible with osx64
+# Downgrading to 11 for osx-64
+# Downgrading to 11 for osx-arm as well out of an abundance of caution
+# https://github.com/conda-forge/libnetcdf-feedstock/issues/138
+c_compiler_version:      # [osx]
+  - 11                   # [osx]
+cxx_compiler_version:    # [osx]
+  - 11                   # [osx]
