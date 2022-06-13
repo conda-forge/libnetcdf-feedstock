@@ -25,6 +25,8 @@ source:
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
     # Revert upstream change in 4.8.1--maybe unnecessary in 4.8.2
     - patches/fix_cmake.patch  # [win]
+    # https://github.com/Unidata/netcdf-c/issues/2390
+    - patches/incorrect_library_versionand_filename_in_4.9.0.path
 
 build:
   number: {{ build }}
