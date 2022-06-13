@@ -81,6 +81,7 @@ requirements:
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
     - libzip
+    - zstd
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - bzip2
@@ -90,6 +91,7 @@ requirements:
     - hdf5 * {{ mpi_prefix }}_*
     - jpeg
     - libzip
+    - zstd
     # Curl should be pulling this... Investigate it later.
     - libssh2  # [win]
 
