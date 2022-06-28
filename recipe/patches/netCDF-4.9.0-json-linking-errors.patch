@@ -1,5 +1,5 @@
---- netcdf-c-4.9.0/include/netcdf_json.h.orig 2022-06-28 13:38:59.935828565 +0200
-+++ netcdf-c-4.9.0/include/netcdf_json_new.h 2022-06-28 13:42:36.411055851 +0200
+--- netcdf-c-4.9.0.orig/include/netcdf_json.h
++++ netcdf-c-4.9.0/include/netcdf_json.h
 @@ -57,25 +57,25 @@
  #endif
  
