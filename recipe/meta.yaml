@@ -27,6 +27,7 @@ source:
     - patches/incorrect_library_versionand_filename_in_4.9.0.path
     # Revert upstream change in 4.8.1--maybe unnecessary in 4.8.2
     - patches/fix_cmake.patch  # [win]
+    - patches/netCDF-4.9.0-json-linking-errors.patch
 
 build:
   number: {{ build }}
