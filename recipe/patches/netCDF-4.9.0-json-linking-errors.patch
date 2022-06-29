@@ -1,5 +1,5 @@
---- netcdf-c-4.9.0.orig/include/netcdf_json.h
-+++ netcdf-c-4.9.0/include/netcdf_json.h
+--- netcdf-c-4.9.0.orig/include/netcdf_json.h	2022-06-10 18:04:15.000000000 -0300
++++ netcdf-c-4.9.0/include/netcdf_json.h	2022-06-29 09:05:37.311407278 -0300
 @@ -57,25 +57,25 @@
  #endif
  
@@ -9,27 +9,27 @@
  
  /* Reclaim a JSON tree */
 -DLLEXPORT extern void NCJreclaim(NCjson* json);
-+DLLEXPORT static void NCJreclaim(NCjson* json);
++DLLEXPORT static  void NCJreclaim(NCjson* json);
  
  /* Create a new JSON node of a given sort */
 -DLLEXPORT extern int NCJnew(int sort, NCjson** objectp);
-+DLLEXPORT static int NCJnew(int sort, NCjson** objectp);
++DLLEXPORT static  int NCJnew(int sort, NCjson** objectp);
  
  /* Create new json object with given string content */
 -DLLEXPORT extern int NCJnewstring(int sort, const char* value, NCjson** jsonp);
-+DLLEXPORT static int NCJnewstring(int sort, const char* value, NCjson** jsonp);
++DLLEXPORT static  int NCJnewstring(int sort, const char* value, NCjson** jsonp);
  
  /* Create new json object with given counted string content */
 -DLLEXPORT extern int NCJnewstringn(int sort, size_t len, const char* value, NCjson** jsonp);
-+DLLEXPORT static int NCJnewstringn(int sort, size_t len, const char* value, NCjson** jsonp);
++DLLEXPORT static  int NCJnewstringn(int sort, size_t len, const char* value, NCjson** jsonp);
  
  /* Get dict key value by name */
 -DLLEXPORT extern int NCJdictget(const NCjson* dict, const char* key, NCjson** valuep);
-+DLLEXPORT static int NCJdictget(const NCjson* dict, const char* key, NCjson** valuep);
++DLLEXPORT static  int NCJdictget(const NCjson* dict, const char* key, NCjson** valuep);
  
  /* Convert one json sort to  value of another type; don't use union so we can know when to reclaim sval */
 -DLLEXPORT extern int NCJcvt(const NCjson* value, int outsort, struct NCJconst* output);
-+DLLEXPORT static int NCJcvt(const NCjson* value, int outsort, struct NCJconst* output);
++DLLEXPORT static  int NCJcvt(const NCjson* value, int outsort, struct NCJconst* output);
  
  #ifndef NETCDF_JSON_H
  
