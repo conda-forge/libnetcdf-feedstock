@@ -21,7 +21,7 @@ docker_image:
 hdf4:
 - 4.2.15
 hdf5:
-- 1.12.1
+- 1.12.2
 jpeg:
 - '9'
 libzip:
@@ -41,8 +41,6 @@ pin_run_as_build:
     max_pin: x.x
   jpeg:
     max_pin: x
-  mpich:
-    max_pin: x.x
   zlib:
     max_pin: x.x
 target_platform:

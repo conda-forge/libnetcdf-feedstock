@@ -3,13 +3,8 @@ mpi:
   - openmpi  # [not win]
   - mpich  # [not win]
 
-pin_run_as_build:
-  openmpi:
-    max_pin: x.x
 
 pin_run_as_build:
-  mpich:
-    max_pin: x.x
 
 # OSX Compilers 13 seem to be incompatible with osx64
 # Downgrading to 11 for osx-64
