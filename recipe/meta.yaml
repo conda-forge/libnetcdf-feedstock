@@ -83,15 +83,8 @@ requirements:
     - libzip
   run:
     - {{ mpi }}  # [mpi != 'nompi']
-    - bzip2
     - curl
-    - zlib
-    - hdf4
     - hdf5 * {{ mpi_prefix }}_*
-    - jpeg
-    - libzip
-    # Curl should be pulling this... Investigate it later.
-    - libssh2  # [win]
 
 test:
   commands:
