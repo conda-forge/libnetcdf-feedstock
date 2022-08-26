@@ -3,6 +3,9 @@ mpi:
   - openmpi  # [not win]
   - mpich  # [not win]
 
+
+pin_run_as_build:
+
 # OSX Compilers 13 seem to be incompatible with osx64
 # Downgrading to 11 for osx-64
 # Downgrading to 11 for osx-arm as well out of an abundance of caution
