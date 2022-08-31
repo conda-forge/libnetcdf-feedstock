@@ -1,7 +1,7 @@
 bzip2:
 - '1'
 c_compiler:
-- vs2017
+- vs2019
 channel_sources:
 - conda-forge
 channel_targets:
@@ -9,7 +9,7 @@ channel_targets:
 curl:
 - '7'
 cxx_compiler:
-- vs2017
+- vs2019
 hdf4:
 - 4.2.15
 hdf5:
