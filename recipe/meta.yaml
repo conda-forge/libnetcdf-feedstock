@@ -28,6 +28,7 @@ source:
     # Revert upstream change in 4.8.1--maybe unnecessary in 4.8.2
     - patches/fix_cmake.patch  # [win]
     - patches/fix-ncjson.patch
+    - patches/fix-tests.patch
 
 build:
   number: {{ build }}
