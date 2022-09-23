@@ -1,12 +1,13 @@
---- netcdf-c-4.6.3.orig/config.h.cmake.in	2019-02-28 17:40:34.000000000 -0300
-+++ netcdf-c-4.6.3/config.h.cmake.in	2019-03-04 12:40:57.383805113 -0300
-@@ -67,6 +67,9 @@
-     #endif
+--- netcdf-c-4.9.0.orig/config.h.cmake.in	2022-06-10 18:04:15.000000000 -0300
++++ netcdf-c-4.9.0/config.h.cmake.in	2022-06-13 09:07:44.793148154 -0300
+@@ -57,6 +57,10 @@
+    #define _OFF_T_DEFINED
     #endif
  
 +   #if _MSC_VER<1900
 +    #define __func__ __FUNCTION__
 +   #endif
- 
++
     #define strdup _strdup
     #define fdopen _fdopen
+    #define write _write
