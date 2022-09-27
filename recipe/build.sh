@@ -60,6 +60,7 @@ fi
 # https://github.com/Unidata/netcdf-c/issues/2188#issuecomment-1015927961
 # -DENABLE_DAP_REMOTE_TESTS=OFF
 # Build static.
+mkdir build-static && cd build-static
 cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
@@ -83,8 +84,10 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
 # ctest  # Run only for the shared lib build to save time.
 make install -j${CPU_COUNT} ${VERBOSE_CM}
 make clean
+cd .. 
 
 # Build shared.
+mkdir build-shared && cd build-shared
 cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
@@ -111,6 +114,10 @@ SKIP=""
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
 ctest -VV --output-on-failure -j${CPU_COUNT} ${SKIP}
 fi
+
+cd ..
+rm -rf build-static
+rm -rf build-shared
 
 # Fix build paths in cmake artifacts
 for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
