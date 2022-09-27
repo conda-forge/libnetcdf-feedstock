@@ -59,6 +59,12 @@ fi
 # DAP Remote tests are causing spurious failures at the momment
 # https://github.com/Unidata/netcdf-c/issues/2188#issuecomment-1015927961
 # -DENABLE_DAP_REMOTE_TESTS=OFF
+
+# 2022/09/27
+# Cmake discourages in-source-tree builds, so moving to out-of-source-tree builds.
+# 
+mkdir build-static
+cd build-static
 # Build static.
 cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
@@ -83,7 +89,11 @@ cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
 # ctest  # Run only for the shared lib build to save time.
 make install -j${CPU_COUNT} ${VERBOSE_CM}
 make clean
+cd ..
 
+
+mkdir build-shared
+cd build-shared
 # Build shared.
 cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DCMAKE_INSTALL_LIBDIR="lib" \
@@ -111,6 +121,13 @@ SKIP=""
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
 ctest -VV --output-on-failure -j${CPU_COUNT} ${SKIP}
 fi
+
+#
+# Clean up build directories
+#
+cd ..
+rm -rf build-static
+rm -rf build-shared
 
 # Fix build paths in cmake artifacts
 for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
