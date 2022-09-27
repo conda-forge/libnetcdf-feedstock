@@ -112,7 +112,8 @@ make install -j${CPU_COUNT} ${VERBOSE_CM}
 SKIP=""
 
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
-ctest -VV --output-on-failure -j${CPU_COUNT} ${SKIP}
+#ctest -VV --output-on-failure -j${CPU_COUNT} ${SKIP}
+ctest -VV --output-on-failure -j 4 ${SKIP}
 fi
 
 cd ..
