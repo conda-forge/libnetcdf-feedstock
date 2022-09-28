@@ -24,7 +24,7 @@ source:
     - patches/strdup.patch
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
     # https://github.com/Unidata/netcdf-c/issues/2390
-    - patches/incorrect_library_versionand_filename_in_4.9.0.patch
+    # patches/incorrect_library_versionand_filename_in_4.9.0.patch
     # Revert upstream change in 4.8.1--maybe unnecessary in 4.8.2
     - patches/fix_cmake.patch  # [win]
     - patches/fix-ncjson.patch
