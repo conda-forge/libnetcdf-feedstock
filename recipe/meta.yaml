@@ -29,6 +29,7 @@ source:
     - patches/fix_cmake.patch  # [win]
     - patches/fix-ncjson.patch
     - patches/fix-tests.patch
+    - patches/fix-ncdump-tests-prereq.patch
 
 build:
   number: {{ build }}
