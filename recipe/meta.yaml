@@ -92,7 +92,7 @@ requirements:
 
 test:
   commands:
-    - test -f ${PREFIX}/lib/libnetcdf.a  # [not win]
+    - test ! -f ${PREFIX}/lib/libnetcdf.a          # [not win]
     - test -f ${PREFIX}/lib/libnetcdf${SHLIB_EXT}  # [not win]
     - nc-config --all  # [not win]
 
