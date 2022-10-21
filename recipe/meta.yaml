@@ -65,6 +65,8 @@ requirements:
     - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]
     - unzip  # [not win]
     - m2-unzip  # [win]
+    - m4  # [not win]
+    - m2-m4  # [win]
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - msinttypes  # [win and vc<14]
