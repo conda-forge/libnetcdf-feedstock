@@ -63,8 +63,7 @@ fi
 mkdir build-shared
 cd build-shared
 # Build shared.
-cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-      -DCMAKE_INSTALL_LIBDIR="lib" \
+cmake ${CMAKE_ARGS} \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
       -DENABLE_DAP=ON \
@@ -95,14 +94,6 @@ fi
 #
 cd ..
 rm -rf build-shared
-
-# Fix build paths in cmake artifacts
-for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
-    sed -i.bak "s#${CONDA_BUILD_SYSROOT}/usr/lib/lib\([a-z]*\).so#\1#g" ${fname}
-    sed -i.bak "s#/Applications/Xcode_.*app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.*sdk/usr/lib/lib\([a-z]*\).dylib#\1#g" ${fname}
-    rm ${fname}.bak
-    cat ${fname}
-done
 
 # Fix build paths in nc-config
 sed -i.bak "s#${BUILD_PREFIX}/bin/${CC}#${CC}#g" ${PREFIX}/bin/nc-config
