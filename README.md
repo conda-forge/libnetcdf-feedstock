@@ -267,6 +267,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@WardF](https://github.com/WardF/)
 * [@dopplershift](https://github.com/dopplershift/)
 * [@groutr](https://github.com/groutr/)
 * [@kmuehlbauer](https://github.com/kmuehlbauer/)
