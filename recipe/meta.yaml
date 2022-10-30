@@ -27,6 +27,7 @@ source:
     - patches/fix_cmake.patch  # [win]
     # Fix renaming file with multiple builds--will be in 4.8.2
     - patches/fix-rename.patch
+    - patches/fix-tests.patch
 
 build:
   number: {{ build }}

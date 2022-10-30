@@ -1,0 +1,65 @@
+diff -ruN netcdf-c-4.8.1/CMakeLists.txt netcdf-c-4.8.1-patch/CMakeLists.txt
+--- netcdf-c-4.8.1/CMakeLists.txt	2021-08-18 19:49:05.000000000 +0200
++++ netcdf-c-4.8.1-patch/CMakeLists.txt	2022-10-30 11:32:52.893519202 +0100
+@@ -941,17 +941,26 @@
+ # Check for the math library so it can be explicitly linked.
+ IF(NOT WIN32)
+   FIND_LIBRARY(HAVE_LIBM NAMES math m libm)
+-  MESSAGE(STATUS "Found Math library: ${HAVE_LIBM}")
+   IF(NOT HAVE_LIBM)
+-    MESSAGE(FATAL_ERROR "Unable to find the math library.")
++    CHECK_FUNCTION_EXISTS(exp HAVE_LIBM_FUNC)
++    IF(NOT HAVE_LIBM_FUNC)
++        MESSAGE(FATAL_ERROR "Unable to find the math library.")
++    ELSE(NOT HAVE_LIBM_FUNC)
++        SET(HAVE_LIBM "")
++    ENDIF()
++  ELSE(NOT HAVE_LIBM)
++    MESSAGE(STATUS "Found Math library: ${HAVE_LIBM}")
+   ENDIF()
+ ENDIF()
+ 
+ # Option to Enable DAP long tests, remote tests.
+ OPTION(ENABLE_DAP_LONG_TESTS "Enable DAP long tests." OFF)
++OPTION(ENABLE_EXTERNAL_SERVER_TESTS "Enable external Server remote tests." OFF)
+ OPTION(ENABLE_DAP_REMOTE_TESTS "Enable DAP remote tests." ON)
+ SET(REMOTETESTSERVERS "remotetest.unidata.ucar.edu" CACHE STRING "test servers to use for remote test")
+ 
++SET(REMOTETESTSERVERS "remotetest.unidata.ucar.edu" CACHE STRING "test servers to use for remote test")
++
+ # See if we have libzip
+ FIND_PACKAGE(Zip)
+ 
+diff -ruN netcdf-c-4.8.1/nc_test/CMakeLists.txt netcdf-c-4.8.1-patch/nc_test/CMakeLists.txt
+--- netcdf-c-4.8.1/nc_test/CMakeLists.txt	2021-08-18 19:49:05.000000000 +0200
++++ netcdf-c-4.8.1-patch/nc_test/CMakeLists.txt	2022-10-30 12:00:09.828975244 +0100
+@@ -94,11 +94,6 @@
+       add_sh_test(nc_test run_diskless2)
+     ENDIF()
+ 
+-    IF(ENABLE_BYTERANGE)
+-        build_bin_test_no_prefix(tst_byterange)
+-        add_sh_test(nc_test test_byterange)
+-    ENDIF()
+-
+   IF(BUILD_MMAP)
+     add_sh_test(nc_test run_mmap)
+   ENDIF()
+diff -ruN netcdf-c-4.8.1/nc_test/Makefile.am netcdf-c-4.8.1-patch/nc_test/Makefile.am
+--- netcdf-c-4.8.1/nc_test/Makefile.am	2021-08-18 19:49:05.000000000 +0200
++++ netcdf-c-4.8.1-patch/nc_test/Makefile.am	2022-10-30 12:00:32.612610252 +0100
+@@ -75,14 +75,6 @@
+ 
+ TESTS = $(TESTPROGRAMS)
+ 
+-if ENABLE_BYTERANGE
+-if BUILD_UTILITIES
+-tst_byterange_SOURCES = tst_byterange.c
+-check_PROGRAMS += tst_byterange
+-TESTS += test_byterange.sh
+-endif
+-endif
+-
+ if BUILD_UTILITIES
+ TESTS += run_diskless.sh run_diskless5.sh run_inmemory.sh
+ if LARGE_FILE_TESTS
