@@ -1,0 +1,48 @@
+commit 61739567907b63b18da33fab20870391dde20236
+Author: Dan Ibanez <daibane@sandia.gov>
+Date:   Mon Nov 7 13:24:20 2022 -0700
+
+    Rename variable to avoid function name conflict
+    
+    I was getting the following error while compiling:
+    
+    ```
+    netcdf-c/libnczarr/zutil.c:544:26: error: called object 'strlen' is not a function or function pointer
+      544 |     if(dnamep) *dnamep = strdup(dname);
+          |                          ^~~~~~
+    netcdf-c/libnczarr/zutil.c:533:68: note: declared here
+      533 | ncz_nctype2dtype(nc_type nctype, int endianness, int purezarr, int strlen, char** dnamep)
+          |                                                                ~~~~^~~~~~
+    ```
+    
+    My interpretation is that strdup() is implemented as a macro
+    which calls strlen() the standard C function, and when that
+    macro is being substituted here the call to strlen tries
+    to "call" the integer variable named strlen.
+    
+    Resolving this by renaming the integer variable to "len"
+    instead of "strlen", avoiding a conflict with a standard
+    C library function name.
+
+diff --git a/libnczarr/zutil.c b/libnczarr/zutil.c
+index 0cb64979c..f99740f15 100644
+--- a/libnczarr/zutil.c
++++ b/libnczarr/zutil.c
+@@ -530,7 +530,7 @@ ncz_nctypedecode(const char* snctype, nc_type* nctypep)
+ */
+ 
+ int
+-ncz_nctype2dtype(nc_type nctype, int endianness, int purezarr, int strlen, char** dnamep)
++ncz_nctype2dtype(nc_type nctype, int endianness, int purezarr, int len, char** dnamep)
+ {
+     char dname[64];
+     char* format = NULL;
+@@ -540,7 +540,7 @@ ncz_nctype2dtype(nc_type nctype, int endianness, int purezarr, int strlen, char*
+         format = znames[nctype].zarr[endianness];
+     else
+         format = znames[nctype].nczarr[endianness];
+-    snprintf(dname,sizeof(dname),format,strlen);
++    snprintf(dname,sizeof(dname),format,len);
+     if(dnamep) *dnamep = strdup(dname);
+     return NC_NOERR;		
+ }
