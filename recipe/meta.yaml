@@ -1,4 +1,4 @@
-{% set tag_version = "4.9.1-rc1" %}
+{% set tag_version = "4.9.1-rc2" %}
 {% set version = tag_version | replace("-","") %}
 {% set build = 0 %}
 
@@ -15,7 +15,7 @@ package:
 
 source:
   url: https://github.com/Unidata/netcdf-c/archive/v{{ tag_version }}.tar.gz
-  sha256: c4cee300f4ae274fd05030b653decdf3e626213df5153b70caf4b60899fe326e
+  sha256: 5da2456fce60307ce6716a3bb8ddbda0567dcc5ccdf447f1e1e2d95183981191
   patches:
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - patches/0006-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
@@ -23,7 +23,6 @@ source:
     - patches/0009-topsrcdir.patch
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
-    - patches/fix-name-conflict.patch
 
 build:
   number: {{ build }}
