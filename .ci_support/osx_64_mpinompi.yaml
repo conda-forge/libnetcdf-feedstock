@@ -22,6 +22,8 @@ hdf5:
 - 1.12.2
 jpeg:
 - '9'
+libxml2:
+- '2.10'
 libzip:
 - '1'
 macos_machine:

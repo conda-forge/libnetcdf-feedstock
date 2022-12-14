@@ -80,6 +80,7 @@ requirements:
     - jpeg
     - libzip
     - zstd
+    - libxml2
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - curl
