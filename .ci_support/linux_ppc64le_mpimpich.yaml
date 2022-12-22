@@ -1,9 +1,11 @@
+aws_sdk_cpp:
+- 1.9.379
 bzip2:
 - '1'
 c_compiler:
 - gcc
 c_compiler_version:
-- '10'
+- '11'
 cdt_name:
 - cos7
 channel_sources:
@@ -15,7 +17,7 @@ curl:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '10'
+- '11'
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
 hdf4:
