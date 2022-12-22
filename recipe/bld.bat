@@ -20,9 +20,10 @@ cmake -LAH -G "NMake Makefiles" ^
       -DHDF5_INCLUDE_DIR="%LIBRARY_INC:\=/%" ^
       -DCMAKE_C_FLAGS="-DH5_BUILT_AS_DYNAMIC_LIB" ^
       -DENABLE_NCZARR=on ^
-      -DENABLE_NCZARR_S3=off ^
+      -DENABLE_NCZARR_S3=on ^
       -DENABLE_NCZARR_S3_TESTS=off ^
       -DENABLE_EXTERNAL_SERVER_TESTS=OFF ^
+      -DENABLE_S3_SDK=on ^
       %SRC_DIR%
 if errorlevel 1 exit \b 1
 

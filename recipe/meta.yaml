@@ -86,10 +86,12 @@ requirements:
     - libzip
     - zstd
     - libxml2
+    - aws-sdk-cpp
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - curl
     - hdf5 * {{ mpi_prefix }}_*
+    - aws-sdk-cpp
 
 test:
   commands:
