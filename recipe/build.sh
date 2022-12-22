@@ -80,8 +80,9 @@ cmake ${CMAKE_ARGS} \
       -DENABLE_BYTERANGE=ON \
       -DENABLE_NCZARR=on \
       -DENABLE_NCZARR_ZIP=on \
-      -DENABLE_NCZARR_S3=off \
-      -DENABLE_NCZARR_S3_TESTS=off \
+      -DENABLE_NCZARR_S3=on \
+      -DENABLE_NCZARR_S3_TESTS=on \
+      -DENABLE_S3_SDK=on \
       ${PARALLEL} \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
