@@ -81,6 +81,7 @@ cmake ${CMAKE_ARGS} \
       -DENABLE_NCZARR_S3=on \
       -DENABLE_NCZARR_S3_TESTS=off \
       -DENABLE_S3_SDK=on \
+      -DENABLE_BYTERANGE=on \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
 
