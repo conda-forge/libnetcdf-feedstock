@@ -19,7 +19,7 @@ cxx_compiler_version:
 hdf4:
 - 4.2.15
 hdf5:
-- 1.12.2
+- 1.14.0
 jpeg:
 - '9'
 libxml2:
