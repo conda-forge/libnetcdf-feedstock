@@ -1,5 +1,5 @@
-{% set version = "4.9.0" %}
-{% set build = 2 %}
+{% set version = "4.9.1" %}
+{% set build = 0 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -13,23 +13,13 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/Unidata/netcdf-c/archive/v{{ version }}.tar.gz
-  sha256: 9f4cb864f3ab54adb75409984c6202323d2fc66c003e5308f3cdf224ed41c0a6
+  url: https://github.com/Unidata/netcdf-c/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 4ee8d5f6b50a1eb4ad4c10f24531e36261fd1882410fb08435eb2ddfd49a0908
   patches:
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
-    - patches/0006-Fix-tests-for-Windows-VS2008-define-__func__-as-__FU.patch
-    - patches/0008-Finish-the-missing-code-to-handle-VS-in-test_common.patch
     - patches/0009-topsrcdir.patch
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
-    - patches/strdup.patch
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
-    # https://github.com/Unidata/netcdf-c/issues/2390
-    # patches/incorrect_library_versionand_filename_in_4.9.0.patch
-    # Revert upstream change in 4.8.1--maybe unnecessary in 4.8.2
-    - patches/fix_cmake.patch  # [win]
-    - patches/fix-ncjson.patch
-    - patches/fix-tests.patch
-    - patches/fix-ncdump-tests-prereq.patch
 
 build:
   number: {{ build }}
@@ -59,7 +49,7 @@ build:
 
   run_exports:
     #   https://abi-laboratory.pro/tracker/timeline/netcdf/
-    - {{ pin_subpackage('libnetcdf', max_pin='x.x.x.x') }} {{ build_pin }}
+    - {{ pin_subpackage('libnetcdf', max_pin='x.x.x') }} {{ build_pin }}
 
 requirements:
   build:
@@ -72,6 +62,8 @@ requirements:
     - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]
     - unzip  # [not win]
     - m2-unzip  # [win]
+    - m4  # [not win]
+    - m2-m4  # [win]
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - msinttypes  # [win and vc<14]
