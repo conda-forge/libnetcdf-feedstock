@@ -1,5 +1,4 @@
-{% set tag_version = "4.9.1-rc2" %}
-{% set version = tag_version | replace("-","") %}
+{% set version = "4.9.1" %}
 {% set build = 0 %}
 
 # recipe-lint fails if mpi is undefined
@@ -14,8 +13,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/Unidata/netcdf-c/archive/v{{ tag_version }}.tar.gz
-  sha256: 127aab76ad9bab3d75a631c4e9fc72a41432b7b485d10c40a573bdd73be76435
+  url: https://github.com/Unidata/netcdf-c/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 4ee8d5f6b50a1eb4ad4c10f24531e36261fd1882410fb08435eb2ddfd49a0908
   patches:
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - patches/0009-topsrcdir.patch
