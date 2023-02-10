@@ -1,5 +1,5 @@
 {% set version = "4.9.1" %}
-{% set build = 2 %}
+{% set build = 3 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
