@@ -21,6 +21,8 @@ source:
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
     - patches/fix-undefined-behavior.patch
+    # https://github.com/Unidata/netcdf-c/pull/2615
+    - patches/update_hdf5fdhttp_hdf51140.patch
 
 build:
   number: {{ build }}

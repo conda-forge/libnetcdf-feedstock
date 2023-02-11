@@ -1,0 +1,152 @@
+From 727fa749005fa7868735fff82474b4476c6f5c6f Mon Sep 17 00:00:00 2001
+From: Dennis Heimbigner <dmh@ucar.edu>
+Date: Fri, 10 Feb 2023 15:10:43 -0700
+Subject: [PATCH] Modify H5FDhttp.c to work with HDF5 1.14.0
+
+re: https://github.com/Unidata/netcdf-c/issues/2614
+
+Most of the changes are minor comment changes.
+But the dispatch table for H5FD has changed, requiring changes
+to H5FDhttp.c, which is derived from the HDF5 source file H5FDstdio.c.
+The patch is to conditionally modify the dispatch table
+to conform to the HDF5-1.14.0 version.
+I was able to build and successfully test 1.14 for a reasonable
+set of (non-parallel) ./configure options.
+---
+ libhdf5/H5FDhttp.c | 81 +++++++++++++++++++++++++++-------------------
+ libhdf5/H5FDhttp.h |  6 +++-
+ 2 files changed, 52 insertions(+), 35 deletions(-)
+
+diff --git a/libhdf5/H5FDhttp.c b/libhdf5/H5FDhttp.c
+index 81dba1f5bf..4b9c42e976 100644
+--- a/libhdf5/H5FDhttp.c
++++ b/libhdf5/H5FDhttp.c
+@@ -5,7 +5,6 @@
+ 
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * Copyright by The HDF Group.                                               *
+- * Copyright by the Board of Trustees of the University of Illinois.         *
+  * All rights reserved.                                                      *
+  *                                                                           *
+  * This file is part of HDF5.  The full HDF5 copyright notice, including     *
+@@ -105,7 +104,7 @@ typedef struct H5FD_http_t {
+     haddr_t     eof;            /* end of file; current file size   */
+     haddr_t     pos;            /* current file I/O position        */
+     unsigned    write_access;   /* Flag to indicate the file was opened with write access */
+-    H5FD_http_file_op op;		/* last operation */
++    H5FD_http_file_op op;	/* last operation */
+     NC_HTTP_STATE*  state;       /* Curl handle + extra */
+     char*           url;        /* The URL (minus any fragment) for the dataset */ 
+ } H5FD_http_t;
+@@ -163,40 +162,54 @@ static herr_t H5FD_http_unlock(H5FD_t *_file);
+ 
+ /* Beware, not same as H5FD_HTTP_g */
+ static const H5FD_class_t H5FD_http_g = {
+-    "http",                     /* name         */
+-    MAXADDR,                    /* maxaddr      */
+-    H5F_CLOSE_WEAK,             /* fc_degree    */
++#if H5_VERSION_GE(1,14,0)
++    H5FD_CLASS_VERSION,		/* struct version  */
++    H5_VFD_HTTP,		/* value           */
++#endif
++    "http",			/* name         */
++    MAXADDR,			/* maxaddr      */
++    H5F_CLOSE_WEAK,		/* fc_degree    */
+ #ifndef H5FDCLASS1
+-    H5FD_http_term,             /* terminate    */
++    H5FD_http_term,		/* terminate    */
++#endif
++    NULL,			/* sb_size      */
++    NULL,			/* sb_encode    */
++    NULL,			/* sb_decode    */
++    0,				/* fapl_size    */
++    NULL,			/* fapl_get     */
++    NULL,			/* fapl_copy    */
++    NULL,			/* fapl_free    */
++    0,				/* dxpl_size    */
++    NULL,			/* dxpl_copy    */
++    NULL,			/* dxpl_free    */
++    H5FD_http_open,		/* open         */
++    H5FD_http_close,		/* close        */
++    H5FD_http_cmp,		/* cmp          */
++    H5FD_http_query,		/* query        */
++    NULL,			/* get_type_map */
++    H5FD_http_alloc,		/* alloc        */
++    NULL,			/* free         */
++    H5FD_http_get_eoa,		/* get_eoa      */
++    H5FD_http_set_eoa,		/* set_eoa      */
++    H5FD_http_get_eof,		/* get_eof      */
++    H5FD_http_get_handle,	/* get_handle   */
++    H5FD_http_read,		/* read         */
++    H5FD_http_write,		/* write        */
++#if H5_VERSION_GE(1,14,0)
++    NULL,			/* read_vector     */
++    NULL,			/* write_vector    */
++    NULL,			/* read_selection  */
++    NULL,			/* write_selection */
++#endif
++    H5FD_http_flush,		/* flush        */
++    NULL,			/* truncate     */
++    H5FD_http_lock,		/* lock         */
++    H5FD_http_unlock,		/* unlock       */
++#if H5_VERSION_GE(1,14,0)
++    NULL,			/* del          */
++    NULL,			/* ctl	        */
+ #endif
+-    NULL,                       /* sb_size      */
+-    NULL,                       /* sb_encode    */
+-    NULL,                       /* sb_decode    */
+-    0,                          /* fapl_size    */
+-    NULL,                       /* fapl_get     */
+-    NULL,                       /* fapl_copy    */
+-    NULL,                       /* fapl_free    */
+-    0,                          /* dxpl_size    */
+-    NULL,                       /* dxpl_copy    */
+-    NULL,                       /* dxpl_free    */
+-    H5FD_http_open,            /* open         */
+-    H5FD_http_close,           /* close        */
+-    H5FD_http_cmp,             /* cmp          */
+-    H5FD_http_query,           /* query        */
+-    NULL,                       /* get_type_map */
+-    H5FD_http_alloc,           /* alloc        */
+-    NULL,                       /* free         */
+-    H5FD_http_get_eoa,         /* get_eoa      */
+-    H5FD_http_set_eoa,         /* set_eoa      */
+-    H5FD_http_get_eof,         /* get_eof      */
+-    H5FD_http_get_handle,      /* get_handle   */
+-    H5FD_http_read,            /* read         */
+-    H5FD_http_write,           /* write        */
+-    H5FD_http_flush,           /* flush        */
+-    NULL, 		       /* truncate     */
+-    H5FD_http_lock,            /* lock         */
+-    H5FD_http_unlock,          /* unlock       */
+-    H5FD_FLMAP_DICHOTOMY       /* fl_map       */
++    H5FD_FLMAP_DICHOTOMY	/* fl_map       */
+ };
+ 
+ 
+diff --git a/libhdf5/H5FDhttp.h b/libhdf5/H5FDhttp.h
+index 210f44a727..6d4553998d 100644
+--- a/libhdf5/H5FDhttp.h
++++ b/libhdf5/H5FDhttp.h
+@@ -5,7 +5,6 @@
+ 
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * Copyright by The HDF Group.                                               *
+- * Copyright by the Board of Trustees of the University of Illinois.         *
+  * All rights reserved.                                                      *
+  *                                                                           *
+  * This file is part of HDF5.  The full HDF5 copyright notice, including     *
+@@ -30,7 +29,12 @@
+ 
+ #include "H5Ipublic.h"
+ 
++#if H5_VERSION_GE(1,14,0)
++#define H5_VFD_HTTP     ((H5FD_class_value_t)(H5_VFD_MAX - 2))
++#define H5FD_HTTP	(H5FDperform_init(H5FD_http_init))
++#else
+ #define H5FD_HTTP	(H5FD_http_init())
++#endif
+ 
+ #ifdef __cplusplus
+ extern "C" {
