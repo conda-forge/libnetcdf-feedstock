@@ -97,6 +97,7 @@ about:
   license: MIT
   license_file: COPYRIGHT
   summary: Libraries and data formats that support array-oriented scientific data
+  dev_url: https://github.com/Unidata/netcdf-c
 
 extra:
   recipe-maintainers:
