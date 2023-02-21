@@ -47,22 +47,12 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     #  (symbol in a section other than those above according to man nm), instead though
     #  or to fix ld64 so that it checks for symbols being used in this section).
     export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
-    export CFLAGS=${CFLAGS//-O2/-O0}
-    CMAKE_BUILD_TYPE=None
-fi
-
-if [[ ${target_platform} == "linux-ppc64le" ]]; then
-    export CFLAGS=${CFLAGS//-O3/-O0}
-    # This is the easiest way to get CMake to stop appending -O3
-    CMAKE_BUILD_TYPE=None
 fi
 
 # 2022/04/25
 # DAP Remote tests are causing spurious failures at the momment
 # https://github.com/Unidata/netcdf-c/issues/2188#issuecomment-1015927961
 # -DENABLE_DAP_REMOTE_TESTS=OFF
-
-echo $CFLAGS
 
 mkdir build-shared
 cd build-shared
