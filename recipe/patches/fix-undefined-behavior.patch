@@ -1,0 +1,32 @@
+commit 5ae3655436393b31baac8fb8e0588dcfea01d0b4
+Author: Ward Fisher <wfisher@ucar.edu>
+Date:   Tue Feb 21 15:02:14 2023 -0700
+
+    Fixing issues uncovered by compiling with '-fsanitize=undefined' and running nc_test/nc_test, in support of https://github.com/Unidata/netcdf-c/issues/1983, amongst others.  The cast as was being used was undefined behavior, and had to be worked around in a style approximating C++'s 'reinterpret_cast'
+
+diff --git a/nc_test/util.c b/nc_test/util.c
+index 2687ab098..0cc4eaf91 100644
+--- a/nc_test/util.c
++++ b/nc_test/util.c
+@@ -170,8 +170,8 @@ equal(const double x,
+         /* because in-memory data type char can be signed or unsigned,
+          * type cast the value from external NC_CHAR before the comparison
+          */
+-        char x2 = (char) x;
+-        char y2 = (char) y;
++        char x2 = *(char *)&x;
++        char y2 = *(char *)&y;
+         return ABS(x2-y2) <= epsilon * MAX( ABS(x2), ABS(y2));
+     }
+ 
+@@ -194,8 +194,8 @@ equal2(const double x,
+         /* because in-memory data type char can be signed or unsigned,
+          * type cast the value from external NC_CHAR before the comparison
+          */
+-        char x2 = (char) x;
+-        char y2 = (char) y;
++        char x2 = *(char *)&x;
++        char y2 = *(char *)&y;
+         return ABS(x2-y2) <= epsilon * MAX( ABS(x2), ABS(y2));
+     }
+ 
