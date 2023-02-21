@@ -23,6 +23,12 @@ else
   PARALLEL=""
 fi
 
+if [[ ${DEBUG_C} == yes ]]; then
+  CMAKE_BUILD_TYPE=Debug
+else
+  CMAKE_BUILD_TYPE=Release
+fi
+
 if [[ ${HOST} =~ .*darwin.* ]]; then
     # We have a problem with over-stripping of dylibs in the test programs:
     # nm ${PREFIX}/lib/libdf.dylib | grep error_top
@@ -44,12 +50,6 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     export CFLAGS="$CFLAGS -fno-strict-aliasing"
 fi
 
-if [[ ${DEBUG_C} == yes ]]; then
-  CMAKE_BUILD_TYPE=Debug
-else
-  CMAKE_BUILD_TYPE=Release
-fi
-
 if [[ ${target_platform} == "linux-ppc64le" ]]; then
     export CFLAGS=${CFLAGS//-O3/-O0}
     # This is the easiest way to get CMake to stop appending -O3
@@ -60,6 +60,8 @@ fi
 # DAP Remote tests are causing spurious failures at the momment
 # https://github.com/Unidata/netcdf-c/issues/2188#issuecomment-1015927961
 # -DENABLE_DAP_REMOTE_TESTS=OFF
+
+echo $CFLAGS
 
 mkdir build-shared
 cd build-shared
