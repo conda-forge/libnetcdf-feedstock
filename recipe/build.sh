@@ -47,7 +47,8 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     #  (symbol in a section other than those above according to man nm), instead though
     #  or to fix ld64 so that it checks for symbols being used in this section).
     export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
-    export CFLAGS="$CFLAGS -fno-strict-aliasing"
+    export CFLAGS=${CFLAGS//-O2/-O0}
+    CMAKE_BUILD_TYPE=None
 fi
 
 if [[ ${target_platform} == "linux-ppc64le" ]]; then
