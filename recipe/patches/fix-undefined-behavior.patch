@@ -1,11 +1,5 @@
-commit 5ae3655436393b31baac8fb8e0588dcfea01d0b4
-Author: Ward Fisher <wfisher@ucar.edu>
-Date:   Tue Feb 21 15:02:14 2023 -0700
-
-    Fixing issues uncovered by compiling with '-fsanitize=undefined' and running nc_test/nc_test, in support of https://github.com/Unidata/netcdf-c/issues/1983, amongst others.  The cast as was being used was undefined behavior, and had to be worked around in a style approximating C++'s 'reinterpret_cast'
-
 diff --git a/nc_test/util.c b/nc_test/util.c
-index 2687ab098..0cc4eaf91 100644
+index 2687ab098..9e46d88fe 100644
 --- a/nc_test/util.c
 +++ b/nc_test/util.c
 @@ -170,8 +170,8 @@ equal(const double x,
@@ -30,3 +24,23 @@ index 2687ab098..0cc4eaf91 100644
          return ABS(x2-y2) <= epsilon * MAX( ABS(x2), ABS(y2));
      }
  
+@@ -413,8 +413,8 @@ int dbl2nc ( const double d, const nc_type xtype, void *p)
+ double
+ hash( const nc_type xtype, const int rank, const size_t *index )
+ {
+-    double base;
+-    double result;
++    double base = 0;
++    double result = 0;
+     int  d;       /* index of dimension */
+ 
+ 	/* If vector then elements 0 & 1 are min & max. Elements 2 & 3 are */
+@@ -969,7 +969,7 @@ check_dims(int  ncid)
+ void
+ check_vars(int  ncid)
+ {
+-    size_t index[MAX_RANK];
++    size_t index[MAX_RANK] = {0};
+     char  text, name[NC_MAX_NAME];
+     int  i, err;		/* status */
+     size_t  j;
