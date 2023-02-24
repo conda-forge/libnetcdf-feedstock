@@ -23,6 +23,12 @@ else
   PARALLEL=""
 fi
 
+if [[ ${DEBUG_C} == yes ]]; then
+  CMAKE_BUILD_TYPE=Debug
+else
+  CMAKE_BUILD_TYPE=Release
+fi
+
 if [[ ${HOST} =~ .*darwin.* ]]; then
     # We have a problem with over-stripping of dylibs in the test programs:
     # nm ${PREFIX}/lib/libdf.dylib | grep error_top
@@ -41,18 +47,6 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     #  (symbol in a section other than those above according to man nm), instead though
     #  or to fix ld64 so that it checks for symbols being used in this section).
     export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
-fi
-
-if [[ ${DEBUG_C} == yes ]]; then
-  CMAKE_BUILD_TYPE=Debug
-else
-  CMAKE_BUILD_TYPE=Release
-fi
-
-if [[ ${target_platform} == "linux-ppc64le" ]]; then
-    export CFLAGS=${CFLAGS//-O3/-O0}
-    # This is the easiest way to get CMake to stop appending -O3
-    CMAKE_BUILD_TYPE=None
 fi
 
 # 2022/04/25
