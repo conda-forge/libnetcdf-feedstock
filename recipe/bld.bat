@@ -22,7 +22,8 @@ cmake -LAH -G "NMake Makefiles" ^
       -DENABLE_NCZARR=on ^
       -DENABLE_NCZARR_S3=off ^
       -DENABLE_NCZARR_S3_TESTS=off ^
-      -DENABLE_EXTERNAL_SERVER_TESTS=OFF ^
+      -DENABLE_BYTERANGE=on ^
+      -DENABLE_EXTERNAL_SERVER_TESTS=on ^
       %SRC_DIR%
 if errorlevel 1 exit \b 1
 
