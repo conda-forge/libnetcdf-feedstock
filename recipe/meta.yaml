@@ -1,5 +1,5 @@
 {% set version = "4.9.1" %}
-{% set build = 1 %}
+{% set build = 2 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -75,7 +75,7 @@ requirements:
     # without this repeat reference, conda-smithy doesn't pin correctly
     - hdf5
     - hdf5 * {{ mpi_prefix }}_*
-    - jpeg
+    - libjpeg-turbo
     - libzip
     - zstd
     - libxml2
