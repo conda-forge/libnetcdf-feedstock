@@ -14,8 +14,8 @@ hdf4:
 - 4.2.15
 hdf5:
 - 1.12.2
-jpeg:
-- '9'
+libjpeg_turbo:
+- 2.1.5
 libxml2:
 - '2.10'
 libzip:

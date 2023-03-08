@@ -1,11 +1,11 @@
-About libnetcdf
-===============
+About libnetcdf-feedstock
+=========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/libnetcdf-feedstock/blob/main/LICENSE.txt)
 
 Home: http://www.unidata.ucar.edu/software/netcdf/
 
 Package license: MIT
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/libnetcdf-feedstock/blob/main/LICENSE.txt)
 
 Summary: Libraries and data formats that support array-oriented scientific data
 
