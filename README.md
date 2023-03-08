@@ -9,6 +9,8 @@ Package license: MIT
 
 Summary: Libraries and data formats that support array-oriented scientific data
 
+Development: https://github.com/Unidata/netcdf-c
+
 Current build status
 ====================
 
