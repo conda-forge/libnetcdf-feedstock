@@ -22,7 +22,6 @@ source:
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
     - patches/fix-undefined-behavior.patch
     # https://github.com/Unidata/netcdf-c/pull/2615
-    - patches/update_hdf5fdhttp_hdf51140.patch
 
 build:
   number: {{ build }}
