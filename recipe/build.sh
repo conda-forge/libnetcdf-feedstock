@@ -98,8 +98,10 @@ rm ${PREFIX}/bin/nc-config.bak
 for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
      # fix linux
      sed -i.bak "s#${CONDA_BUILD_SYSROOT}/usr/lib/lib\([a-z]*\).so#\1#g" ${fname}
-     # fix OSX
-     sed -i.bak "s#/Applications/Xcode_[0-9]*.[0-9]*.[0-9]*.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX[0-9]*.[0-9]*.sdk/usr/lib/lib\([a-zA-Z0-9]*\).[dylib|tbd]#\1#g" ${fname}
+     # fix OSX (.dylib extension)
+     sed -i.bak "s#/Applications/Xcode_[0-9]*.[0-9]*.[0-9]*.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX[0-9]*.[0-9]*.sdk/usr/lib/lib\([a-zA-Z0-9]*\).dylib#\1#g" ${fname}
+     # fix OSX (.tbd extension)
+     sed -i.bak "s#/Applications/Xcode_[0-9]*.[0-9]*.[0-9]*.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX[0-9]*.[0-9]*.sdk/usr/lib/lib\([a-zA-Z0-9]*\).tbd#\1#g" ${fname}
      rm ${fname}.bak
      cat ${fname}
  done
