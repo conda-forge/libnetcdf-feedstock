@@ -54,6 +54,8 @@ fi
 # https://github.com/Unidata/netcdf-c/issues/2188#issuecomment-1015927961
 # -DENABLE_DAP_REMOTE_TESTS=OFF
 
+export HDF5_PLUGIN_PATH=$(echo "H5_DEFAULT_PLUGINDIR" | $CPP -P -include $PREFIX/include/H5pubconf.h -)
+
 mkdir build-shared
 cd build-shared
 # Build shared.
