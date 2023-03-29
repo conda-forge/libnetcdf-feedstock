@@ -9,6 +9,7 @@ rem manually specify hdf5 paths to work-around https://github.com/Unidata/netcdf
 cmake -LAH -G "NMake Makefiles" ^
       -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
       -DBUILD_SHARED_LIBS=ON ^
+      -DPLUGIN_INSTALL_DIR=YES ^
       -DENABLE_TESTS=ON ^
       -DENABLE_HDF4=ON ^
       -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
@@ -42,4 +43,3 @@ goto end_tests
 :vc9_tests
 ctest -VV
 :end_tests
-
