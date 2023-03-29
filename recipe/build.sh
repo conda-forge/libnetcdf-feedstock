@@ -47,6 +47,9 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     #  (symbol in a section other than those above according to man nm), instead though
     #  or to fix ld64 so that it checks for symbols being used in this section).
     export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
+    export HDF5_PLUGIN_PATH=$(echo "H5_DEFAULT_PLUGINDIR" | clang-cpp -P -include $PREFIX/include/H5pubconf.h - | tr -d '"')
+else
+    export HDF5_PLUGIN_PATH=$(echo "H5_DEFAULT_PLUGINDIR" | $CPP -P -include $PREFIX/include/H5pubconf.h - | tr -d '"')
 fi
 
 # 2022/04/25
@@ -54,7 +57,6 @@ fi
 # https://github.com/Unidata/netcdf-c/issues/2188#issuecomment-1015927961
 # -DENABLE_DAP_REMOTE_TESTS=OFF
 
-export HDF5_PLUGIN_PATH=$(echo "H5_DEFAULT_PLUGINDIR" | $CPP -P -include $PREFIX/include/H5pubconf.h - | tr -d '"')
 
 mkdir build-shared
 cd build-shared
