@@ -47,12 +47,16 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     #  (symbol in a section other than those above according to man nm), instead though
     #  or to fix ld64 so that it checks for symbols being used in this section).
     export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
+    export HDF5_PLUGIN_PATH=$(echo "H5_DEFAULT_PLUGINDIR" | clang-cpp -P -include $PREFIX/include/H5pubconf.h - | tr -d '"')
+else
+    export HDF5_PLUGIN_PATH=$(echo "H5_DEFAULT_PLUGINDIR" | $CPP -P -include $PREFIX/include/H5pubconf.h - | tr -d '"')
 fi
 
 # 2022/04/25
 # DAP Remote tests are causing spurious failures at the momment
 # https://github.com/Unidata/netcdf-c/issues/2188#issuecomment-1015927961
 # -DENABLE_DAP_REMOTE_TESTS=OFF
+
 
 mkdir build-shared
 cd build-shared
@@ -65,6 +69,8 @@ cmake ${CMAKE_ARGS} \
       -DENABLE_HDF4=ON \
       -DENABLE_NETCDF_4=ON \
       -DBUILD_SHARED_LIBS=ON \
+      -DENABLE_PLUGIN_INSTALL=ON \
+      -DPLUGIN_INSTALL_DIR=${HDF5_PLUGIN_PATH} \
       -DENABLE_TESTS=ON \
       -DBUILD_UTILITIES=ON \
       -DENABLE_DOXYGEN=OFF \

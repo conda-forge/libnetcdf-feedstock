@@ -1,5 +1,5 @@
 {% set version = "4.9.2" %}
-{% set build = 2 %}
+{% set build = 3 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -78,6 +78,7 @@ requirements:
     - libzip
     - zstd
     - libxml2
+    - blosc
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - curl
