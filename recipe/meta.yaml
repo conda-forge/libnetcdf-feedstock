@@ -1,5 +1,5 @@
 {% set version = "4.9.2" %}
-{% set build = 3 %}
+{% set build = 4 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -20,6 +20,7 @@ source:
     - patches/0009-topsrcdir.patch
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
+    - patches/0001-Fix-issue-2674.patch
 
 build:
   number: {{ build }}
@@ -107,3 +108,4 @@ extra:
     - msarahan
     - xylar
     - dopplershift
+    - zklaus
