@@ -48,6 +48,7 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     #  or to fix ld64 so that it checks for symbols being used in this section).
     export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
     export HDF5_PLUGIN_PATH=$(echo "H5_DEFAULT_PLUGINDIR" | clang-cpp -P -include $PREFIX/include/H5pubconf.h - | tr -d '"')
+    export CMAKE_ARGS="${CMAKE_ARGS} -DHAVE_CLOCK_GETTIME:BOOL=OFF"
 else
     export HDF5_PLUGIN_PATH=$(echo "H5_DEFAULT_PLUGINDIR" | $CPP -P -include $PREFIX/include/H5pubconf.h - | tr -d '"')
 fi
