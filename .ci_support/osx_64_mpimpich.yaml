@@ -5,7 +5,7 @@ bzip2:
 c_compiler:
 - clang
 c_compiler_version:
-- '14'
+- '15'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -15,7 +15,7 @@ curl:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '14'
+- '15'
 hdf4:
 - 4.2.15
 hdf5:
@@ -23,7 +23,7 @@ hdf5:
 libjpeg_turbo:
 - 2.1.5
 libxml2:
-- '2.10'
+- '2.11'
 libzip:
 - '1'
 macos_machine:

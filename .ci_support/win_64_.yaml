@@ -17,7 +17,7 @@ hdf5:
 libjpeg_turbo:
 - 2.1.5
 libxml2:
-- '2.10'
+- '2.11'
 libzip:
 - '1'
 mpi:
