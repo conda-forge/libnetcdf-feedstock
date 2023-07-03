@@ -8,6 +8,10 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
+cxx_compiler:
+- clangxx
+cxx_compiler_version:
+- '15'
 hdf4:
 - 4.2.15
 hdf5:
@@ -28,6 +32,9 @@ openmpi:
 - '4'
 target_platform:
 - osx-64
+zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
 zlib:
 - '1.2'
 zstd:
