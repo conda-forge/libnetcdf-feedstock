@@ -1,5 +1,7 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '11.0'
+bzip2:
+- '1'
 c_compiler:
 - clang
 c_compiler_version:
@@ -20,8 +22,12 @@ libaec:
 - '1'
 libcurl:
 - '8'
+libjpeg_turbo:
+- 2.1.5
 libxml2:
 - '2.11'
+libzip:
+- '1'
 macos_machine:
 - arm64-apple-darwin20.0.0
 mpi:

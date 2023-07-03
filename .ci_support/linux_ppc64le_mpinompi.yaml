@@ -1,3 +1,5 @@
+bzip2:
+- '1'
 c_compiler:
 - gcc
 c_compiler_version:
@@ -22,8 +24,12 @@ libaec:
 - '1'
 libcurl:
 - '8'
+libjpeg_turbo:
+- 2.1.5
 libxml2:
 - '2.11'
+libzip:
+- '1'
 mpi:
 - nompi
 mpich:
