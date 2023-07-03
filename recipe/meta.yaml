@@ -68,14 +68,14 @@ requirements:
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - blosc
-    # - bzip2
+    - bzip2
     - hdf4
     # without this repeat reference, conda-smithy doesn't pin correctly
     - hdf5
     - hdf5 * {{ mpi_prefix }}_*
     - libaec
     - libcurl
-    # - libjpeg-turbo
+    - libjpeg-turbo
     - libxml2
     - libzip
     - zlib
