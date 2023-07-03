@@ -77,7 +77,7 @@ requirements:
     - libcurl
     # - libjpeg-turbo
     - libxml2
-    # - libzip
+    - libzip
     - zlib
     - zstd
   run:

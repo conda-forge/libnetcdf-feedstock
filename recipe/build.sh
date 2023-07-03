@@ -79,6 +79,7 @@ cmake ${CMAKE_ARGS} \
       -DENABLE_EXTERNAL_SERVER_TESTS=OFF \
       ${PARALLEL} \
       -DENABLE_NCZARR=on \
+      -DENABLE_NCZARR_ZIP=on \
       -DENABLE_NCZARR_S3=off \
       -DENABLE_NCZARR_S3_TESTS=off \
       ${SRC_DIR}
