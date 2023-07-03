@@ -1,7 +1,5 @@
 BUILD:
 - aarch64-conda_cos7-linux-gnu
-bzip2:
-- '1'
 c_compiler:
 - gcc
 c_compiler_version:
@@ -14,24 +12,18 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-curl:
-- '8'
-cxx_compiler:
-- gxx
-cxx_compiler_version:
-- '12'
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
 hdf4:
 - 4.2.15
 hdf5:
 - 1.14.1
-libjpeg_turbo:
-- 2.1.5
+libaec:
+- '1'
+libcurl:
+- '8'
 libxml2:
 - '2.11'
-libzip:
-- '1'
 mpi:
 - mpich
 mpich:
@@ -40,9 +32,6 @@ openmpi:
 - '4'
 target_platform:
 - linux-aarch64
-zip_keys:
-- - c_compiler_version
-  - cxx_compiler_version
 zlib:
 - '1.2'
 zstd:
