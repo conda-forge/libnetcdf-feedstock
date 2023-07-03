@@ -78,7 +78,6 @@ requirements:
     # - libjpeg-turbo
     - libxml2
     # - libzip
-    - msinttypes  # [win and vc<14]
     - zlib
     - zstd
   run:
