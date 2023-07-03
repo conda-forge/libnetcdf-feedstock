@@ -67,22 +67,22 @@ requirements:
     - m2-m4  # [win]
   host:
     - {{ mpi }}  # [mpi != 'nompi']
-    - msinttypes  # [win and vc<14]
+    - blosc
     - bzip2
-    - curl
-    - zlib
     - hdf4
     # without this repeat reference, conda-smithy doesn't pin correctly
     - hdf5
     - hdf5 * {{ mpi_prefix }}_*
+    - libaec
+    - libcurl
     - libjpeg-turbo
-    - libzip
-    - zstd
     - libxml2
-    - blosc
+    - libzip
+    - msinttypes  # [win and vc<14]
+    - zlib
+    - zstd
   run:
     - {{ mpi }}  # [mpi != 'nompi']
-    - curl
     - hdf5 * {{ mpi_prefix }}_*
 
 test:
