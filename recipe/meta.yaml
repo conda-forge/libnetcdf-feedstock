@@ -59,7 +59,7 @@ requirements:
     - pkg-config  # [not win]
     - gnuconfig  # [unix]
     - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
+    # - {{ compiler('cxx') }}
     - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]
     - unzip  # [not win]
     - m2-unzip  # [win]
@@ -68,16 +68,16 @@ requirements:
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - blosc
-    - bzip2
+    # - bzip2
     - hdf4
     # without this repeat reference, conda-smithy doesn't pin correctly
     - hdf5
     - hdf5 * {{ mpi_prefix }}_*
     - libaec
     - libcurl
-    - libjpeg-turbo
+    # - libjpeg-turbo
     - libxml2
-    - libzip
+    # - libzip
     - msinttypes  # [win and vc<14]
     - zlib
     - zstd
