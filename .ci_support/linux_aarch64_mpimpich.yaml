@@ -14,8 +14,6 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-curl:
-- '8'
 cxx_compiler:
 - gxx
 cxx_compiler_version:
@@ -26,8 +24,10 @@ hdf4:
 - 4.2.15
 hdf5:
 - 1.14.1
-libjpeg_turbo:
-- 2.1.5
+libaec:
+- '1'
+libcurl:
+- '8'
 libxml2:
 - '2.11'
 libzip:

@@ -1,5 +1,5 @@
 {% set version = "4.9.2" %}
-{% set build = 6 %}
+{% set build = 7 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -21,6 +21,7 @@ source:
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
     - patches/0001-Fix-issue-2674.patch
+    - patches/0001-Switch-custom-Bzip2-cmake-module-to-standard.patch
 
 build:
   number: {{ build }}
@@ -67,23 +68,21 @@ requirements:
     - m2-m4  # [win]
   host:
     - {{ mpi }}  # [mpi != 'nompi']
-    - msinttypes  # [win and vc<14]
+    - blosc
     - bzip2
-    - curl
-    - zlib
     - hdf4
     # without this repeat reference, conda-smithy doesn't pin correctly
     - hdf5
     - hdf5 * {{ mpi_prefix }}_*
-    - libjpeg-turbo
-    - libzip
-    - zstd
+    - libaec
+    - libcurl
     - libxml2
-    - blosc
-  run:
-    - {{ mpi }}  # [mpi != 'nompi']
-    - curl
-    - hdf5 * {{ mpi_prefix }}_*
+    - libzip
+    # Openssl provides libcrypto which is needed via libcurl, but doesn't get
+    # to the run reqs through run_exports because it is twice removed
+    - openssl  # [unix]
+    - zlib
+    - zstd
 
 test:
   commands:

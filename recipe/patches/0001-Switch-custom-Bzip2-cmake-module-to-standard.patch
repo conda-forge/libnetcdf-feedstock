@@ -1,0 +1,244 @@
+From b38811cf38f9e8a62f6675ef17280eb938e59c89 Mon Sep 17 00:00:00 2001
+From: Klaus Zimmermann <klaus.zimmermann@smhi.se>
+Date: Wed, 5 Jul 2023 10:45:08 +0200
+Subject: [PATCH] Switch custom Bzip2 cmake module to standard
+
+---
+ CMakeLists.txt                | 15 ++++----
+ cmake/modules/FindBz2.cmake   | 64 -----------------------------------
+ cmake/modules/FindBzip2.cmake | 64 -----------------------------------
+ liblib/CMakeLists.txt         |  4 +--
+ plugins/CMakeLists.txt        |  6 ++--
+ 5 files changed, 13 insertions(+), 140 deletions(-)
+ delete mode 100644 cmake/modules/FindBz2.cmake
+ delete mode 100644 cmake/modules/FindBzip2.cmake
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index de95010c..4a912713 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1132,7 +1132,7 @@ endmacro(set_std_filter)
+ 
+ # Locate some compressors
+ FIND_PACKAGE(Szip)
+-FIND_PACKAGE(Bz2)
++FIND_PACKAGE(BZip2)
+ FIND_PACKAGE(Blosc)
+ FIND_PACKAGE(Zstd)
+ 
+@@ -1142,14 +1142,14 @@ set_std_filter(Szip)
+   SET(HAVE_SZ ${Szip_FOUND})
+ set_std_filter(Blosc)
+ set_std_filter(Zstd)
+-IF(Bz2_FOUND)
+-  set_std_filter(Bz2)
++IF(BZIP2_FOUND)
++  set_std_filter(BZIP2)
+ ELSE()
+   # The reason we use a local version is to support a more comples test case
+   MESSAGE("libbz2 not found using built-in version")
+-  SET(HAVE_LOCAL_BZ2 ON)
+-  SET(HAVE_BZ2 ON)
+-  set(STD_FILTERS "${STD_FILTERS} bz2")
++  SET(HAVE_LOCAL_BZIP2 ON)
++  SET(HAVE_BZIP2 ON)
++  set(STD_FILTERS "${STD_FILTERS} bzip2")
+ ENDIF()
+ 
+ # If user wants, then install selected plugins (default on)
+@@ -2565,7 +2565,8 @@ is_enabled(HAVE_SZ HAS_SZIP)
+ is_enabled(HAVE_SZ HAS_SZLIB_WRITE)
+ is_enabled(HAVE_ZSTD HAS_ZSTD)
+ is_enabled(HAVE_BLOSC HAS_BLOSC)
+-is_enabled(HAVE_BZ2 HAS_BZ2)
++is_enabled(HAVE_BZIP2 HAS_BZIP2)
++is_enabled(HAVE_BZIP2 HAS_BZ2)
+ 
+ 
+ # Generate file from template.
+diff --git a/cmake/modules/FindBz2.cmake b/cmake/modules/FindBz2.cmake
+deleted file mode 100644
+index 89d66e18..00000000
+--- a/cmake/modules/FindBz2.cmake
++++ /dev/null
+@@ -1,64 +0,0 @@
+-# Searches for an installation of the bz2 library. On success, it sets the following variables:
+-#
+-#   Bz2_FOUND              Set to true to indicate the bz2 library was found
+-#   Bz2_INCLUDE_DIRS       The directory containing the header file bz2/bz2.h
+-#   Bz2_LIBRARIES          The libraries needed to use the bz2 library
+-#
+-# To specify an additional directory to search, set Bz2_ROOT.
+-#
+-# Author: Siddhartha Chaudhuri, 2009
+-#
+-
+-# Look for the header, first in the user-specified location and then in the system locations
+-SET(Bz2_INCLUDE_DOC "The directory containing the header file bz2.h")
+-FIND_PATH(Bz2_INCLUDE_DIRS NAMES bz2.h bz2/bz2.h PATHS ${Bz2_ROOT} ${Bz2_ROOT}/include DOC ${Bz2_INCLUDE_DOC} NO_DEFAULT_PATH)
+-IF(NOT Bz2_INCLUDE_DIRS)  # now look in system locations
+-  FIND_PATH(Bz2_INCLUDE_DIRS NAMES bzlib.h DOC ${Bz2_INCLUDE_DOC})
+-ENDIF(NOT Bz2_INCLUDE_DIRS)
+-
+-SET(Bz2_FOUND FALSE)
+-
+-IF(Bz2_INCLUDE_DIRS)
+-  SET(Bz2_LIBRARY_DIRS ${Bz2_INCLUDE_DIRS})
+-
+-  IF("${Bz2_LIBRARY_DIRS}" MATCHES "/include$")
+-    # Strip off the trailing "/include" in the path.
+-    GET_FILENAME_COMPONENT(Bz2_LIBRARY_DIRS ${Bz2_LIBRARY_DIRS} PATH)
+-  ENDIF("${Bz2_LIBRARY_DIRS}" MATCHES "/include$")
+-
+-  IF(EXISTS "${Bz2_LIBRARY_DIRS}/lib")
+-    SET(Bz2_LIBRARY_DIRS ${Bz2_LIBRARY_DIRS}/lib)
+-  ENDIF(EXISTS "${Bz2_LIBRARY_DIRS}/lib")
+-
+-  # Find Bz2 libraries
+-  FIND_LIBRARY(Bz2_DEBUG_LIBRARY NAMES bz2d bz2_d libbz2d libbz2_d libbz2
+-               PATH_SUFFIXES Debug ${CMAKE_LIBRARY_ARCHITECTURE} ${CMAKE_LIBRARY_ARCHITECTURE}/Debug
+-               PATHS ${Bz2_LIBRARY_DIRS} NO_DEFAULT_PATH)
+-  FIND_LIBRARY(Bz2_RELEASE_LIBRARY NAMES bz2 libbz2
+-               PATH_SUFFIXES Release ${CMAKE_LIBRARY_ARCHITECTURE} ${CMAKE_LIBRARY_ARCHITECTURE}/Release
+-               PATHS ${Bz2_LIBRARY_DIRS} NO_DEFAULT_PATH)
+-
+-  SET(Bz2_LIBRARIES )
+-  IF(Bz2_DEBUG_LIBRARY AND Bz2_RELEASE_LIBRARY)
+-    SET(Bz2_LIBRARIES debug ${Bz2_DEBUG_LIBRARY} optimized ${Bz2_RELEASE_LIBRARY})
+-  ELSEIF(Bz2_DEBUG_LIBRARY)
+-    SET(Bz2_LIBRARIES ${Bz2_DEBUG_LIBRARY})
+-  ELSEIF(Bz2_RELEASE_LIBRARY)
+-    SET(Bz2_LIBRARIES ${Bz2_RELEASE_LIBRARY})
+-  ENDIF(Bz2_DEBUG_LIBRARY AND Bz2_RELEASE_LIBRARY)
+-
+-  IF(Bz2_LIBRARIES)
+-    SET(Bz2_FOUND TRUE)
+-  ENDIF(Bz2_LIBRARIES)
+-ENDIF(Bz2_INCLUDE_DIRS)
+-
+-IF(Bz2_FOUND)
+-#  IF(NOT Bz2_FIND_QUIETLY)
+-    MESSAGE(STATUS "Found Bz2: headers at ${Bz2_INCLUDE_DIRS}, libraries at ${Bz2_LIBRARY_DIRS}")
+-    MESSAGE(STATUS "	library is ${Bz2_LIBRARIES}")    
+-#  ENDIF(NOT Bz2_FIND_QUIETLY)
+-ELSE(Bz2_FOUND)
+-  IF(Bz2_FIND_REQUIRED)
+-    MESSAGE(FATAL_ERROR "Bz2 library not found")
+-  ENDIF(Bz2_FIND_REQUIRED)
+-ENDIF(Bz2_FOUND)
+diff --git a/cmake/modules/FindBzip2.cmake b/cmake/modules/FindBzip2.cmake
+deleted file mode 100644
+index 9b6c9471..00000000
+--- a/cmake/modules/FindBzip2.cmake
++++ /dev/null
+@@ -1,64 +0,0 @@
+-# Searches for an installation of the bzip2 library. On success, it sets the following variables:
+-#
+-#   Bzip2_FOUND              Set to true to indicate the bzip2 library was found
+-#   Bzip2_INCLUDE_DIRS       The directory containing the header file bzip2/bzip2.h
+-#   Bzip2_LIBRARIES          The libraries needed to use the bzip2 library
+-#
+-# To specify an additional directory to search, set Bzip2_ROOT.
+-#
+-# Author: Siddhartha Chaudhuri, 2009
+-#
+-
+-# Look for the header, first in the user-specified location and then in the system locations
+-SET(Bzip2_INCLUDE_DOC "The directory containing the header file bzip2.h")
+-FIND_PATH(Bzip2_INCLUDE_DIRS NAMES bzip2.h bzip2/bzip2.h PATHS ${Bzip2_ROOT} ${Bzip2_ROOT}/include DOC ${Bzip2_INCLUDE_DOC} NO_DEFAULT_PATH)
+-IF(NOT Bzip2_INCLUDE_DIRS)  # now look in system locations
+-  FIND_PATH(Bzip2_INCLUDE_DIRS NAMES bzlib.h DOC ${Bzip2_INCLUDE_DOC})
+-ENDIF(NOT Bzip2_INCLUDE_DIRS)
+-
+-SET(Bzip2_FOUND FALSE)
+-
+-IF(Bzip2_INCLUDE_DIRS)
+-  SET(Bzip2_LIBRARY_DIRS ${Bzip2_INCLUDE_DIRS})
+-
+-  IF("${Bzip2_LIBRARY_DIRS}" MATCHES "/include$")
+-    # Strip off the trailing "/include" in the path.
+-    GET_FILENAME_COMPONENT(Bzip2_LIBRARY_DIRS ${Bzip2_LIBRARY_DIRS} PATH)
+-  ENDIF("${Bzip2_LIBRARY_DIRS}" MATCHES "/include$")
+-
+-  IF(EXISTS "${Bzip2_LIBRARY_DIRS}/lib")
+-    SET(Bzip2_LIBRARY_DIRS ${Bzip2_LIBRARY_DIRS}/lib)
+-  ENDIF(EXISTS "${Bzip2_LIBRARY_DIRS}/lib")
+-
+-  # Find Bzip2 libraries
+-  FIND_LIBRARY(Bzip2_DEBUG_LIBRARY NAMES bzip2d bzip2_d libbzip2d libbzip2_d libbzip2
+-               PATH_SUFFIXES Debug ${CMAKE_LIBRARY_ARCHITECTURE} ${CMAKE_LIBRARY_ARCHITECTURE}/Debug
+-               PATHS ${Bzip2_LIBRARY_DIRS} NO_DEFAULT_PATH)
+-  FIND_LIBRARY(Bzip2_RELEASE_LIBRARY NAMES bzip2 libbzip2
+-               PATH_SUFFIXES Release ${CMAKE_LIBRARY_ARCHITECTURE} ${CMAKE_LIBRARY_ARCHITECTURE}/Release
+-               PATHS ${Bzip2_LIBRARY_DIRS} NO_DEFAULT_PATH)
+-
+-  SET(Bzip2_LIBRARIES )
+-  IF(Bzip2_DEBUG_LIBRARY AND Bzip2_RELEASE_LIBRARY)
+-    SET(Bzip2_LIBRARIES debug ${Bzip2_DEBUG_LIBRARY} optimized ${Bzip2_RELEASE_LIBRARY})
+-  ELSEIF(Bzip2_DEBUG_LIBRARY)
+-    SET(Bzip2_LIBRARIES ${Bzip2_DEBUG_LIBRARY})
+-  ELSEIF(Bzip2_RELEASE_LIBRARY)
+-    SET(Bzip2_LIBRARIES ${Bzip2_RELEASE_LIBRARY})
+-  ENDIF(Bzip2_DEBUG_LIBRARY AND Bzip2_RELEASE_LIBRARY)
+-
+-  IF(Bzip2_LIBRARIES)
+-    SET(Bzip2_FOUND TRUE)
+-  ENDIF(Bzip2_LIBRARIES)
+-ENDIF(Bzip2_INCLUDE_DIRS)
+-
+-IF(Bzip2_FOUND)
+-#  IF(NOT Bzip2_FIND_QUIETLY)
+-    MESSAGE(STATUS "Found Bzip2: headers at ${Bzip2_INCLUDE_DIRS}, libraries at ${Bzip2_LIBRARY_DIRS}")
+-    MESSAGE(STATUS "	library is ${Bzip2_LIBRARIES}")    
+-#  ENDIF(NOT Bzip2_FIND_QUIETLY)
+-ELSE(Bzip2_FOUND)
+-  IF(Bzip2_FIND_REQUIRED)
+-    MESSAGE(FATAL_ERROR "Bzip2 library not found")
+-  ENDIF(Bzip2_FIND_REQUIRED)
+-ENDIF(Bzip2_FOUND)
+diff --git a/liblib/CMakeLists.txt b/liblib/CMakeLists.txt
+index e3eddc0f..f38a7ea9 100644
+--- a/liblib/CMakeLists.txt
++++ b/liblib/CMakeLists.txt
+@@ -87,8 +87,8 @@ ENDIF()
+ IF(Zstd_FOUND)
+ SET(TLL_LIBS ${TLL_LIBS} ${Zstd_LIBRARIES})
+ ENDIF()
+-IF(Bz2_FOUND)
+-SET(TLL_LIBS ${TLL_LIBS} ${Bz2_LIBRARIES})
++IF(BZIP2_FOUND)
++SET(TLL_LIBS ${TLL_LIBS} ${BZIP2_LIBRARIES})
+ ENDIF()
+ IF(SZIP_FOUND)
+ SET(TLL_LIBS ${TLL_LIBS} ${SZIP_LIBRARIES})
+diff --git a/plugins/CMakeLists.txt b/plugins/CMakeLists.txt
+index 65891d82..a8e1a212 100644
+--- a/plugins/CMakeLists.txt
++++ b/plugins/CMakeLists.txt
+@@ -94,12 +94,12 @@ IF(HAVE_SZ)
+   buildplugin(h5szip "h5szip" ${Szip_LIBRARIES})
+ ENDIF()
+ 
+-IF(HAVE_LOCAL_BZ2)
++IF(HAVE_LOCAL_BZIP2)
+ SET(h5bzip2_SOURCES H5Zbzip2.c blocksort.c huffman.c crctable.c randtable.c compress.c decompress.c bzlib.c bzlib.h bzlib_private.h)
+ buildplugin(h5bzip2 "h5bzip2")
+ ELSE()
+ SET(h5bzip2_SOURCES H5Zbzip2.c)
+-buildplugin(h5bzip2 "h5bzip2" ${Bzip2_LIBRARIES})
++buildplugin(h5bzip2 "h5bzip2" ${BZIP2_LIBRARIES})
+ ENDIF()
+ 
+ 
+@@ -113,7 +113,7 @@ MACRO(installplugin PLUG)
+ ENDMACRO()
+ 
+ install(DIRECTORY DESTINATION ${PLUGIN_INSTALL_DIR})
+-IF(Bzip2_FOUND)
++IF(BZIP2_FOUND)
+ installplugin(h5bzip2)
+ ENDIF()
+ IF(Zstd_FOUND)
+-- 
+2.39.1
+
