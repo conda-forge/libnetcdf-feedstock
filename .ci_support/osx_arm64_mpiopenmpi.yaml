@@ -22,8 +22,6 @@ libaec:
 - '1'
 libcurl:
 - '8'
-libjpeg_turbo:
-- 2.1.5
 libxml2:
 - '2.11'
 libzip:
