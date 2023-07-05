@@ -78,6 +78,9 @@ requirements:
     - libcurl
     - libxml2
     - libzip
+    # Openssl provides libcrypto which is needed via libcurl, but doesn't get
+    # to the run reqs through run_exports because it is twice removed
+    - openssl  # [unix]
     - zlib
     - zstd
 
