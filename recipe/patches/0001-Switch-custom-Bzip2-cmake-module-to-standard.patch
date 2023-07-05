@@ -1,4 +1,4 @@
-From 53da64b8eea66c4f07e4a31c2aa044cc4e6b114a Mon Sep 17 00:00:00 2001
+From b38811cf38f9e8a62f6675ef17280eb938e59c89 Mon Sep 17 00:00:00 2001
 From: Klaus Zimmermann <klaus.zimmermann@smhi.se>
 Date: Wed, 5 Jul 2023 10:45:08 +0200
 Subject: [PATCH] Switch custom Bzip2 cmake module to standard
@@ -8,8 +8,8 @@ Subject: [PATCH] Switch custom Bzip2 cmake module to standard
  cmake/modules/FindBz2.cmake   | 64 -----------------------------------
  cmake/modules/FindBzip2.cmake | 64 -----------------------------------
  liblib/CMakeLists.txt         |  4 +--
- plugins/CMakeLists.txt        |  4 +--
- 5 files changed, 12 insertions(+), 139 deletions(-)
+ plugins/CMakeLists.txt        |  6 ++--
+ 5 files changed, 13 insertions(+), 140 deletions(-)
  delete mode 100644 cmake/modules/FindBz2.cmake
  delete mode 100644 cmake/modules/FindBzip2.cmake
 
@@ -212,7 +212,7 @@ index e3eddc0f..f38a7ea9 100644
  IF(SZIP_FOUND)
  SET(TLL_LIBS ${TLL_LIBS} ${SZIP_LIBRARIES})
 diff --git a/plugins/CMakeLists.txt b/plugins/CMakeLists.txt
-index 65891d82..61c336b8 100644
+index 65891d82..a8e1a212 100644
 --- a/plugins/CMakeLists.txt
 +++ b/plugins/CMakeLists.txt
 @@ -94,12 +94,12 @@ IF(HAVE_SZ)
@@ -230,6 +230,15 @@ index 65891d82..61c336b8 100644
  ENDIF()
  
  
+@@ -113,7 +113,7 @@ MACRO(installplugin PLUG)
+ ENDMACRO()
+ 
+ install(DIRECTORY DESTINATION ${PLUGIN_INSTALL_DIR})
+-IF(Bzip2_FOUND)
++IF(BZIP2_FOUND)
+ installplugin(h5bzip2)
+ ENDIF()
+ IF(Zstd_FOUND)
 -- 
 2.39.1
 
