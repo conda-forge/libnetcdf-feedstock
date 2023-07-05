@@ -76,7 +76,6 @@ requirements:
     - hdf5 * {{ mpi_prefix }}_*
     - libaec
     - libcurl
-    - libjpeg-turbo
     - libxml2
     - libzip
     - zlib
