@@ -76,6 +76,7 @@ requirements:
     - hdf5 * {{ mpi_prefix }}_*
     - libaec
     - libcurl
+    - libpnetcdf  # [mpi != 'nompi']
     - libxml2
     - libzip
     # Openssl provides libcrypto which is needed via libcurl, but doesn't get
