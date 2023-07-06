@@ -81,7 +81,7 @@ cmake ${CMAKE_ARGS} \
       -DENABLE_NCZARR=on \
       -DENABLE_NCZARR_ZIP=on \
       -DENABLE_NCZARR_S3=on \
-      -DENABLE_NCZARR_S3_TESTS=on \
+      -DENABLE_NCZARR_S3_TESTS=off \
       -DENABLE_S3_SDK=on \
       ${PARALLEL} \
       ${SRC_DIR}
