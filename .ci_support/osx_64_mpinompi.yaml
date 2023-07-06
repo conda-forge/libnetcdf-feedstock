@@ -1,5 +1,7 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '10.9'
+aws_sdk_cpp:
+- 1.10.57
 bzip2:
 - '1'
 c_compiler:
@@ -34,6 +36,8 @@ mpich:
 - '4'
 openmpi:
 - '4'
+openssl:
+- '3'
 target_platform:
 - osx-64
 zip_keys:

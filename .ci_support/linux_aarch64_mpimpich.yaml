@@ -1,5 +1,7 @@
 BUILD:
 - aarch64-conda_cos7-linux-gnu
+aws_sdk_cpp:
+- 1.10.57
 bzip2:
 - '1'
 c_compiler:
@@ -38,6 +40,8 @@ mpich:
 - '4'
 openmpi:
 - '4'
+openssl:
+- '3'
 target_platform:
 - linux-aarch64
 zip_keys:
