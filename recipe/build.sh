@@ -5,7 +5,7 @@ cp $BUILD_PREFIX/share/gnuconfig/config.* .
 set -x
 
 if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
-  export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON"
+  export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON -DENABLE_PNETCDF=ON"
   export CC=mpicc
   export CXX=mpicxx
   export TESTPROC=4
