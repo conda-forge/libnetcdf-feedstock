@@ -92,7 +92,7 @@ test:
   requires:
     - netcdf4
   commands:
-    - {{ PYTHON }} -c "import test_netcdf; test_netcdf.test_netcdf()"
+    - python -c "import test_netcdf; test_netcdf.test_netcdf()"
     - test ! -f ${PREFIX}/lib/libnetcdf.a          # [not win]
     - test -f ${PREFIX}/lib/libnetcdf${SHLIB_EXT}  # [not win]
     - nc-config --all  # [not win]
