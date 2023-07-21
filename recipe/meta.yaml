@@ -25,7 +25,7 @@ source:
 
 build:
   number: {{ build }}
-  skip: true  # [win and vc<14]
+  skip: true  # [not win]
   {% if mpi != "nompi" %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
