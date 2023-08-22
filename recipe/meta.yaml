@@ -87,7 +87,12 @@ requirements:
     - aws-sdk-cpp
 
 test:
+  files:
+    - test_netcdf.py
+  requires:
+    - netcdf4
   commands:
+    - python -c "import test_netcdf; test_netcdf.test_netcdf()"
     - test ! -f ${PREFIX}/lib/libnetcdf.a          # [not win]
     - test -f ${PREFIX}/lib/libnetcdf${SHLIB_EXT}  # [not win]
     - nc-config --all  # [not win]
