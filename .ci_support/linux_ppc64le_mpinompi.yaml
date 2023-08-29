@@ -1,5 +1,3 @@
-aws_sdk_cpp:
-- 1.10.57
 bzip2:
 - '1'
 c_compiler:
