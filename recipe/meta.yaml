@@ -84,7 +84,6 @@ requirements:
     - openssl  # [unix]
     - zlib
     - zstd
-    - aws-sdk-cpp
 
 test:
   commands:
