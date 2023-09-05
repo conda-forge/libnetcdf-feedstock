@@ -84,6 +84,7 @@ requirements:
     - openssl  # [unix]
     - zlib
     - zstd
+    - aws-sdk-cpp
   run:
     # In principle, zlib should *not* be a run requirement since only libz.so.1
     # is needed which is provided by libzlib, which in turn gets added to the
