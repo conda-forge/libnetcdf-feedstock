@@ -22,6 +22,7 @@ source:
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
     - patches/0001-Fix-issue-2674.patch
     - patches/0001-Switch-custom-Bzip2-cmake-module-to-standard.patch
+    - patches/s3logging.patch
 
 build:
   number: {{ build }}
