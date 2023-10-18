@@ -1,0 +1,11 @@
+diff -ruN -x __pycache__ -x obj -x '*~' -x tags -x TAGS -x autom4te.cache netcdf-c-4.9.2.orig/libdispatch/ncs3sdk.cpp netcdf-c-4.9.2/libdispatch/ncs3sdk.cpp
+--- netcdf-c-4.9.2.orig/libdispatch/ncs3sdk.cpp	2023-09-18 17:09:14.876220002 +0200
++++ netcdf-c-4.9.2/libdispatch/ncs3sdk.cpp	2023-09-18 17:10:40.963717783 +0200
+@@ -72,6 +72,7 @@
+ 	ncs3_initialized = 1;
+ 	ncs3_finalized = 0;
+         NCTRACE(11,NULL);
++        ncs3options.loggingOptions.logLevel = Aws::Utils::Logging::LogLevel::Debug;
+ 	Aws::InitAPI(ncs3options);
+     }
+     return NCUNTRACE(NC_NOERR);

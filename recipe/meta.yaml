@@ -1,5 +1,5 @@
 {% set version = "4.9.2" %}
-{% set build = 12 %}
+{% set build = 13 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -22,10 +22,11 @@ source:
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
     - patches/0001-Fix-issue-2674.patch
     - patches/0001-Switch-custom-Bzip2-cmake-module-to-standard.patch
+    - patches/s3logging.patch
 
 build:
   number: {{ build }}
-  skip: true  # [win and vc<14]
+  skip: true  # [not win]
   {% if mpi != "nompi" %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
@@ -84,6 +85,7 @@ requirements:
     - openssl  # [unix]
     - zlib
     - zstd
+    - aws-sdk-cpp
   run:
     # In principle, zlib should *not* be a run requirement since only libz.so.1
     # is needed which is provided by libzlib, which in turn gets added to the
@@ -96,7 +98,12 @@ requirements:
     - zlib
 
 test:
+  files:
+    - test_netcdf.py
+  requires:
+    - netcdf4
   commands:
+    - python -c "import test_netcdf; test_netcdf.test_netcdf()"
     - test ! -f ${PREFIX}/lib/libnetcdf.a          # [not win]
     - test -f ${PREFIX}/lib/libnetcdf${SHLIB_EXT}  # [not win]
     - nc-config --all  # [not win]

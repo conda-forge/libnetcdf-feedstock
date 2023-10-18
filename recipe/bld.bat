@@ -1,9 +1,11 @@
+@echo on
+
 mkdir %SRC_DIR%\build
 cd %SRC_DIR%\build
 
-set BUILD_TYPE=Release
+:: set BUILD_TYPE=Release
 :: set BUILD_TYPE=RelWithDebInfo
-:: set BUILD_TYPE=Debug
+set BUILD_TYPE=Debug
 
 rem to be filled with mpi options
 set PARALLEL=""
@@ -22,6 +24,7 @@ cmake -LAH -G "NMake Makefiles" ^
       -DENABLE_DAP=ON ^
       -DENABLE_DAP_REMOTE_TESTS=OFF ^
       -DENABLE_HDF4=ON ^
+      -DENABLE_LOGGING=ON ^
       -DENABLE_NETCDF_4=ON ^
       -DENABLE_PLUGIN_INSTALL=ON ^
       -DPLUGIN_INSTALL_DIR=YES ^
@@ -29,9 +32,11 @@ cmake -LAH -G "NMake Makefiles" ^
       -DENABLE_BYTERANGE=ON ^
       -DENABLE_NCZARR=on ^
       -DENABLE_NCZARR_ZIP=on ^
-      -DENABLE_NCZARR_S3=off ^
-      -DENABLE_NCZARR_S3_TESTS=off ^
+      -DENABLE_NCZARR_S3=on ^
+      -DENABLE_NCZARR_S3_TESTS=on ^
       -DENABLE_S3_SDK=off ^
+      -DENABLE_S3=on ^
+      -DENABLE_S3_INTERNAL=on ^
       -DHDF5_C_LIBRARY="%LIBRARY_LIB:\=/%/hdf5.lib" ^
       -DHDF5_HL_LIBRARY="%LIBRARY_LIB:\=/%/hdf5_hl.lib" ^
       -DHDF5_INCLUDE_DIR="%LIBRARY_INC:\=/%" ^
