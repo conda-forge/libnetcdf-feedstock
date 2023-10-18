@@ -1,9 +1,9 @@
 mkdir %SRC_DIR%\build
 cd %SRC_DIR%\build
 
-set BUILD_TYPE=Release
+:: set BUILD_TYPE=Release
 :: set BUILD_TYPE=RelWithDebInfo
-:: set BUILD_TYPE=Debug
+set BUILD_TYPE=Debug
 
 rem to be filled with mpi options
 set PARALLEL=""
