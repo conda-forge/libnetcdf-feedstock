@@ -32,7 +32,7 @@ cmake -LAH -G "NMake Makefiles" ^
       -DENABLE_NCZARR_ZIP=on ^
       -DENABLE_NCZARR_S3=on ^
       -DENABLE_NCZARR_S3_TESTS=on ^
-      -DENABLE_S3_SDK=on ^
+      -DENABLE_S3_SDK=off ^
       -DENABLE_S3=on ^
       -DENABLE_S3_INTERNAL=on ^
       -DHDF5_C_LIBRARY="%LIBRARY_LIB:\=/%/hdf5.lib" ^
