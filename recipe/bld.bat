@@ -1,3 +1,5 @@
+@echo on
+
 mkdir %SRC_DIR%\build
 cd %SRC_DIR%\build
 
