@@ -17,7 +17,7 @@ libaec:
 libcurl:
 - '8'
 libxml2:
-- '2.11'
+- '2.12'
 libzip:
 - '1'
 mpi:
