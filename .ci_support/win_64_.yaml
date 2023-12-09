@@ -11,7 +11,7 @@ cxx_compiler:
 hdf4:
 - 4.2.15
 hdf5:
-- 1.14.2
+- 1.14.3
 libaec:
 - '1'
 libcurl:
