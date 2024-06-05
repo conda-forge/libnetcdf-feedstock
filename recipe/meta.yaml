@@ -67,6 +67,7 @@ requirements:
     - m2-unzip  # [win]
     - m4  # [not win]
     - m2-m4  # [win]
+    - wget  # [not win]
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - blosc
