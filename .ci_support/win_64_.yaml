@@ -2,6 +2,8 @@ bzip2:
 - '1'
 c_compiler:
 - vs2019
+c_stdlib:
+- vs
 channel_sources:
 - conda-forge
 channel_targets:
@@ -17,7 +19,7 @@ libaec:
 libcurl:
 - '8'
 libxml2:
-- '2.12'
+- '2'
 libzip:
 - '1'
 mpi:
@@ -25,7 +27,7 @@ mpi:
 mpich:
 - '4'
 openmpi:
-- '4'
+- '5'
 target_platform:
 - win-64
 vc:

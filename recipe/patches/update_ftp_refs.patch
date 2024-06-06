@@ -1,0 +1,24 @@
+diff -ur netcdf-c-4.9.2.orig/hdf4_test/run_get_hdf4_files.sh netcdf-c-4.9.2/hdf4_test/run_get_hdf4_files.sh
+--- netcdf-c-4.9.2.orig/hdf4_test/run_get_hdf4_files.sh	2023-03-14 15:34:25.000000000 -0500
++++ netcdf-c-4.9.2/hdf4_test/run_get_hdf4_files.sh	2024-06-05 09:42:23.957332835 -0500
+@@ -14,7 +14,7 @@
+ 
+ # Get a file from the ftp site; retry several times
+ getfile() {
+-   FTPFILE="ftp://ftp.unidata.ucar.edu/pub/netcdf/sample_data/hdf4/$1.gz"
++   FTPFILE="https://resources.unidata.ucar.edu/netcdf/sample_data/hdf4/$1.gz"
+ 
+    for try in 1 2 3 4 ; do # try 4 times
+ 
+diff -ur netcdf-c-4.9.2.orig/nc_perf/run_knmi_bm.sh netcdf-c-4.9.2/nc_perf/run_knmi_bm.sh
+--- netcdf-c-4.9.2.orig/nc_perf/run_knmi_bm.sh	2023-03-14 15:34:25.000000000 -0500
++++ netcdf-c-4.9.2/nc_perf/run_knmi_bm.sh	2024-06-05 09:42:51.909632837 -0500
+@@ -15,7 +15,7 @@
+ for f1 in $file_list
+ do
+     if ! test -f $f1; then
+-	wget ftp://ftp.unidata.ucar.edu/pub/netcdf/sample_data/$f1.gz
++	wget https://resources.unidata.ucar.edu//netcdf/sample_data/$f1.gz
+ 	gunzip $f1.gz
+     fi
+ done
