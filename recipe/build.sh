@@ -9,12 +9,6 @@ if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export CC=mpicc
   export CXX=mpicxx
   export TESTPROC=4
-  export OMPI_MCA_rmaps_base_oversubscribe=yes
-  export OMPI_MCA_btl=self,tcp
-  export OMPI_MCA_plm=isolated
-  export OMPI_MCA_rmaps_base_oversubscribe=yes
-  export OMPI_MCA_btl_vader_single_copy_mechanism=none
-  mpiexec="mpiexec --allow-run-as-root"
   # for cross compiling using openmpi
   export OPAL_PREFIX=$PREFIX
 else
@@ -104,7 +98,7 @@ rm -rf build-shared
 sed -i.bak "s#${BUILD_PREFIX}/bin/${CC}#${CC}#g" ${PREFIX}/bin/nc-config
 rm ${PREFIX}/bin/nc-config.bak
 
-# Clean out build-location stuff from cmake files 
+# Clean out build-location stuff from cmake files
 # Should only be libm, but the patterns are more general just in case
 for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
      # fix linux
