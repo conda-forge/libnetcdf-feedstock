@@ -11,7 +11,8 @@ if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export TESTPROC=4
   export OMPI_MCA_rmaps_base_oversubscribe=yes
   export OMPI_MCA_btl=self,tcp
-  export OMPI_MCA_plm=isolated
+  # for openmpi5 in containers without SSH installed
+  export OMPI_MCA_plm_ssh_agent=false
   export OMPI_MCA_rmaps_base_oversubscribe=yes
   export OMPI_MCA_btl_vader_single_copy_mechanism=none
   mpiexec="mpiexec --allow-run-as-root"
