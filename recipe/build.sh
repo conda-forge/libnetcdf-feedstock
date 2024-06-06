@@ -91,7 +91,8 @@ make install -j${CPU_COUNT} ${VERBOSE_CM}
 SKIP=""
 
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
-ctest -VV --output-on-failure -j${CPU_COUNT} ${SKIP}
+# Lengthen default timeout of 1500 for slow mac builds
+ctest -VV --timeout 2000 --output-on-failure -j${CPU_COUNT} ${SKIP}
 fi
 
 #
