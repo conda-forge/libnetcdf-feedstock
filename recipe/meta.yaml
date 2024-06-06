@@ -60,6 +60,7 @@ requirements:
     - pkg-config  # [not win]
     - gnuconfig  # [unix]
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
     - {{ compiler('cxx') }}
     - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]
     - unzip  # [not win]
