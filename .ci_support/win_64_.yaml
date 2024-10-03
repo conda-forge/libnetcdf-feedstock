@@ -13,7 +13,7 @@ cxx_compiler:
 hdf4:
 - 4.2.15
 hdf5:
-- 1.14.3
+- 1.14.4
 libaec:
 - '1'
 libcurl:
@@ -33,6 +33,6 @@ target_platform:
 vc:
 - '14'
 zlib:
-- '1.2'
+- '1'
 zstd:
 - '1.5'
