@@ -12,6 +12,11 @@ jobs:
       arch: arm64
       dist: focal
 
+    - env: CONFIG=linux_aarch64_mpimvapich UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64
+      os: linux
+      arch: arm64
+      dist: focal
+
     - env: CONFIG=linux_aarch64_mpinompi UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64
       os: linux
       arch: arm64
