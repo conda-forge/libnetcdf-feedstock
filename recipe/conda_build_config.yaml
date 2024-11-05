@@ -2,3 +2,4 @@ mpi:
   - nompi
   - openmpi  # [not win]
   - mpich  # [not win]
+  - mvapich  # [not win]
