@@ -1,5 +1,5 @@
 {% set version = "4.9.2" %}
-{% set build = 15 %}
+{% set build = 16 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -19,15 +19,19 @@ source:
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - patches/0009-topsrcdir.patch
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
-    - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
+    - patches/do_not_use_more_than_2_processes_in_tests.patch  # [linux]
     - patches/0001-Fix-issue-2674.patch
     - patches/0001-Switch-custom-Bzip2-cmake-module-to-standard.patch
     # removeme once 4.9.3 is released
     - patches/update_ftp_refs.patch
 
+
 build:
   number: {{ build }}
   skip: true  # [win and vc<14]
+  {% if (mpi == "mvapich" and target_platform not in ["linux-64", "linux-aarch64", "linux-ppc64le"]) %}
+  skip: true
+  {% endif %}
   {% if mpi != "nompi" %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
@@ -36,6 +40,7 @@ build:
   # add build string so packages can depend on
   # mpi or nompi variants
   # dependencies:
+  # `PKG_NAME * mpi_mvapich_*` for mvapich
   # `PKG_NAME * mpi_mpich_*` for mpich
   # `PKG_NAME * mpi_*` for any mpi
   # `PKG_NAME * nompi_*` for no mpi
@@ -123,3 +128,4 @@ extra:
     - xylar
     - dopplershift
     - zklaus
+    - j34ni

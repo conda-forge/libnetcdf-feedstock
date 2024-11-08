@@ -1,4 +1,3 @@
-
 About libnetcdf-feedstock
 =========================
 
@@ -44,6 +43,13 @@ Current build status
                 </a>
               </td>
             </tr><tr>
+              <td>linux_64_mpimvapich</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_mpimvapich" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
               <td>linux_64_mpinompi</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=main">
@@ -65,6 +71,13 @@ Current build status
                 </a>
               </td>
             </tr><tr>
+              <td>linux_aarch64_mpimvapich</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_mpimvapich" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
               <td>linux_aarch64_mpinompi</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=main">
@@ -83,6 +96,13 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpimpich" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_mpimvapich</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpimvapich" alt="variant">
                 </a>
               </td>
             </tr><tr>
@@ -280,6 +300,7 @@ Feedstock Maintainers
 * [@WardF](https://github.com/WardF/)
 * [@dopplershift](https://github.com/dopplershift/)
 * [@groutr](https://github.com/groutr/)
+* [@j34ni](https://github.com/j34ni/)
 * [@kmuehlbauer](https://github.com/kmuehlbauer/)
 * [@mingwandroid](https://github.com/mingwandroid/)
 * [@msarahan](https://github.com/msarahan/)

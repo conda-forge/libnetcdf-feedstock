@@ -1,0 +1,40 @@
+--- dap4_test/test_fillmismatch.sh
++++ dap4_test/test_fillmismatch.sh
+@@ -1,5 +1,10 @@
+ #!/bin/sh
+ 
++if [ "$#" -ne 0 ]; then
++    echo "Unexpected arguments: $*"
++    exit 1
++fi
++
+ if test "x$srcdir" = x ; then srcdir=`pwd`; fi
+ . ../test_common.sh
+ 
+@@ -8,6 +13,8 @@
+ set -e
+ 
+ echo "test_fillmismatch.sh:"
++echo "srcdir = $srcdir"
++echo "NCDUMP = ${NCDUMP}"
+ 
+ F="test_fillmismatch.nc"
+ 
+@@ -17,6 +24,8 @@
+ # First check that with [nofillmismatch], we get a failure
+ rm -f ./tmp_dap4_mismatch
+ URLNO="[nofillmismatch]$URL"
++echo "Running nofillmismatch check with URLNO: ${URLNO}"
++
+ if ${NCDUMP} -h "${NOURL}" > ./tmp_dap4_mismatch 2>&1 ; then
+ echo "*** Fail: ${NCDUMP} ${NOURL} passed"
+ exit 1
+@@ -26,6 +35,8 @@
+ 
+ # Now check that with [fillmismatch] (default), we get success
+ rm -f ./tmp_dap4_mismatch
++echo "Running fillmismatch check with URL: ${URL}"
++
+ if ${NCDUMP} -h "${URL}" > ./tmp_dap4_mismatch ; then
+ echo "*** Pass: ${NCDUMP} ${URL} passed"
+ else
