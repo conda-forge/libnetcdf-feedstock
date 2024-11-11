@@ -28,6 +28,10 @@ jobs:
         CONFIG: linux_aarch64_mpimpich
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
+      linux_aarch64_mpimvapich:
+        CONFIG: linux_aarch64_mpimvapich
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
       linux_aarch64_mpinompi:
         CONFIG: linux_aarch64_mpinompi
         UPLOAD_PACKAGES: 'True'
