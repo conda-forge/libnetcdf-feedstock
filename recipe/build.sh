@@ -55,9 +55,9 @@ fi
 # Replace specific test scripts with dummy versions for MVAPICH due to known incompatibilities and memory-related issues
 if [[ $mpi == "mvapich" ]]; then
   echo "Replacing certain tests with dummy tests for MVAPICH"
-  cp $RECIPE_DIR/patches/dummy_tst_parallel_zlib.c nc_test4/tst_parallel_zlib.c
-  cp $RECIPE_DIR/patches/dummy_tst_parallel_compress.c nc_test4/tst_parallel_compress.c
-  cp $RECIPE_DIR/patches/dummy_run_pnetcdf_tests.sh nc_test/run_pnetcdf_tests.sh
+  cp $RECIPE_DIR/mvapich_dummy_tests/dummy_tst_parallel_zlib.c nc_test4/tst_parallel_zlib.c
+  cp $RECIPE_DIR/mvapich_dummy_tests/dummy_tst_parallel_compress.c nc_test4/tst_parallel_compress.c
+  cp $RECIPE_DIR/mvapich_dummy_tests/dummy_run_pnetcdf_tests.sh nc_test/run_pnetcdf_tests.sh
   chmod ugo+x nc_test/run_pnetcdf_tests.sh
 fi
 

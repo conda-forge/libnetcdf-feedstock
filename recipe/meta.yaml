@@ -29,7 +29,6 @@ source:
     # removeme once 4.9.3 is released
     - patches/update_ftp_refs.patch
 
-
 build:
   number: {{ build }}
   skip: true  # [win and vc<14]
