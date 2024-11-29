@@ -19,7 +19,11 @@ source:
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - patches/0009-topsrcdir.patch
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
+    {% if mpi == "mvapich" %}
     - patches/do_not_use_more_than_2_processes_in_tests.patch  # [linux]
+     {% else %}
+    - patches/do_not_use_16_processes_in_tests.patch  # [linux]
+    {% endif %}
     - patches/0001-Fix-issue-2674.patch
     - patches/0001-Switch-custom-Bzip2-cmake-module-to-standard.patch
     # removeme once 4.9.3 is released
@@ -29,7 +33,7 @@ source:
 build:
   number: {{ build }}
   skip: true  # [win and vc<14]
-  {% if (mpi == "mvapich" and target_platform not in ["linux-64", "linux-ppc64le"]) %}
+  {% if (mpi == "mvapich" and target_platform not in ["linux-64", "linux-aarch64", "linux-ppc64le"]) %}
   skip: true
   {% endif %}
   {% if mpi != "nompi" %}
