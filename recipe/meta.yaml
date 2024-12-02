@@ -32,7 +32,7 @@ source:
 build:
   number: {{ build }}
   skip: true  # [win and vc<14]
-  {% if (mpi == "mvapich" and target_platform not in ["linux-64", "linux-aarch64", "linux-ppc64le"]) %}
+  {% if (mpi == "mvapich" and target_platform not in ["linux-64", "linux-ppc64le"]) %}
   skip: true
   {% endif %}
   {% if mpi != "nompi" %}

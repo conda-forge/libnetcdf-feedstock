@@ -2,20 +2,13 @@
 # Get an updated config.sub and config.guess
 cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
-# Enable strict error handling and verbose output for debugging
-set -euxo pipefail
-
-# Export environment variables for build and test timeout control specific to mvapich
-if [[ $mpi == "mvapich" ]]; then
-  export NETCDF_C_CTEST_TIMEOUT=2500
-  export NETCDF_C_CTEST_CPU_COUNT=2
-fi
+set -x
 
 if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON -DENABLE_PNETCDF=ON"
   export CC=mpicc
   export CXX=mpicxx
-  export TESTPROC=2
+  export TESTPROC=4
   # for cross compiling using openmpi
   export OPAL_PREFIX=$PREFIX
 else
@@ -24,9 +17,6 @@ else
   PARALLEL=""
 fi
 
-# Ensure DEBUG_C is set to avoid unbound variable issues
-DEBUG_C=${DEBUG_C:-no}
-VERBOSE_CM=${VERBOSE_CM:-}
 if [[ ${DEBUG_C} == yes ]]; then
   CMAKE_BUILD_TYPE=Debug
 else
@@ -62,17 +52,7 @@ fi
 # https://github.com/Unidata/netcdf-c/issues/2188#issuecomment-1015927961
 # -DENABLE_DAP_REMOTE_TESTS=OFF
 
-# Replace specific test scripts with dummy versions for MVAPICH due to known incompatibilities and memory-related issues
-if [[ $mpi == "mvapich" ]]; then
-  echo "Replacing certain tests with dummy tests for MVAPICH"
-  cp $RECIPE_DIR/mvapich_dummy_tests/dummy_tst_parallel_zlib.c nc_test4/tst_parallel_zlib.c
-  cp $RECIPE_DIR/mvapich_dummy_tests/dummy_tst_parallel_compress.c nc_test4/tst_parallel_compress.c
-  cp $RECIPE_DIR/mvapich_dummy_tests/dummy_run_pnetcdf_tests.sh nc_test/run_pnetcdf_tests.sh
-  chmod ugo+x nc_test/run_pnetcdf_tests.sh
-fi
-
-# Ensure SKIP_TESTS is set to avoid unbound variable issues
-SKIP_TESTS=${SKIP_TESTS:-}
+SKIP=""
 
 # also skip dap4_test_test_fillmismatch for the same reasons and increase timeout
 if [[ ("$target_platform" == "linux-ppc64le") ]]; then
@@ -112,9 +92,9 @@ cmake ${CMAKE_ARGS} \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
 
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]] && [[ $mpi == "mvapich" ]]; then
-  echo "Running mvapich tests with extended timeout and limited CPUs"
-  ctest -VV --timeout ${NETCDF_C_CTEST_TIMEOUT} --output-on-failure -j${NETCDF_C_CTEST_CPU_COUNT} ${SKIP_TESTS}
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+# Lengthen default timeout of 1500 for slow mac builds
+ctest -VV --timeout 2000 --output-on-failure -j${CPU_COUNT} ${SKIP}
 fi
 
 #
@@ -139,3 +119,4 @@ for fname in `ls ${PREFIX}/lib/cmake/netCDF/*`; do
      rm ${fname}.bak
      cat ${fname}
  done
+
