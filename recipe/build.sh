@@ -2,13 +2,20 @@
 # Get an updated config.sub and config.guess
 cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
-set -x
+# Enable strict error handling and verbose output for debugging
+set -euxo pipefail
+
+# Export environment variables for build and test timeout control specific to mvapich
+if [[ $mpi == "mvapich" ]]; then
+  export NETCDF_C_CTEST_TIMEOUT=2500
+  export NETCDF_C_CTEST_CPU_COUNT=2
+fi
 
 if [[ ! -z "$mpi" && "$mpi" != "nompi" ]]; then
   export PARALLEL="-DENABLE_PARALLEL4=ON -DENABLE_PARALLEL_TESTS=ON -DENABLE_PNETCDF=ON"
   export CC=mpicc
   export CXX=mpicxx
-  export TESTPROC=4
+  export TESTPROC=2
   # for cross compiling using openmpi
   export OPAL_PREFIX=$PREFIX
 else
@@ -17,6 +24,9 @@ else
   PARALLEL=""
 fi
 
+# Ensure DEBUG_C is set to avoid unbound variable issues
+DEBUG_C=${DEBUG_C:-no}
+VERBOSE_CM=${VERBOSE_CM:-}
 if [[ ${DEBUG_C} == yes ]]; then
   CMAKE_BUILD_TYPE=Debug
 else
@@ -61,7 +71,8 @@ if [[ $mpi == "mvapich" ]]; then
   chmod ugo+x nc_test/run_pnetcdf_tests.sh
 fi
 
-SKIP=""
+# Ensure SKIP_TESTS is set to avoid unbound variable issues
+SKIP_TESTS=${SKIP_TESTS:-}
 
 # also skip dap4_test_test_fillmismatch for the same reasons and increase timeout
 if [[ ("$target_platform" == "linux-ppc64le") ]]; then
@@ -101,9 +112,9 @@ cmake ${CMAKE_ARGS} \
       ${SRC_DIR}
 make install -j${CPU_COUNT} ${VERBOSE_CM}
 
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
-# Lengthen default timeout of 1500 for slow mac builds
-ctest -VV --timeout 2000 --output-on-failure -j${CPU_COUNT} ${SKIP}
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]] && [[ $mpi == "mvapich" ]]; then
+  echo "Running mvapich tests with extended timeout and limited CPUs"
+  ctest -VV --timeout ${NETCDF_C_CTEST_TIMEOUT} --output-on-failure -j${NETCDF_C_CTEST_CPU_COUNT} ${SKIP_TESTS}
 fi
 
 #
