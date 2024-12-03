@@ -61,6 +61,13 @@ if [[ ("$target_platform" == "linux-ppc64le") ]]; then
   SKIP_TESTS="-E dap4_test_test_fillmismatch"
 fi
 
+# skip nc_test_run_pnetcdf_tests for mvapich
+if [[ $mpi == "mvapich" ]]; then
+  echo "Replacing nc_test_run_pnetcdf_testswith dummy test for MVAPICH"
+  cp $RECIPE_DIR/mvapich_dummy_tests/dummy_run_pnetcdf_tests.sh nc_test/run_pnetcdf_tests.sh
+  chmod ugo+x nc_test/run_pnetcdf_tests.sh
+fi
+
 # Allow oversubscribing with MVAPIch
 export MVP_ENABLE_AFFINITY=0
 
