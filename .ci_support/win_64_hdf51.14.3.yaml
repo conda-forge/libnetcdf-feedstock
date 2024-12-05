@@ -1,0 +1,40 @@
+bzip2:
+- '1'
+c_compiler:
+- vs2019
+c_stdlib:
+- vs
+channel_sources:
+- conda-forge
+channel_targets:
+- conda-forge main
+cxx_compiler:
+- vs2019
+hdf4:
+- 4.2.15
+hdf5:
+- 1.14.3
+libaec:
+- '1'
+libcurl:
+- '8'
+libnetcdf:
+- 4.9.2
+libxml2:
+- '2'
+libzip:
+- '1'
+mpi:
+- nompi
+mpich:
+- '4'
+openmpi:
+- '5'
+target_platform:
+- win-64
+vc:
+- '14'
+zlib:
+- '1'
+zstd:
+- '1.5'
