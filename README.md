@@ -15,14 +15,7 @@ Current build status
 ====================
 
 
-<table><tr>
-    <td>Travis</td>
-    <td>
-      <a href="https://app.travis-ci.com/conda-forge/libnetcdf-feedstock">
-        <img alt="linux" src="https://img.shields.io/travis/com/conda-forge/libnetcdf-feedstock/main.svg?label=Linux">
-      </a>
-    </td>
-  </tr>
+<table>
     
   <tr>
     <td>Azure</td>
@@ -40,6 +33,13 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_hdf51.14.3mpimpich" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_64_hdf51.14.3mpimvapich</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_hdf51.14.3mpimvapich" alt="variant">
                 </a>
               </td>
             </tr><tr>
@@ -61,6 +61,13 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_hdf51.14.4mpimpich" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_64_hdf51.14.4mpimvapich</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=556&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/libnetcdf-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_hdf51.14.4mpimvapich" alt="variant">
                 </a>
               </td>
             </tr><tr>
@@ -391,11 +398,11 @@ Feedstock Maintainers
 * [@WardF](https://github.com/WardF/)
 * [@dopplershift](https://github.com/dopplershift/)
 * [@groutr](https://github.com/groutr/)
+* [@j34ni](https://github.com/j34ni/)
 * [@kmuehlbauer](https://github.com/kmuehlbauer/)
 * [@mingwandroid](https://github.com/mingwandroid/)
 * [@msarahan](https://github.com/msarahan/)
 * [@ocefpaf](https://github.com/ocefpaf/)
 * [@xylar](https://github.com/xylar/)
 * [@zklaus](https://github.com/zklaus/)
-
 

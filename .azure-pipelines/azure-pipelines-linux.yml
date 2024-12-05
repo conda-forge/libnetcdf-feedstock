@@ -12,6 +12,10 @@ jobs:
         CONFIG: linux_64_hdf51.14.3mpimpich
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+      linux_64_hdf51.14.3mpimvapich:
+        CONFIG: linux_64_hdf51.14.3mpimvapich
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
       linux_64_hdf51.14.3mpinompi:
         CONFIG: linux_64_hdf51.14.3mpinompi
         UPLOAD_PACKAGES: 'True'
@@ -24,12 +28,40 @@ jobs:
         CONFIG: linux_64_hdf51.14.4mpimpich
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+      linux_64_hdf51.14.4mpimvapich:
+        CONFIG: linux_64_hdf51.14.4mpimvapich
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
       linux_64_hdf51.14.4mpinompi:
         CONFIG: linux_64_hdf51.14.4mpinompi
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
       linux_64_hdf51.14.4mpiopenmpi:
         CONFIG: linux_64_hdf51.14.4mpiopenmpi
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+      linux_aarch64_hdf51.14.3mpimpich:
+        CONFIG: linux_aarch64_hdf51.14.3mpimpich
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+      linux_aarch64_hdf51.14.3mpinompi:
+        CONFIG: linux_aarch64_hdf51.14.3mpinompi
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+      linux_aarch64_hdf51.14.3mpiopenmpi:
+        CONFIG: linux_aarch64_hdf51.14.3mpiopenmpi
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+      linux_aarch64_hdf51.14.4mpimpich:
+        CONFIG: linux_aarch64_hdf51.14.4mpimpich
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+      linux_aarch64_hdf51.14.4mpinompi:
+        CONFIG: linux_aarch64_hdf51.14.4mpinompi
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+      linux_aarch64_hdf51.14.4mpiopenmpi:
+        CONFIG: linux_aarch64_hdf51.14.4mpiopenmpi
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
       linux_ppc64le_hdf51.14.3mpimpich:
