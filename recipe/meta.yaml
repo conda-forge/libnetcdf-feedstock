@@ -20,7 +20,6 @@ source:
     - patches/0009-topsrcdir.patch
     - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
-    - patches/0001-Switch-custom-Bzip2-cmake-module-to-standard.patch
 
 build:
   number: {{ build }}
