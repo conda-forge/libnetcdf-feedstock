@@ -16,8 +16,8 @@ source:
   # url: https://github.com/Unidata/netcdf-c/archive/refs/tags/v{{ version }}.tar.gz
   # sha256: 990f46d49525d6ab5dc4249f8684c6deeaf54de6fec63a187e9fb382cc0ffdff
 
-  url: https://github.com/Unidata/netcdf-c/archive/06bd740dd1115b054e472ee4d589df4eab980e8d.tar.gz
-  sha256: 6570cfe34c2a0822ea7796a8ba3fe57d866e0923348564665ecf90b037a024eb
+  url: https://github.com/gauteh/netcdf-c/archive/refs/heads/various-stuff.tar.gz
+  sha256: b1e647d2c6105e1d94363a7fb188674d3cb6ae586fb12a96e041cd350be13cb5
 
   patches:
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
