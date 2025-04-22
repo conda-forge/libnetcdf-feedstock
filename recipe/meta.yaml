@@ -66,6 +66,7 @@ requirements:
     - m4  # [not win]
     - m2-m4  # [win]
     - wget  # [not win]
+    - diffutils  # [linux]
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - blosc
