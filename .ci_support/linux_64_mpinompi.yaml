@@ -23,7 +23,7 @@ docker_image:
 hdf4:
 - 4.2.15
 hdf5:
-- 1.14.4
+- 1.14.3
 libaec:
 - '1'
 libcurl:
@@ -31,7 +31,7 @@ libcurl:
 libnetcdf:
 - 4.9.2
 libxml2:
-- '2'
+- '2.13'
 libzip:
 - '1'
 mpi:
@@ -43,7 +43,7 @@ openmpi:
 openssl:
 - '3'
 target_platform:
-- linux-ppc64le
+- linux-64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version

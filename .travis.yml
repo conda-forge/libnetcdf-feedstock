@@ -7,32 +7,17 @@ language: shell
 
 jobs:
   include:
-    - env: CONFIG=linux_aarch64_hdf51.14.3mpimpich UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma9
+    - env: CONFIG=linux_aarch64_mpimpich UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma9
       os: linux
       arch: arm64
       dist: focal
 
-    - env: CONFIG=linux_aarch64_hdf51.14.3mpinompi UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma9
+    - env: CONFIG=linux_aarch64_mpinompi UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma9
       os: linux
       arch: arm64
       dist: focal
 
-    - env: CONFIG=linux_aarch64_hdf51.14.3mpiopenmpi UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma9
-      os: linux
-      arch: arm64
-      dist: focal
-
-    - env: CONFIG=linux_aarch64_hdf51.14.4mpimpich UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma9
-      os: linux
-      arch: arm64
-      dist: focal
-
-    - env: CONFIG=linux_aarch64_hdf51.14.4mpinompi UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma9
-      os: linux
-      arch: arm64
-      dist: focal
-
-    - env: CONFIG=linux_aarch64_hdf51.14.4mpiopenmpi UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma9
+    - env: CONFIG=linux_aarch64_mpiopenmpi UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma9
       os: linux
       arch: arm64
       dist: focal
