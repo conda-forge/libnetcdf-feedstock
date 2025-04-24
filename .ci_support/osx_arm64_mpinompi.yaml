@@ -23,7 +23,7 @@ cxx_compiler_version:
 hdf4:
 - 4.2.15
 hdf5:
-- 1.14.4
+- 1.14.6
 libaec:
 - '1'
 libcurl:
@@ -31,13 +31,13 @@ libcurl:
 libnetcdf:
 - 4.9.2
 libxml2:
-- '2'
+- '2.13'
 libzip:
 - '1'
 macos_machine:
 - arm64-apple-darwin20.0.0
 mpi:
-- openmpi
+- nompi
 mpich:
 - '4'
 openmpi:

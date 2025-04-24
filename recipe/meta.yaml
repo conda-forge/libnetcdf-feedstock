@@ -1,5 +1,5 @@
 {% set version = "4.9.2" %}
-{% set build = 16 %}
+{% set build = 17 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -57,7 +57,9 @@ build:
 
 requirements:
   build:
-    - cmake
+    # Until we get Windows builds fixed, see 
+    # https://github.com/conda-forge/libnetcdf-feedstock/pull/199#issuecomment-2820860279
+    - cmake <4.0
     - make  # [not win]
     - pkg-config  # [not win]
     - gnuconfig  # [unix]
@@ -70,6 +72,7 @@ requirements:
     - m4  # [not win]
     - m2-m4  # [win]
     - wget  # [not win]
+    - diffutils  # [linux]
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - blosc
