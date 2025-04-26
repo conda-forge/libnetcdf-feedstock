@@ -30,6 +30,8 @@ libcurl:
 - '8'
 libnetcdf:
 - 4.9.2
+libpnetcdf:
+- 1.14.0
 libxml2:
 - '2.13'
 libzip:
