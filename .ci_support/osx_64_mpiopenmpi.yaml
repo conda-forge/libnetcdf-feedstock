@@ -31,7 +31,7 @@ libcurl:
 libnetcdf:
 - 4.9.2
 libpnetcdf:
-- 1.14.0
+- 1.14.1
 libxml2:
 - '2.13'
 libzip:
