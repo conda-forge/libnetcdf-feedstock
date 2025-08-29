@@ -23,7 +23,12 @@ else
   CMAKE_BUILD_TYPE=Release
 fi
 
+# Extra CMake args for macOS go into an array (preserves proper tokenization)
+cmake_osx_args=()
 if [[ ${HOST} =~ .*darwin.* ]]; then
+    # Avoid -O3 on macOS; keep Release semantics (incl. -DNDEBUG) but use -O2
+    cmake_osx_args+=(-DCMAKE_C_FLAGS_RELEASE:STRING="-O2 -DNDEBUG") 
+    cmake_osx_args+=(-DCMAKE_CXX_FLAGS_RELEASE:STRING="-O2 -DNDEBUG")
     # We have a problem with over-stripping of dylibs in the test programs:
     # nm ${PREFIX}/lib/libdf.dylib | grep error_top
     #   000000000006197c S _error_top
@@ -56,7 +61,7 @@ fi
 mkdir build-shared
 cd build-shared
 # Build shared.
-cmake ${CMAKE_ARGS} \
+cmake ${CMAKE_ARGS} "${cmake_osx_args[@]}" \
       -DCMAKE_PREFIX_PATH=${PREFIX} \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
       -DBUILD_SHARED_LIBS=ON \
