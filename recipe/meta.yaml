@@ -1,5 +1,5 @@
-{% set version = "4.9.2" %}
-{% set build = 18 %}
+{% set version = "4.9.3" %}
+{% set build = 0 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -14,16 +14,11 @@ package:
 
 source:
   url: https://github.com/Unidata/netcdf-c/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: bc104d101278c68b303359b3dc4192f81592ae8640f1aee486921138f7f88cb7
+  sha256: 990f46d49525d6ab5dc4249f8684c6deeaf54de6fec63a187e9fb382cc0ffdff
   patches:
     - patches/0004-Prefer-getenv-TOPSRCDIR-over-STRINGIFY-TOPSRCDIR.patch
     - patches/0009-topsrcdir.patch
-    - patches/prevent_MS_runtime_libs_being_installed_again.patch  # [win]
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
-    - patches/0001-Fix-issue-2674.patch
-    - patches/0001-Switch-custom-Bzip2-cmake-module-to-standard.patch
-    # removeme once 4.9.3 is released
-    - patches/update_ftp_refs.patch
 
 build:
   number: {{ build }}
