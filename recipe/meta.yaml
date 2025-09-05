@@ -52,7 +52,7 @@ build:
 
 requirements:
   build:
-    # Until we get Windows builds fixed, see 
+    # Until we get Windows builds fixed, see
     # https://github.com/conda-forge/libnetcdf-feedstock/pull/199#issuecomment-2820860279
     - cmake <4.0
     - make  # [not win]
