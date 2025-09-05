@@ -20,3 +20,57 @@ nc-config --has-cdf5     | grep -q yes
 
 # We cannot package szip due to its license
 # nc-config --has-szlib    | grep -q no
+
+# Minimal NCZarr zip smoke test: create a tiny Zarr store and read it back
+set -euo pipefail
+
+tmpdir=$(mktemp -d)
+trap 'rm -rf "${tmpdir}"' EXIT
+
+cat >"${tmpdir}/mini.cdl" <<'CDL'
+netcdf mini {
+dimensions:
+		x = 3 ;
+variables:
+		int v(x) ;
+data:
+		v = 1, 2, 3 ;
+}
+CDL
+
+# Create a Zarr zip using ncgen via URL mode fragment
+zstore="file://${tmpdir}/mini.zip#mode=xarray,zip"
+ncgen -o "${zstore}" "${tmpdir}/mini.cdl"
+
+# Ensure ncdump can read the header from the zip-backed Zarr store
+if ! ncdump -h "${zstore}" >/dev/null 2>&1; then
+	echo "NCZarr zip smoke test failed; emitting diagnostics..." >&2
+	NCOPTIONS=warn,open,dispatch,ncmpath ncdump -h "${zstore}" || true
+	exit 1
+fi
+
+# Verify type detection; some builds may report 'zarr' (extended) or 'netCDF-4' (data model)
+kind_zip=$(ncdump -k "${zstore}" || true)
+echo "NCZarr zip: ncdump -k => ${kind_zip}"
+if ! echo "${kind_zip}" | grep -Eqi 'zarr|netCDF-4'; then
+	echo "NCZarr zip: unexpected ncdump -k output: ${kind_zip}" >&2
+	exit 1
+fi
+
+# Also check directory-backed Zarr for completeness
+zdir="file://${tmpdir}/mini.file#mode=xarray,file"
+ncgen -o "${zdir}" "${tmpdir}/mini.cdl"
+if ! ncdump -h "${zdir}" >/dev/null 2>&1; then
+	echo "NCZarr file provider smoke test failed; emitting diagnostics..." >&2
+	NCOPTIONS=warn,open,dispatch,ncmpath ncdump -h "${zdir}" || true
+	exit 1
+fi
+
+kind_file=$(ncdump -k "${zdir}" || true)
+echo "NCZarr file: ncdump -k => ${kind_file}"
+if ! echo "${kind_file}" | grep -Eqi 'zarr|netCDF-4'; then
+	echo "NCZarr file: unexpected ncdump -k output: ${kind_file}" >&2
+	exit 1
+fi
+
+echo "NCZarr zip and file smoke tests passed"
