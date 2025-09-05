@@ -91,7 +91,8 @@ if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}
 # Lengthen default timeout of 1500 for slow mac builds
 # nc_test4_run_par_test is ruinning out of memory
 # nc_test4_tst_files4 hanging on linux aarch64 and ppc64le
-ctest -VV --timeout 2000 --output-on-failure -j${CPU_COUNT} -E "nc_test4_run_par_test|nc_test4_tst_files4"
+# dap4_test_test_hyrax times out on linux aarch64
+ctest -VV --timeout 2000 --output-on-failure -j${CPU_COUNT} -E "nc_test4_run_par_test|nc_test4_tst_files4|dap4_test_test_hyrax"
 fi
 
 #
