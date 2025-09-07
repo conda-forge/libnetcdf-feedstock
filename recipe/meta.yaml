@@ -86,9 +86,13 @@ requirements:
     - openssl  # [unix]
     - zlib
     - zstd
-    # rather than using the system getfattr (in /usr/bin), it would be safer
-    # to use the conda-forge version.  Then, we also need it at runtime (see
-    # below)
+    # Silence "getfattr: not found" warnings originating from upstream DAOS
+    # detection that shells out to `getfattr` when xattr headers are not
+    # available at build time. Ensure `getfattr` is present at runtime on
+    # Linux and that the version used at build time is from conda-forge, not
+    # the one in /usr/bin.
+    # See:
+    # - https://github.com/conda-forge/libnetcdf-feedstock/issues/211
     - attr  # [linux]
   run:
     # In principle, zlib should *not* be a run requirement since only libz.so.1
@@ -100,12 +104,6 @@ requirements:
     # https://github.com/conda-forge/libnetcdf-feedstock/issues/173
     # https://github.com/Unidata/netcdf-c/issues/2713
     - zlib
-    # Silence "getfattr: not found" warnings originating from upstream DAOS
-    # detection that shells out to `getfattr` when xattr headers are not
-    # available at build time. Ensure `getfattr` is present at runtime on Linux.
-    # See:
-    # - https://github.com/conda-forge/libnetcdf-feedstock/issues/211
-    - attr  # [linux]
 
 test:
   commands:
