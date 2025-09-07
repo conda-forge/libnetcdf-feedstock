@@ -74,3 +74,38 @@ if ! echo "${kind_file}" | grep -Eqi 'zarr|netCDF-4'; then
 fi
 
 echo "NCZarr zip and file smoke tests passed"
+
+# On Linux, ensure libnetcdf operations do not emit "getfattr: not found"
+# which is noise from DAOS detection when the attr package is missing.
+if [[ "$(uname)" == "Linux" ]]; then
+	# getfattr should be present via 'attr'
+	# Log PATH and where getfattr is coming from to aid diagnosis
+	echo "PATH during test: $PATH"
+	getfattr_path=$(command -v getfattr || true)
+	echo "getfattr path: ${getfattr_path:-NOT FOUND}"
+	if [[ -n "${getfattr_path:-}" ]]; then
+		# Show details of the resolved binary (if any)
+		ls -l "${getfattr_path}" || true
+	else
+		echo "getfattr not found on PATH; expected from attr runtime dep" >&2
+		exit 1
+	fi
+
+	# Create a tiny NetCDF-4 file and run ncdump -h, capturing stderr
+	cat >"${tmpdir}/mini_nc4.cdl" <<'CDL'
+netcdf mini_nc4 {
+dimensions:
+		x = 1 ;
+variables:
+		int v(x) ;
+}
+CDL
+	ncgen -k netCDF-4 -o "${tmpdir}/mini_nc4.nc" "${tmpdir}/mini_nc4.cdl"
+	# Capture stderr (and stdout) from ncdump to detect any noisy warnings.
+	# Note: capturing both keeps this simple and is robust across shells.
+	msg=$(ncdump -h "${tmpdir}/mini_nc4.nc" 2>&1 || true)
+	if echo "$msg" | grep -q "getfattr: not found"; then
+		echo "Unexpected 'getfattr: not found' in ncdump output" >&2
+		exit 1
+	fi
+fi
