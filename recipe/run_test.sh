@@ -86,6 +86,17 @@ if [[ "$(uname)" == "Linux" ]]; then
 	if [[ -n "${getfattr_path:-}" ]]; then
 		# Show details of the resolved binary (if any)
 		ls -l "${getfattr_path}" || true
+		# Ensure we are using the conda-forge provided binary, not the system one.
+		# This guards against silently passing because /usr/bin/getfattr is present.
+		case "$getfattr_path" in
+			"$PREFIX"/bin/*)
+				;;
+			*)
+				echo "getfattr is not from conda PREFIX: $getfattr_path" >&2
+				echo "Expected $PREFIX/bin/getfattr (ensure attr is a runtime dep)." >&2
+				exit 1
+				;;
+		esac
 	else
 		echo "getfattr not found on PATH; expected from attr runtime dep" >&2
 		exit 1

@@ -1,5 +1,5 @@
 {% set version = "4.9.3" %}
-{% set build = 0 %}
+{% set build = 1 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -86,6 +86,10 @@ requirements:
     - openssl  # [unix]
     - zlib
     - zstd
+    # rather than using the system getfattr (in /usr/bin), it would be safer
+    # to use the conda-forge version.  Then, we also need it at runtime (see
+    # below)
+    - attr  # [linux]
   run:
     # In principle, zlib should *not* be a run requirement since only libz.so.1
     # is needed which is provided by libzlib, which in turn gets added to the
@@ -96,6 +100,12 @@ requirements:
     # https://github.com/conda-forge/libnetcdf-feedstock/issues/173
     # https://github.com/Unidata/netcdf-c/issues/2713
     - zlib
+    # Silence "getfattr: not found" warnings originating from upstream DAOS
+    # detection that shells out to `getfattr` when xattr headers are not
+    # available at build time. Ensure `getfattr` is present at runtime on Linux.
+    # See:
+    # - https://github.com/conda-forge/libnetcdf-feedstock/issues/211
+    - attr  # [linux]
 
 test:
   commands:
