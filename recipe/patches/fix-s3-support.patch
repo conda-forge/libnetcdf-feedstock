@@ -1,0 +1,19 @@
+commit 2905cdc7679f10f8fe2414557fb4b10fc2b4ac1c
+Author: Ward Fisher <wfisher@ucar.edu>
+Date:   Fri Sep 5 15:32:44 2025 -0600
+
+    Added a fallback of us-east-1 as the default AWS default region if there is no other region defined.
+
+diff --git a/libdispatch/ds3util.c b/libdispatch/ds3util.c
+index 9626e2ee1..2d3d0a64e 100644
+--- a/libdispatch/ds3util.c
++++ b/libdispatch/ds3util.c
+@@ -761,7 +761,7 @@ NC_getdefaults3region(NCURI* uri, const char** regionp)
+ 	}
+     }
+     if(region == NULL)
+-	  region = NC_getglobalstate()->aws.default_region; /* Force use of the Amazon default */
++	  region = (NC_getglobalstate()->aws.default_region ? NC_getglobalstate()->aws.default_region : "us-east-1"); /* Force use of the Amazon default */
+ #ifdef AWSDEBUG
+     fprintf(stderr,">>> activeregion = |%s|\n",region);
+ #endif
