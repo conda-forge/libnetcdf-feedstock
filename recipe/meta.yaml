@@ -1,5 +1,5 @@
 {% set version = "4.9.3" %}
-{% set build = 2 %}
+{% set build = 3 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -80,7 +80,7 @@ requirements:
     - libaec
     - libcurl
     - libpnetcdf  # [mpi != 'nompi']
-    - libxml2
+    - libxml2-devel
     - libzip
     # Openssl provides libcrypto which is needed via libcurl, but doesn't get
     # to the run reqs through run_exports because it is twice removed
