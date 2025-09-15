@@ -34,8 +34,8 @@ libnetcdf:
 - 4.9.2
 libpnetcdf:
 - 1.14.1
-libxml2:
-- '2.13'
+libxml2_devel:
+- '2.14'
 libzip:
 - '1'
 mpi:
