@@ -1,5 +1,5 @@
 {% set version = "4.9.3" %}
-{% set build = 3 %}
+{% set build = 4 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -95,16 +95,6 @@ requirements:
     # See:
     # - https://github.com/conda-forge/libnetcdf-feedstock/issues/211
     - attr  # [linux]
-  run:
-    # In principle, zlib should *not* be a run requirement since only libz.so.1
-    # is needed which is provided by libzlib, which in turn gets added to the
-    # run requirements as a run_export from zlib in the host requirements.
-    # However, the Cmake export target requires libz.so (likely a bug), which is
-    # provided by zlib, hence the run requirement here to make the export target
-    # usable. For more details, see
-    # https://github.com/conda-forge/libnetcdf-feedstock/issues/173
-    # https://github.com/Unidata/netcdf-c/issues/2713
-    - zlib
 
 test:
   commands:

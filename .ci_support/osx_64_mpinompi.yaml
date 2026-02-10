@@ -29,7 +29,7 @@ libaec:
 libcurl:
 - '8'
 libnetcdf:
-- 4.9.2
+- 4.9.3
 libpnetcdf:
 - 1.14.1
 libxml2_devel:
@@ -45,7 +45,7 @@ mpich:
 openmpi:
 - '5'
 openssl:
-- '3'
+- '3.5'
 target_platform:
 - osx-64
 zip_keys:
