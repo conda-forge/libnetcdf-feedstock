@@ -83,14 +83,6 @@ requirements:
     - openssl  # [unix]
     - zlib
     - zstd
-    # Silence "getfattr: not found" warnings originating from upstream DAOS
-    # detection that shells out to `getfattr` when xattr headers are not
-    # available at build time. Ensure `getfattr` is present at runtime on
-    # Linux and that the version used at build time is from conda-forge, not
-    # the one in /usr/bin.
-    # See:
-    # - https://github.com/conda-forge/libnetcdf-feedstock/issues/211
-    - libattr  # [linux]
 
 test:
   commands:
