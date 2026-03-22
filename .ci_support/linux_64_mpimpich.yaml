@@ -1,5 +1,3 @@
-attr:
-- '2.5'
 bzip2:
 - '1'
 c_compiler:
