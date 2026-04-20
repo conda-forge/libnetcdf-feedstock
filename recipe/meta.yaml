@@ -1,5 +1,5 @@
 {% set version = "4.10.0" %}
-{% set build = 3 %}
+{% set build = 4 %}
 
 # recipe-lint fails if mpi is undefined
 {% set mpi = mpi or 'nompi' %}
@@ -17,6 +17,8 @@ source:
   sha256: ce160f9c1483b32d1ba8b7633d7984510259e4e439c48a218b95a023dc02fd4c
   patches:
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
+    # https://github.com/Unidata/netcdf-c/issues/3362
+    - patches/fix-utf8-public-flag.patch  # [win]
 
 build:
   number: {{ build }}
