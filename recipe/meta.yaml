@@ -17,7 +17,7 @@ source:
   sha256: ce160f9c1483b32d1ba8b7633d7984510259e4e439c48a218b95a023dc02fd4c
   patches:
     - patches/do_not_use_16_processes_in_tests.patch  # [ppc64le]
-    # https://github.com/Unidata/netcdf-c/issues/XXXX
+    # https://github.com/Unidata/netcdf-c/issues/3362
     - patches/fix-utf8-public-flag.patch  # [win]
 
 build:
@@ -25,7 +25,7 @@ build:
   {% if mpi != "nompi" %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
-  {% set mpi_prefix = "nommi" %}
+  {% set mpi_prefix = "nompi" %}
   {% endif %}
   # add build string so packages can depend on
   # mpi or nompi variants
