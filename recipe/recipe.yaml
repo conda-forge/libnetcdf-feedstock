@@ -1,0 +1,123 @@
+schema_version: 1
+
+context:
+  version: "4.10.0"
+  build_number: 5
+
+package:
+  name: libnetcdf
+  version: ${{ version }}
+
+source:
+  url: https://github.com/Unidata/netcdf-c/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: ce160f9c1483b32d1ba8b7633d7984510259e4e439c48a218b95a023dc02fd4c
+  patches:
+    - if: ppc64le
+      then: patches/do_not_use_16_processes_in_tests.patch
+    # https://github.com/Unidata/netcdf-c/issues/3362
+    - if: win
+      then: patches/fix-utf8-public-flag.patch
+
+build:
+  # add build string so packages can depend on mpi or nompi variants explicitly:
+  # `PKG_NAME * mpi_mpich_*` for mpich
+  # `PKG_NAME * mpi_*` for any mpi
+  # `PKG_NAME * nompi_*` for no mpi
+  # prioritize nompi via build number
+  number: ${{ build_number | int + 100 if mpi == "nompi" else build_number }}
+  string: ${{ mpi_prefix }}_h${{ hash }}_${{ build_number | int + 100 if mpi == "nompi" else build_number }}
+  variant:
+    # prefer 'nompi' over other mpi variants
+    down_prioritize_variant: ${{ 0 if mpi == "nompi" else 1 }}
+  # only nompi is supported on Windows
+  skip: win and mpi != "nompi"
+
+requirements:
+  build:
+    # Until we get Windows builds fixed, see
+    # https://github.com/conda-forge/libnetcdf-feedstock/pull/199#issuecomment-2820860279
+    - cmake <4.0
+    - if: unix
+      then:
+        - make
+        - pkg-config
+    - if: unix
+      then: gnuconfig
+    - ${{ compiler('c') }}
+    - ${{ stdlib('c') }}
+    - ${{ compiler('cxx') }}
+    # for cross compiling using openmpi
+    - if: mpi == "openmpi" and build_platform != target_platform
+      then: ${{ mpi }}
+    - if: unix
+      then: unzip
+    - if: win
+      then: m2-unzip
+    - if: unix
+      then: m4
+    - if: win
+      then: m2-m4
+    - if: unix
+      then: wget
+    - if: linux
+      then: diffutils
+  host:
+    - if: mpi != "nompi"
+      then: ${{ mpi }}
+    - blosc
+    - bzip2
+    - hdf4
+    # without this repeat reference, conda-smithy doesn't pin correctly
+    - hdf5
+    - hdf5 * ${{ mpi_prefix }}_*
+    - libaec
+    - libcurl
+    - if: mpi != "nompi"
+      then: libpnetcdf
+    - libxml2-devel
+    - libzip
+    # Openssl provides libcrypto which is needed via libcurl, but doesn't get
+    # to the run reqs through run_exports because it is twice removed
+    - if: unix
+      then: openssl
+    - zlib
+    - zstd
+  run_exports:
+    #   https://abi-laboratory.pro/tracker/timeline/netcdf/
+    - ${{ pin_subpackage('libnetcdf', upper_bound='x.x.x') }}
+    # mpi builds require the right mpi
+    # non-mpi builds *do not* appear to require non-mpi builds
+    # at least not always
+    - if: mpi != "nompi"
+      then: libnetcdf * ${{ mpi_prefix }}_*
+
+tests:
+  - files:
+      recipe:
+        - run_test.sh
+    script:
+      - if: unix
+        then:
+          - test ! -f ${PREFIX}/lib/libnetcdf.a
+          - test -f ${PREFIX}/lib/libnetcdf${SHLIB_EXT}
+          - nc-config --all
+          - bash run_test.sh
+
+about:
+  homepage: http://www.unidata.ucar.edu/software/netcdf/
+  license: MIT
+  license_file: COPYRIGHT
+  summary: Libraries and data formats that support array-oriented scientific data
+  repository: https://github.com/Unidata/netcdf-c
+
+extra:
+  recipe-maintainers:
+    - WardF
+    - groutr
+    - kmuehlbauer
+    - ocefpaf
+    - mingwandroid
+    - msarahan
+    - xylar
+    - dopplershift
+    - zklaus

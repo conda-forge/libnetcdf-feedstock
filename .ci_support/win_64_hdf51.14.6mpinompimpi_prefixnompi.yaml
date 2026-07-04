@@ -1,0 +1,41 @@
+bzip2:
+- '1'
+c_compiler:
+- vs2022
+c_stdlib:
+- vs
+channel_sources:
+- conda-forge
+channel_targets:
+- conda-forge main
+cxx_compiler:
+- vs2022
+hdf4:
+- 4.2.15
+hdf5:
+- 1.14.6
+libaec:
+- '1'
+libcurl:
+- '8'
+libxml2_devel:
+- '2.14'
+libzip:
+- '1'
+mpi:
+- nompi
+mpi_prefix:
+- nompi
+mpich:
+- '5'
+openmpi:
+- '5'
+target_platform:
+- win-64
+zip_keys:
+- - mpi
+  - mpi_prefix
+zlib:
+- '1'
+zstd:
+- '1.5'

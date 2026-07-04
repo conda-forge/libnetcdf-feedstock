@@ -68,9 +68,9 @@ cmake ${CMAKE_ARGS} "${cmake_osx_args[@]}" \
       -DNETCDF_BUILD_UTILITIES=ON \
       -DNETCDF_ENABLE_DOXYGEN=OFF \
       -DNETCDF_ENABLE_TESTS=ON \
-      -DENABLE_EXTERNAL_SERVER_TESTS=OFF \
+      -DNETCDF_ENABLE_EXTERNAL_SERVER_TESTS=OFF \
       -DNETCDF_ENABLE_DAP=ON \
-      -DENABLE_DAP_REMOTE_TESTS=OFF \
+      -DNETCDF_ENABLE_DAP_REMOTE_TESTS=OFF \
       -DNETCDF_ENABLE_HDF4=ON \
       -DNETCDF_ENABLE_HDF5=ON \
       -DENABLE_PLUGIN_INSTALL=ON \
@@ -92,7 +92,20 @@ if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}
 # nc_test4_run_par_test is ruinning out of memory
 # nc_test4_tst_files4 hanging on linux aarch64 and ppc64le
 # dap4_test_test_hyrax times out on linux aarch64
-ctest -VV --timeout 2000 --output-on-failure -j${CPU_COUNT} -E "nc_test4_run_par_test|nc_test4_tst_files4|dap4_test_test_hyrax"
+#
+# Sanitize the test output through iconv: some tests (e.g. ncdump_tst_bom)
+# deliberately emit non-UTF-8 bytes (a UTF-16 BOM) to stdout. rattler-build
+# reads the build output as a UTF-8 stream and stops draining the pipe on
+# invalid bytes, which deadlocks the build. `iconv -c` drops the invalid
+# sequences while preserving valid UTF-8.
+#
+# The build runs under `bash -e -o pipefail`. iconv -c can still exit non-zero
+# on some invalid/incomplete byte sequences (behavior varies between glibc iconv
+# and conda-forge libiconv), which would silently fail the build even though all
+# tests passed. Wrap iconv in `|| true` so its exit status is ignored; pipefail
+# still surfaces a genuine ctest failure as the pipeline's exit status.
+set -o pipefail
+ctest -VV --timeout 2000 --output-on-failure -j${CPU_COUNT} -E "nc_test4_run_par_test|nc_test4_tst_files4|dap4_test_test_hyrax" 2>&1 | { iconv -c -f UTF-8 -t UTF-8 || true; }
 fi
 
 #

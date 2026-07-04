@@ -1,0 +1,12 @@
+zip_keys:
+- [mpi, mpi_prefix]
+
+mpi:
+  - nompi
+  - openmpi
+  - mpich
+
+mpi_prefix:
+  - nompi
+  - mpi_openmpi
+  - mpi_mpich
