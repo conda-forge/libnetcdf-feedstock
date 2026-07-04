@@ -97,9 +97,15 @@ if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}
 # deliberately emit non-UTF-8 bytes (a UTF-16 BOM) to stdout. rattler-build
 # reads the build output as a UTF-8 stream and stops draining the pipe on
 # invalid bytes, which deadlocks the build. `iconv -c` drops the invalid
-# sequences while preserving valid UTF-8. pipefail keeps ctest's exit status.
+# sequences while preserving valid UTF-8.
+#
+# The build runs under `bash -e -o pipefail`. iconv -c can still exit non-zero
+# on some invalid/incomplete byte sequences (behavior varies between glibc iconv
+# and conda-forge libiconv), which would silently fail the build even though all
+# tests passed. Wrap iconv in `|| true` so its exit status is ignored; pipefail
+# still surfaces a genuine ctest failure as the pipeline's exit status.
 set -o pipefail
-ctest -VV --timeout 2000 --output-on-failure -j${CPU_COUNT} -E "nc_test4_run_par_test|nc_test4_tst_files4|dap4_test_test_hyrax" 2>&1 | iconv -c -f UTF-8 -t UTF-8
+ctest -VV --timeout 2000 --output-on-failure -j${CPU_COUNT} -E "nc_test4_run_par_test|nc_test4_tst_files4|dap4_test_test_hyrax" 2>&1 | { iconv -c -f UTF-8 -t UTF-8 || true; }
 fi
 
 #
