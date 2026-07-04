@@ -92,7 +92,14 @@ if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}
 # nc_test4_run_par_test is ruinning out of memory
 # nc_test4_tst_files4 hanging on linux aarch64 and ppc64le
 # dap4_test_test_hyrax times out on linux aarch64
-ctest -VV --timeout 2000 --output-on-failure -j${CPU_COUNT} -E "nc_test4_run_par_test|nc_test4_tst_files4|dap4_test_test_hyrax"
+#
+# Sanitize the test output through iconv: some tests (e.g. ncdump_tst_bom)
+# deliberately emit non-UTF-8 bytes (a UTF-16 BOM) to stdout. rattler-build
+# reads the build output as a UTF-8 stream and stops draining the pipe on
+# invalid bytes, which deadlocks the build. `iconv -c` drops the invalid
+# sequences while preserving valid UTF-8. pipefail keeps ctest's exit status.
+set -o pipefail
+ctest -VV --timeout 2000 --output-on-failure -j${CPU_COUNT} -E "nc_test4_run_par_test|nc_test4_tst_files4|dap4_test_test_hyrax" 2>&1 | iconv -c -f UTF-8 -t UTF-8
 fi
 
 #
