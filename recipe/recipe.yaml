@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   version: "4.10.1"
-  build_number: 0
+  build_number: 1
 
 package:
   name: libnetcdf
@@ -14,9 +14,6 @@ source:
   patches:
     - if: ppc64le
       then: patches/do_not_use_16_processes_in_tests.patch
-    # https://github.com/Unidata/netcdf-c/issues/3362
-    - if: win
-      then: patches/fix-utf8-public-flag.patch
 
 build:
   # add build string so packages can depend on mpi or nompi variants explicitly:
