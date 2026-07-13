@@ -96,3 +96,28 @@ if echo "$msg" | grep -q "getfattr: not found"; then
 	exit 1
 fi
 echo 'No warning that getfattr is not found'
+
+# Zstd compression-filter roundtrip: regression guard for gh-230.
+# The HDF5 filter plugins (h5zstd/h5blosc/...) must be installed for netcdf to
+# load filters at runtime. If they are missing, reading a filtered file fails
+# with "NetCDF: Filter error: undefined filter encountered".
+cat >"${tmpdir}/filt.cdl" <<'CDL'
+netcdf filt {
+dimensions:
+	x = 8 ;
+variables:
+	int v(x) ;
+data:
+	v = 0, 1, 2, 3, 4, 5, 6, 7 ;
+}
+CDL
+ncgen -k nc4 -o "${tmpdir}/filt.nc" "${tmpdir}/filt.cdl"
+# Apply the Zstandard filter (HDF5 filter id 32015, compression level 3).
+nccopy -F "v,32015,3" "${tmpdir}/filt.nc" "${tmpdir}/filt_zstd.nc"
+# Reading back forces the filter plugin to load.
+if ! ncdump "${tmpdir}/filt_zstd.nc" >/dev/null 2>&1; then
+	echo "zstd filter roundtrip failed (gh-230): plugin not installed?" >&2
+	ncdump "${tmpdir}/filt_zstd.nc" || true
+	exit 1
+fi
+echo 'zstd compression filter roundtrip passed'
