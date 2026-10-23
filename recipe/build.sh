@@ -23,7 +23,9 @@ else
   CMAKE_BUILD_TYPE=Release
 fi
 
-
+if [[ ${HOST} =~ .*darwin.* ]]; then
+  export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
+fi
 export HDF5_PLUGIN_PATH="${PREFIX}/lib/hdf5/plugin"
 
 # 2022/04/25
