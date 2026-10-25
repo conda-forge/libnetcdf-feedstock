@@ -23,34 +23,10 @@ else
   CMAKE_BUILD_TYPE=Release
 fi
 
-# Extra CMake args for macOS go into an array (preserves proper tokenization)
-cmake_osx_args=()
 if [[ ${HOST} =~ .*darwin.* ]]; then
-    # Avoid -O3 on macOS; keep Release semantics (incl. -DNDEBUG) but use -O2
-    cmake_osx_args+=(-DCMAKE_C_FLAGS_RELEASE:STRING="-O2 -DNDEBUG") 
-    cmake_osx_args+=(-DCMAKE_CXX_FLAGS_RELEASE:STRING="-O2 -DNDEBUG")
-    # We have a problem with over-stripping of dylibs in the test programs:
-    # nm ${PREFIX}/lib/libdf.dylib | grep error_top
-    #   000000000006197c S _error_top
-    # Then, despite this being linked to explicitly when creating the test programs:
-    # ./hdf4_test_tst_chunk_hdf4
-    # dyld: Symbol not found: _error_top
-    #   Referenced from: ${PREFIX}/lib/libmfhdf.0.dylib
-    #   Expected in: flat namespace
-    #  in ${PREFIX}/lib/libmfhdf.0.dylib
-    # Abort trap: 56
-    # Now clearly libmfhdf should autoload libdf but it does not and that is not going to change:
-    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=556439
-    # .. so we must remove our unused stripping instead :-(
-    # (it may be possible to arrange this symbol to be in the 'D'ata section instead of 'S'
-    #  (symbol in a section other than those above according to man nm), instead though
-    #  or to fix ld64 so that it checks for symbols being used in this section).
-    export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
-    export HDF5_PLUGIN_PATH=$(echo "H5_DEFAULT_PLUGINDIR" | clang-cpp -P -include $PREFIX/include/H5pubconf.h - | tr -d '"')
-    export CMAKE_ARGS="${CMAKE_ARGS} -DHAVE_CLOCK_GETTIME:BOOL=OFF"
-else
-    export HDF5_PLUGIN_PATH=$(echo "H5_DEFAULT_PLUGINDIR" | $CPP -P -include $PREFIX/include/H5pubconf.h - | tr -d '"')
+  export LDFLAGS=$(echo "${LDFLAGS}" | sed "s/-Wl,-dead_strip_dylibs//g")
 fi
+export HDF5_PLUGIN_PATH="${PREFIX}/lib/hdf5/plugin"
 
 # 2022/04/25
 # DAP Remote tests are causing spurious failures at the momment
