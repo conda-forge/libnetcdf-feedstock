@@ -27,7 +27,7 @@ libaec:
 libcurl:
 - '8'
 libpnetcdf:
-- 1.15.0
+- 1.15.1
 libxml2_devel:
 - '2.15'
 libzip:
